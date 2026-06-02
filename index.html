@@ -598,14 +598,17 @@ footer p { font-size:12.5px; color:rgba(255,255,255,0.4); font-weight:300; }
 </div>
 
 <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script>
-// ─── EMAILJS CONFIG ───────────────────────────────────────────
 const EMAILJS_PUBLIC_KEY  = 'ZL3RCQGUVxd2FaiQ9';
 const EMAILJS_SERVICE_ID  = 'service_2h4vdj7';
 const EMAILJS_TEMPLATE_ID = 'template_1x8pm4t';
-// ─────────────────────────────────────────────────────────────
+const SUPABASE_URL = 'https://qrsceaeduwdeluzuuaww.supabase.co';
+const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InFyc2NlYWVkdXdkZWx1enV1YXd3Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODAzNDY4MTgsImV4cCI6MjA5NTkyMjgxOH0.zHIP1cH-HdXerk5bR9lA18AgPX_mXdyO5qSG2fr7TLY';
 
 emailjs.init(EMAILJS_PUBLIC_KEY);
+const { createClient } = supabase;
+const sb = createClient(SUPABASE_URL, SUPABASE_KEY);
 
 function showPage(name) {
   document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
@@ -616,7 +619,7 @@ function showPage(name) {
   window.scrollTo(0, 0);
 }
 
-function submitForm() {
+async function submitForm() {
   const fields = ['f-prenom','f-nom','f-email','f-tel','f-type'];
   if (fields.some(id => !document.getElementById(id).value.trim())) {
     alert('Merci de remplir tous les champs.');
@@ -627,26 +630,34 @@ function submitForm() {
   btn.textContent = 'Envoi en cours...';
   btn.disabled = true;
 
-  const templateParams = {
+  const data = {
     prenom:    document.getElementById('f-prenom').value.trim(),
     nom:       document.getElementById('f-nom').value.trim(),
     email:     document.getElementById('f-email').value.trim(),
     telephone: document.getElementById('f-tel').value.trim(),
     type_site: document.getElementById('f-type').value,
-    message:   document.getElementById('f-message').value.trim() || 'Aucun message',
+    message:   document.getElementById('f-message').value.trim() || '',
   };
 
-  emailjs.send(EMAILJS_SERVICE_ID, EMAILJS_TEMPLATE_ID, templateParams)
-    .then(() => {
-      document.getElementById('form-content').style.display = 'none';
-      document.getElementById('form-success').style.display = 'block';
-    })
-    .catch((err) => {
-      console.error('EmailJS error:', err);
-      btn.textContent = 'Envoyer ma demande';
-      btn.disabled = false;
-      alert('Une erreur est survenue. Réessayez ou contactez-moi directement.');
+  try {
+    await sb.from('demandes').insert([{
+      prenom: data.prenom, nom: data.nom, email: data.email,
+      telephone: data.telephone, type_site: data.type_site,
+      message: data.message, statut: 'nouveau'
+    }]);
+    await emailjs.send(EMAILJS_SERVICE_ID, EMAILJS_TEMPLATE_ID, {
+      prenom: data.prenom, nom: data.nom, email: data.email,
+      telephone: data.telephone, type_site: data.type_site,
+      message: data.message || 'Aucun message',
     });
+    document.getElementById('form-content').style.display = 'none';
+    document.getElementById('form-success').style.display = 'block';
+  } catch(err) {
+    console.error('Erreur:', err);
+    btn.textContent = 'Envoyer ma demande';
+    btn.disabled = false;
+    alert('Une erreur est survenue. Réessayez ou contactez-moi directement.');
+  }
 }
 </script>
 </body>
