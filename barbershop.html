@@ -1,0 +1,793 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Barbershop Élite — Paris</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500&display=swap" rel="stylesheet">
+<style>
+:root {
+  --black: #0e0e0e;
+  --black2: #171717;
+  --black3: #1f1f1f;
+  --cream: #f0ebe3;
+  --cream2: #e4ddd4;
+  --beige: #c8b89a;
+  --text: #f0ebe3;
+  --muted: #8a8278;
+  --muted2: #5a5550;
+  --border: rgba(240,235,227,0.08);
+  --border2: rgba(240,235,227,0.15);
+}
+
+* { margin:0; padding:0; box-sizing:border-box; }
+html { scroll-behavior:smooth; }
+
+body {
+  font-family: 'DM Sans', sans-serif;
+  background: var(--black);
+  color: var(--text);
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* NAV */
+nav {
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  z-index: 100;
+  height: 68px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 52px;
+  background: rgba(14,14,14,0.93);
+  backdrop-filter: blur(16px);
+  border-bottom: 1px solid var(--border);
+}
+
+.logo {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 22px;
+  font-weight: 600;
+  color: var(--cream);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.nav-links { display:flex; align-items:center; gap:6px; list-style:none; }
+.nav-links a {
+  color: var(--muted);
+  text-decoration: none;
+  font-size: 13px;
+  font-weight: 400;
+  padding: 7px 14px;
+  border-radius: 4px;
+  transition: color 0.15s;
+  letter-spacing: 0.03em;
+}
+.nav-links a:hover { color: var(--cream); }
+
+.nav-cta {
+  background: var(--cream);
+  color: var(--black) !important;
+  font-weight: 500 !important;
+  padding: 9px 22px !important;
+  border-radius: 4px !important;
+  letter-spacing: 0.04em !important;
+  font-size: 12.5px !important;
+  text-transform: uppercase;
+}
+.nav-cta:hover { background: var(--cream2) !important; }
+
+/* PAGES */
+.page { display:none; min-height:100vh; padding-top:68px; }
+.page.active { display:block; }
+
+/* ===== HERO ===== */
+.hero {
+  min-height: calc(100vh - 68px);
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  position: relative;
+  overflow: hidden;
+}
+
+.hero-left {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 80px 52px;
+  position: relative;
+  z-index: 2;
+}
+
+.hero-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 11px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--beige);
+  margin-bottom: 32px;
+}
+.hero-tag::before { content:''; width:24px; height:1px; background:var(--beige); }
+
+.hero h1 {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: clamp(52px, 5.5vw, 82px);
+  line-height: 1.0;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  color: var(--cream);
+  margin-bottom: 10px;
+}
+
+.hero h1 em {
+  font-style: italic;
+  font-weight: 400;
+  color: var(--beige);
+}
+
+.hero-location {
+  font-size: 13px;
+  color: var(--muted);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  margin-bottom: 36px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.hero-desc {
+  font-size: 15px;
+  line-height: 1.7;
+  color: var(--muted);
+  max-width: 400px;
+  margin-bottom: 48px;
+  font-weight: 300;
+}
+
+.hero-btns { display:flex; gap:14px; }
+
+.btn-cream {
+  background: var(--cream);
+  color: var(--black);
+  padding: 14px 32px;
+  border: none;
+  border-radius: 3px;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 13px;
+  font-weight: 500;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: background 0.15s;
+}
+.btn-cream:hover { background: var(--cream2); }
+
+.btn-outline-cream {
+  background: transparent;
+  color: var(--cream);
+  padding: 14px 32px;
+  border: 1px solid var(--border2);
+  border-radius: 3px;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 13px;
+  font-weight: 400;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: border-color 0.15s, color 0.15s;
+}
+.btn-outline-cream:hover { border-color: var(--cream); }
+
+/* Hero right — galerie photos simulée */
+.hero-right {
+  position: relative;
+  overflow: hidden;
+}
+
+.hero-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: 1fr 1fr;
+  height: 100%;
+  gap: 3px;
+}
+
+.hero-img {
+  background: var(--black3);
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.hero-img::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(135deg, rgba(14,14,14,0.3) 0%, transparent 60%);
+}
+
+.hero-img span {
+  font-size: 48px;
+  opacity: 0.15;
+}
+
+.hero-img.big {
+  grid-row: span 2;
+}
+
+/* Stat flottante */
+.hero-stat {
+  position: absolute;
+  bottom: 32px;
+  left: 24px;
+  background: rgba(14,14,14,0.85);
+  backdrop-filter: blur(12px);
+  border: 1px solid var(--border2);
+  border-radius: 8px;
+  padding: 16px 20px;
+  z-index: 3;
+}
+.hero-stat-num {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 32px;
+  font-weight: 600;
+  color: var(--cream);
+  line-height: 1;
+}
+.hero-stat-lbl { font-size: 11px; color: var(--muted); letter-spacing: 0.08em; text-transform: uppercase; margin-top: 2px; }
+
+/* ===== GALERIE ===== */
+.section { padding: 80px 52px; max-width: 1140px; margin: 0 auto; }
+
+.section-header { display:flex; justify-content:space-between; align-items:flex-end; margin-bottom: 48px; }
+
+.section-label {
+  font-size: 11px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--beige);
+  margin-bottom: 14px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.section-label::before { content:''; width:16px; height:1px; background:var(--beige); }
+
+.section h2 {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: clamp(32px, 4vw, 50px);
+  font-weight: 600;
+  line-height: 1.05;
+  letter-spacing: -0.01em;
+  color: var(--cream);
+}
+
+.gallery-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 3px;
+}
+
+.gallery-item {
+  aspect-ratio: 3/4;
+  background: var(--black3);
+  border-radius: 2px;
+  overflow: hidden;
+  position: relative;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.gallery-item:first-child {
+  grid-column: span 2;
+  aspect-ratio: 16/9;
+}
+
+.gallery-item::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to top, rgba(14,14,14,0.7) 0%, transparent 50%);
+  opacity: 0;
+  transition: opacity 0.3s;
+}
+
+.gallery-item:hover::after { opacity: 1; }
+
+.gallery-item span { font-size: 56px; opacity: 0.08; }
+
+.gallery-label {
+  position: absolute;
+  bottom: 16px;
+  left: 18px;
+  z-index: 2;
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--cream);
+  letter-spacing: 0.04em;
+  opacity: 0;
+  transition: opacity 0.3s;
+  transform: translateY(6px);
+  transition: all 0.3s;
+}
+.gallery-item:hover .gallery-label { opacity: 1; transform: translateY(0); }
+
+/* ===== SERVICES ===== */
+.services-wrap {
+  background: var(--black2);
+  padding: 80px 0;
+  border-top: 1px solid var(--border);
+  border-bottom: 1px solid var(--border);
+}
+
+.services-inner { max-width: 1140px; margin: 0 auto; padding: 0 52px; }
+
+.services-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1px;
+  background: var(--border);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  overflow: hidden;
+  margin-top: 52px;
+}
+
+.service-card {
+  background: var(--black2);
+  padding: 40px 36px;
+  transition: background 0.2s;
+  position: relative;
+}
+.service-card:hover { background: var(--black3); }
+
+.service-card::after {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 2px;
+  background: var(--beige);
+  opacity: 0;
+  transition: opacity 0.2s;
+}
+.service-card:hover::after { opacity: 1; }
+
+.service-icon {
+  font-size: 28px;
+  margin-bottom: 20px;
+  display: block;
+}
+
+.service-card h3 {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 26px;
+  font-weight: 600;
+  color: var(--cream);
+  margin-bottom: 10px;
+  letter-spacing: -0.01em;
+}
+
+.service-card p {
+  font-size: 13.5px;
+  color: var(--muted);
+  line-height: 1.65;
+  font-weight: 300;
+  margin-bottom: 28px;
+}
+
+.service-details {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding-top: 24px;
+  border-top: 1px solid var(--border);
+}
+
+.service-detail {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 13px;
+}
+
+.service-detail-name { color: var(--muted); }
+.service-detail-price {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 18px;
+  font-weight: 600;
+  color: var(--cream);
+}
+
+/* ===== RÉSERVATION ===== */
+.resa-wrap {
+  padding: 80px 52px;
+  max-width: 1140px;
+  margin: 0 auto;
+}
+
+.resa-grid { display:grid; grid-template-columns:1fr 1.1fr; gap:72px; align-items:start; }
+
+.resa-info h2 {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 46px;
+  font-weight: 600;
+  line-height: 1.05;
+  color: var(--cream);
+  margin-bottom: 20px;
+}
+
+.resa-info p {
+  font-size: 14.5px;
+  color: var(--muted);
+  line-height: 1.7;
+  font-weight: 300;
+  margin-bottom: 36px;
+}
+
+.horaires { display:flex; flex-direction:column; gap:0; }
+.horaire-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px 0;
+  border-bottom: 1px solid var(--border);
+  font-size: 13.5px;
+}
+.horaire-row:first-child { border-top: 1px solid var(--border); }
+.horaire-jour { color: var(--muted); }
+.horaire-heure { color: var(--cream); font-weight: 500; }
+.horaire-closed { color: var(--muted2); }
+
+.resa-form {
+  background: var(--black2);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 36px;
+}
+
+.fgroup { margin-bottom: 16px; }
+.fgroup label {
+  display: block;
+  font-size: 11px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin-bottom: 7px;
+}
+.fgroup input, .fgroup select {
+  width: 100%;
+  background: var(--black3);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  padding: 12px 14px;
+  color: var(--cream);
+  font-family: 'DM Sans', sans-serif;
+  font-size: 14px;
+  outline: none;
+  transition: border-color 0.15s;
+  appearance: none;
+}
+.fgroup input:focus, .fgroup select:focus { border-color: var(--beige); }
+.fgroup input::placeholder { color: var(--muted2); }
+.fgroup select option { background: var(--black3); }
+
+.frow { display:grid; grid-template-columns:1fr 1fr; gap:12px; }
+
+.btn-resa {
+  width: 100%;
+  background: var(--cream);
+  color: var(--black);
+  border: none;
+  padding: 14px;
+  border-radius: 4px;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 13px;
+  font-weight: 500;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: background 0.15s;
+  margin-top: 6px;
+}
+.btn-resa:hover { background: var(--cream2); }
+
+.resa-note { text-align:center; font-size:12px; color:var(--muted2); margin-top:12px; }
+
+.resa-success { display:none; text-align:center; padding:48px 20px; }
+.resa-success .ico { font-size:36px; display:block; margin-bottom:16px; }
+.resa-success h3 { font-family:'Cormorant Garamond',serif; font-size:26px; color:var(--cream); margin-bottom:8px; }
+.resa-success p { font-size:14px; color:var(--muted); font-weight:300; }
+
+/* ===== CONTACT ===== */
+.contact-wrap {
+  background: var(--black2);
+  border-top: 1px solid var(--border);
+  padding: 80px 52px;
+}
+.contact-inner { max-width:1140px; margin:0 auto; display:grid; grid-template-columns:1fr 1fr; gap:72px; }
+
+.contact-info h2 { font-family:'Cormorant Garamond',serif; font-size:42px; font-weight:600; color:var(--cream); margin-bottom:16px; }
+.contact-info p { font-size:14.5px; color:var(--muted); line-height:1.7; font-weight:300; margin-bottom:36px; }
+
+.contact-cards { display:flex; flex-direction:column; gap:10px; }
+.c-card { background:var(--black3); border:1px solid var(--border); border-radius:6px; padding:18px 20px; display:flex; gap:14px; align-items:center; transition:border-color 0.15s; }
+.c-card:hover { border-color:var(--border2); }
+.c-ico { width:36px; height:36px; background:rgba(200,184,154,0.1); border-radius:4px; display:flex; align-items:center; justify-content:center; font-size:16px; flex-shrink:0; }
+.c-card h4 { font-size:12.5px; font-weight:500; color:var(--cream); margin-bottom:2px; letter-spacing:0.04em; text-transform:uppercase; }
+.c-card p, .c-card a { font-size:13px; color:var(--muted); font-weight:300; text-decoration:none; }
+.c-card a:hover { color:var(--cream); }
+
+.map-placeholder {
+  background: var(--black3);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  height: 320px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+}
+.map-placeholder span { font-size: 36px; opacity: 0.3; }
+.map-placeholder p { font-size: 13px; color: var(--muted2); }
+
+/* FOOTER */
+footer {
+  border-top: 1px solid var(--border);
+  padding: 28px 52px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: var(--black);
+}
+.footer-logo { font-family:'Cormorant Garamond',serif; font-size:18px; font-weight:600; color:var(--cream); letter-spacing:0.06em; text-transform:uppercase; }
+footer p { font-size:12px; color:var(--muted2); font-weight:300; }
+.footer-credit { font-size:12px; color:var(--muted2); }
+.footer-credit a { color:var(--beige); text-decoration:none; }
+
+/* SEP */
+.sep { height:1px; background:var(--border); }
+
+/* ANIM */
+@keyframes fadeUp { from{opacity:0;transform:translateY(20px)} to{opacity:1;transform:translateY(0)} }
+.fade { animation: fadeUp 0.6s ease both; }
+.fade-1{animation-delay:.05s} .fade-2{animation-delay:.18s} .fade-3{animation-delay:.3s} .fade-4{animation-delay:.42s}
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="logo">Barbershop Élite</div>
+  <ul class="nav-links">
+    <li><a href="#" onclick="showSection('accueil')">Accueil</a></li>
+    <li><a href="#" onclick="showSection('services')">Services</a></li>
+    <li><a href="#" onclick="showSection('contact')">Contact</a></li>
+    <li><a href="#" onclick="showSection('reservation')" class="nav-cta">Réserver</a></li>
+  </ul>
+</nav>
+
+<!-- ACCUEIL -->
+<div id="section-accueil" class="page active">
+
+  <!-- HERO -->
+  <div class="hero">
+    <div class="hero-left">
+      <div class="hero-tag fade fade-1">Depuis 2018 · Paris 11e</div>
+      <h1 class="fade fade-2">L'art du<br><em>barbier</em><br>à votre service.</h1>
+      <div class="hero-location fade fade-3">📍 15 rue de la Roquette, Paris</div>
+      <p class="hero-desc fade fade-3">Coupes soignées, barbes taillées avec précision. Une expérience unique dans un cadre premium au cœur de Paris.</p>
+      <div class="hero-btns fade fade-4">
+        <button class="btn-cream" onclick="showSection('reservation')">Prendre rendez-vous</button>
+        <button class="btn-outline-cream" onclick="showSection('services')">Nos services</button>
+      </div>
+    </div>
+    <div class="hero-right">
+      <div class="hero-grid">
+        <div class="hero-img big"><span>✂️</span></div>
+        <div class="hero-img"><span>💈</span></div>
+        <div class="hero-img"><span>🪒</span></div>
+      </div>
+      <div class="hero-stat">
+        <div class="hero-stat-num">4.9★</div>
+        <div class="hero-stat-lbl">+200 avis Google</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- GALERIE -->
+  <div class="section">
+    <div class="section-header">
+      <div>
+        <div class="section-label">Réalisations</div>
+        <h2>Nos coupes.</h2>
+      </div>
+    </div>
+    <div class="gallery-grid">
+      <div class="gallery-item"><span>✂️</span><div class="gallery-label">Dégradé américain</div></div>
+      <div class="gallery-item"><span>💈</span><div class="gallery-label">Coupe classique</div></div>
+      <div class="gallery-item"><span>🪒</span><div class="gallery-label">Rasage traditionnel</div></div>
+      <div class="gallery-item"><span>✂️</span><div class="gallery-label">Coupe + Barbe</div></div>
+      <div class="gallery-item"><span>💈</span><div class="gallery-label">Dégradé fondu</div></div>
+    </div>
+  </div>
+
+  <footer>
+    <div class="footer-logo">Barbershop Élite</div>
+    <p>© 2026 Barbershop Élite · Paris 11e</p>
+    <div class="footer-credit">Site par <a href="https://youdesk.vercel.app">Youdesk</a></div>
+  </footer>
+</div>
+
+<!-- SERVICES -->
+<div id="section-services" class="page">
+  <div class="services-wrap">
+    <div class="services-inner">
+      <div class="section-label">Ce qu'on propose</div>
+      <h2 style="font-family:'Cormorant Garamond',serif;font-size:clamp(32px,4vw,50px);font-weight:600;color:var(--cream)">Nos services.</h2>
+      <div class="services-grid">
+        <div class="service-card">
+          <span class="service-icon">✂️</span>
+          <h3>Coupe</h3>
+          <p>Coupe personnalisée selon votre style, votre morphologie et vos envies. Finitions soignées au rasoir.</p>
+          <div class="service-details">
+            <div class="service-detail"><span class="service-detail-name">Coupe classique</span><span class="service-detail-price">25€</span></div>
+            <div class="service-detail"><span class="service-detail-name">Dégradé</span><span class="service-detail-price">28€</span></div>
+            <div class="service-detail"><span class="service-detail-name">Dégradé américain</span><span class="service-detail-price">32€</span></div>
+          </div>
+        </div>
+        <div class="service-card">
+          <span class="service-icon">🪒</span>
+          <h3>Barbe</h3>
+          <p>Taille et mise en forme de la barbe, rasage traditionnel à la serviette chaude. Un soin complet.</p>
+          <div class="service-details">
+            <div class="service-detail"><span class="service-detail-name">Taille barbe</span><span class="service-detail-price">15€</span></div>
+            <div class="service-detail"><span class="service-detail-name">Rasage complet</span><span class="service-detail-price">20€</span></div>
+            <div class="service-detail"><span class="service-detail-name">Soin barbe</span><span class="service-detail-price">25€</span></div>
+          </div>
+        </div>
+        <div class="service-card">
+          <span class="service-icon">💈</span>
+          <h3>Coupe + Barbe</h3>
+          <p>Le combo parfait. Coupe et barbe réalisées dans la même session pour un résultat impeccable.</p>
+          <div class="service-details">
+            <div class="service-detail"><span class="service-detail-name">Coupe + Barbe</span><span class="service-detail-price">38€</span></div>
+            <div class="service-detail"><span class="service-detail-name">Dégradé + Barbe</span><span class="service-detail-price">44€</span></div>
+            <div class="service-detail"><span class="service-detail-name">Premium complet</span><span class="service-detail-price">55€</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <footer>
+    <div class="footer-logo">Barbershop Élite</div>
+    <p>© 2026 Barbershop Élite · Paris 11e</p>
+    <div class="footer-credit">Site par <a href="https://youdesk.vercel.app">Youdesk</a></div>
+  </footer>
+</div>
+
+<!-- RÉSERVATION -->
+<div id="section-reservation" class="page">
+  <div class="resa-wrap">
+    <div class="resa-grid">
+      <div class="resa-info">
+        <div class="section-label">Prise de RDV</div>
+        <h2>Réservez<br>votre séance.</h2>
+        <p>Choisissez votre prestation, votre créneau et confirmez en quelques secondes. Confirmation immédiate par email.</p>
+        <div class="horaires">
+          <div class="horaire-row"><span class="horaire-jour">Lundi</span><span class="horaire-closed">Fermé</span></div>
+          <div class="horaire-row"><span class="horaire-jour">Mardi — Vendredi</span><span class="horaire-heure">10h — 20h</span></div>
+          <div class="horaire-row"><span class="horaire-jour">Samedi</span><span class="horaire-heure">9h — 19h</span></div>
+          <div class="horaire-row"><span class="horaire-jour">Dimanche</span><span class="horaire-heure">10h — 17h</span></div>
+        </div>
+      </div>
+      <div class="resa-form">
+        <div id="resa-content">
+          <div class="frow">
+            <div class="fgroup"><label>Prénom</label><input type="text" placeholder="Jean" id="r-prenom"></div>
+            <div class="fgroup"><label>Nom</label><input type="text" placeholder="Dupont" id="r-nom"></div>
+          </div>
+          <div class="fgroup"><label>Téléphone</label><input type="tel" placeholder="+33 6 00 00 00 00" id="r-tel"></div>
+          <div class="fgroup">
+            <label>Prestation</label>
+            <select id="r-service">
+              <option value="" disabled selected>Choisissez une prestation</option>
+              <option>Coupe classique — 25€</option>
+              <option>Dégradé — 28€</option>
+              <option>Dégradé américain — 32€</option>
+              <option>Taille barbe — 15€</option>
+              <option>Rasage complet — 20€</option>
+              <option>Coupe + Barbe — 38€</option>
+              <option>Dégradé + Barbe — 44€</option>
+              <option>Premium complet — 55€</option>
+            </select>
+          </div>
+          <div class="frow">
+            <div class="fgroup"><label>Date</label><input type="date" id="r-date"></div>
+            <div class="fgroup">
+              <label>Créneau</label>
+              <select id="r-creneau">
+                <option value="" disabled selected>Heure</option>
+                <option>10:00</option><option>10:30</option><option>11:00</option>
+                <option>11:30</option><option>12:00</option><option>14:00</option>
+                <option>14:30</option><option>15:00</option><option>15:30</option>
+                <option>16:00</option><option>16:30</option><option>17:00</option>
+                <option>17:30</option><option>18:00</option><option>18:30</option>
+                <option>19:00</option><option>19:30</option>
+              </select>
+            </div>
+          </div>
+          <button class="btn-resa" onclick="submitResa()">Confirmer le rendez-vous</button>
+          <p class="resa-note">Confirmation immédiate · Annulation gratuite 24h avant</p>
+        </div>
+        <div class="resa-success" id="resa-success">
+          <span class="ico">✓</span>
+          <h3>RDV confirmé !</h3>
+          <p>À très bientôt chez Barbershop Élite.<br>Un récapitulatif vous a été envoyé.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+  <footer>
+    <div class="footer-logo">Barbershop Élite</div>
+    <p>© 2026 Barbershop Élite · Paris 11e</p>
+    <div class="footer-credit">Site par <a href="https://youdesk.vercel.app">Youdesk</a></div>
+  </footer>
+</div>
+
+<!-- CONTACT -->
+<div id="section-contact" class="page">
+  <div class="contact-wrap">
+    <div class="contact-inner">
+      <div class="contact-info">
+        <div class="section-label">Nous trouver</div>
+        <h2>Venez nous<br>rendre visite.</h2>
+        <p>On vous accueille du mardi au dimanche dans notre salon au cœur du 11e arrondissement.</p>
+        <div class="contact-cards">
+          <div class="c-card"><div class="c-ico">📍</div><div><h4>Adresse</h4><p>15 rue de la Roquette, 75011 Paris</p></div></div>
+          <div class="c-card"><div class="c-ico">📞</div><div><h4>Téléphone</h4><a href="tel:+33600000000">+33 6 00 00 00 00</a></div></div>
+          <div class="c-card"><div class="c-ico">📱</div><div><h4>Instagram</h4><a href="#">@barbershopelite</a></div></div>
+          <div class="c-card"><div class="c-ico">⏱</div><div><h4>Horaires</h4><p>Mar–Ven 10h–20h · Sam 9h–19h · Dim 10h–17h</p></div></div>
+        </div>
+      </div>
+      <div class="map-placeholder">
+        <span>🗺️</span>
+        <p>15 rue de la Roquette, Paris 11e</p>
+      </div>
+    </div>
+  </div>
+  <footer>
+    <div class="footer-logo">Barbershop Élite</div>
+    <p>© 2026 Barbershop Élite · Paris 11e</p>
+    <div class="footer-credit">Site par <a href="https://youdesk.vercel.app">Youdesk</a></div>
+  </footer>
+</div>
+
+<script>
+function showSection(name) {
+  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+  document.getElementById('section-' + name).classList.add('active');
+  window.scrollTo(0, 0);
+}
+
+function submitResa() {
+  const fields = ['r-prenom','r-nom','r-tel','r-service','r-date','r-creneau'];
+  if (fields.some(id => !document.getElementById(id).value.trim())) {
+    alert('Merci de remplir tous les champs.');
+    return;
+  }
+  document.getElementById('resa-content').style.display = 'none';
+  document.getElementById('resa-success').style.display = 'block';
+}
+</script>
+</body>
+</html>
