@@ -1,0 +1,368 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Youdesk — Admin</title>
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500&display=swap" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<style>
+:root {
+  --bg: #919191;
+  --bg2: #848484;
+  --bg3: #767676;
+  --card: #f4f4f4;
+  --card2: #ebebeb;
+  --navy: #0f2340;
+  --navy2: #1a3560;
+  --text: #111111;
+  --muted: #444444;
+  --muted2: #777777;
+  --border: rgba(0,0,0,0.10);
+  --border2: rgba(0,0,0,0.18);
+  --white: #ffffff;
+  --green: #059669;
+  --orange: #b45309;
+  --red: #dc2626;
+}
+
+* { margin:0; padding:0; box-sizing:border-box; }
+body { font-family:'DM Sans',sans-serif; background:var(--bg); color:var(--text); -webkit-font-smoothing:antialiased; }
+
+/* LOGIN */
+#login-screen {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+}
+
+.login-box {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  padding: 48px 40px;
+  width: 100%;
+  max-width: 400px;
+  box-shadow: 0 20px 60px rgba(0,0,0,0.15);
+}
+
+.login-logo {
+  font-family: 'Instrument Serif', serif;
+  font-size: 24px;
+  color: var(--navy);
+  margin-bottom: 8px;
+}
+
+.login-sub {
+  font-size: 13px;
+  color: var(--muted2);
+  margin-bottom: 36px;
+  font-weight: 300;
+}
+
+.fgroup { margin-bottom: 16px; }
+.fgroup label { display:block; font-size:11px; letter-spacing:0.08em; text-transform:uppercase; color:var(--muted); margin-bottom:7px; }
+.fgroup input {
+  width:100%; background:var(--white); border:1px solid var(--border2);
+  border-radius:7px; padding:12px 14px; color:var(--text);
+  font-family:'DM Sans',sans-serif; font-size:14px; outline:none; transition:border-color 0.15s;
+}
+.fgroup input:focus { border-color:var(--navy2); }
+.fgroup input::placeholder { color:var(--muted2); }
+
+.btn-login {
+  width:100%; background:var(--navy); color:var(--white); border:none;
+  padding:13px; border-radius:8px; font-family:'DM Sans',sans-serif;
+  font-size:14px; font-weight:500; cursor:pointer; transition:background 0.15s; margin-top:6px;
+}
+.btn-login:hover { background:var(--navy2); }
+
+.login-error { font-size:13px; color:var(--red); margin-top:12px; text-align:center; display:none; }
+
+/* ADMIN PANEL */
+#admin-screen { display:none; min-height:100vh; }
+
+.admin-nav {
+  position: fixed;
+  top:0; left:0; right:0;
+  height: 64px;
+  background: rgba(145,145,145,0.95);
+  backdrop-filter: blur(16px);
+  border-bottom: 1px solid rgba(255,255,255,0.1);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 32px;
+  z-index: 100;
+}
+
+.admin-logo { font-family:'Instrument Serif',serif; font-size:20px; color:var(--white); }
+.admin-nav-right { display:flex; align-items:center; gap:16px; }
+.admin-user { font-size:13px; color:rgba(255,255,255,0.7); }
+.btn-logout {
+  background:rgba(255,255,255,0.1); color:var(--white); border:1px solid rgba(255,255,255,0.2);
+  padding:7px 16px; border-radius:6px; font-family:'DM Sans',sans-serif; font-size:13px;
+  cursor:pointer; transition:background 0.15s;
+}
+.btn-logout:hover { background:rgba(255,255,255,0.2); }
+
+.admin-body { padding-top:64px; display:grid; grid-template-columns:220px 1fr; min-height:100vh; }
+
+/* SIDEBAR */
+.admin-sidebar {
+  background: var(--navy);
+  padding: 28px 16px;
+  position: sticky;
+  top: 64px;
+  height: calc(100vh - 64px);
+}
+
+.sidebar-section { font-size:10px; letter-spacing:0.14em; text-transform:uppercase; color:rgba(255,255,255,0.3); padding:0 10px; margin-bottom:8px; margin-top:24px; }
+.sidebar-section:first-child { margin-top:0; }
+
+.sidebar-item {
+  display:flex; align-items:center; gap:10px;
+  padding:9px 10px; border-radius:6px; font-size:13.5px;
+  color:rgba(255,255,255,0.5); cursor:pointer; transition:all 0.15s; margin-bottom:2px;
+}
+.sidebar-item:hover { background:rgba(255,255,255,0.08); color:rgba(255,255,255,0.8); }
+.sidebar-item.active { background:rgba(255,255,255,0.12); color:var(--white); }
+.sidebar-ico { font-size:15px; }
+
+/* MAIN */
+.admin-main { padding:36px 40px; background:var(--bg); }
+
+.page-title { font-family:'Instrument Serif',serif; font-size:32px; color:var(--white); margin-bottom:6px; letter-spacing:-0.01em; }
+.page-sub { font-size:14px; color:rgba(255,255,255,0.5); font-weight:300; margin-bottom:36px; }
+
+/* STATS */
+.stats-row { display:grid; grid-template-columns:repeat(4,1fr); gap:14px; margin-bottom:36px; }
+.stat-card { background:var(--card); border:1px solid var(--border); border-radius:10px; padding:20px 22px; }
+.stat-card-num { font-family:'Instrument Serif',serif; font-size:36px; color:var(--navy); line-height:1; margin-bottom:4px; }
+.stat-card-lbl { font-size:12px; color:var(--muted2); letter-spacing:0.05em; text-transform:uppercase; }
+
+/* TABLE */
+.table-wrap { background:var(--card); border:1px solid var(--border); border-radius:10px; overflow:hidden; margin-bottom:24px; }
+.table-header { padding:18px 22px; border-bottom:1px solid var(--border); display:flex; justify-content:space-between; align-items:center; }
+.table-title { font-size:14px; font-weight:500; color:var(--text); }
+.table-count { font-size:12px; color:var(--muted2); background:var(--card2); padding:3px 10px; border-radius:20px; }
+
+table { width:100%; border-collapse:collapse; }
+th { font-size:11px; letter-spacing:0.08em; text-transform:uppercase; color:var(--muted2); padding:12px 22px; text-align:left; border-bottom:1px solid var(--border); background:var(--card2); font-weight:400; }
+td { font-size:13.5px; color:var(--text); padding:14px 22px; border-bottom:1px solid var(--border); }
+tr:last-child td { border-bottom:none; }
+tr:hover td { background:var(--card2); }
+
+.badge { font-size:11px; padding:3px 10px; border-radius:20px; font-weight:500; }
+.badge-nouveau { background:rgba(59,130,246,0.1); color:#1d4ed8; }
+.badge-actif { background:rgba(5,150,105,0.1); color:var(--green); }
+.badge-inactif { background:rgba(107,114,128,0.1); color:var(--muted); }
+
+.btn-action { background:var(--navy); color:var(--white); border:none; padding:6px 14px; border-radius:5px; font-size:12px; cursor:pointer; font-family:'DM Sans',sans-serif; transition:background 0.15s; }
+.btn-action:hover { background:var(--navy2); }
+
+/* TABS */
+.tab-content { display:none; }
+.tab-content.active { display:block; }
+
+/* EMPTY */
+.empty { text-align:center; padding:48px 20px; color:var(--muted2); font-size:14px; font-weight:300; }
+.empty span { font-size:32px; display:block; margin-bottom:12px; }
+
+/* LOADING */
+.loading { text-align:center; padding:32px; color:var(--muted2); font-size:14px; }
+</style>
+</head>
+<body>
+
+<!-- LOGIN -->
+<div id="login-screen">
+  <div class="login-box">
+    <div class="login-logo">Youdesk</div>
+    <div class="login-sub">Accès administrateur</div>
+    <div class="fgroup"><label>Email</label><input type="email" id="login-email" placeholder="contact@youdesk.fr"></div>
+    <div class="fgroup"><label>Mot de passe</label><input type="password" id="login-pwd" placeholder="••••••••" onkeydown="if(event.key==='Enter')doLogin()"></div>
+    <button class="btn-login" onclick="doLogin()">Se connecter</button>
+    <div class="login-error" id="login-error">Email ou mot de passe incorrect.</div>
+  </div>
+</div>
+
+<!-- ADMIN -->
+<div id="admin-screen">
+  <nav class="admin-nav">
+    <div class="admin-logo">Youdesk</div>
+    <div class="admin-nav-right">
+      <span class="admin-user" id="admin-email"></span>
+      <button class="btn-logout" onclick="doLogout()">Déconnexion</button>
+    </div>
+  </nav>
+
+  <div class="admin-body">
+    <div class="admin-sidebar">
+      <div class="sidebar-section">Navigation</div>
+      <div class="sidebar-item active" onclick="showTab('dashboard')"><span class="sidebar-ico">📊</span> Dashboard</div>
+      <div class="sidebar-item" onclick="showTab('demandes')"><span class="sidebar-ico">📬</span> Demandes</div>
+      <div class="sidebar-item" onclick="showTab('clients')"><span class="sidebar-ico">👥</span> Clients</div>
+      <div class="sidebar-section">Mon site</div>
+      <div class="sidebar-item" onclick="window.open('https://youdesk.vercel.app','_blank')"><span class="sidebar-ico">🌐</span> Voir le site</div>
+    </div>
+
+    <div class="admin-main">
+
+      <!-- DASHBOARD -->
+      <div id="tab-dashboard" class="tab-content active">
+        <div class="page-title">Bonjour 👋</div>
+        <div class="page-sub">Voici un résumé de votre activité.</div>
+        <div class="stats-row">
+          <div class="stat-card"><div class="stat-card-num" id="stat-demandes">—</div><div class="stat-card-lbl">Demandes reçues</div></div>
+          <div class="stat-card"><div class="stat-card-num" id="stat-nouvelles">—</div><div class="stat-card-lbl">Nouvelles demandes</div></div>
+          <div class="stat-card"><div class="stat-card-num" id="stat-clients">—</div><div class="stat-card-lbl">Clients actifs</div></div>
+          <div class="stat-card"><div class="stat-card-num" id="stat-mrr">—€</div><div class="stat-card-lbl">MRR estimé</div></div>
+        </div>
+
+        <div class="table-wrap">
+          <div class="table-header">
+            <span class="table-title">Dernières demandes</span>
+            <span class="table-count" id="count-demandes">0</span>
+          </div>
+          <div id="demandes-table-dash"><div class="loading">Chargement...</div></div>
+        </div>
+      </div>
+
+      <!-- DEMANDES -->
+      <div id="tab-demandes" class="tab-content">
+        <div class="page-title">Demandes</div>
+        <div class="page-sub">Toutes les demandes de devis reçues.</div>
+        <div class="table-wrap">
+          <div class="table-header">
+            <span class="table-title">Toutes les demandes</span>
+            <span class="table-count" id="count-demandes2">0</span>
+          </div>
+          <div id="demandes-table-full"><div class="loading">Chargement...</div></div>
+        </div>
+      </div>
+
+      <!-- CLIENTS -->
+      <div id="tab-clients" class="tab-content">
+        <div class="page-title">Clients</div>
+        <div class="page-sub">Gérez vos clients et leurs sites.</div>
+        <div class="table-wrap">
+          <div class="table-header">
+            <span class="table-title">Clients actifs</span>
+            <span class="table-count" id="count-clients">0</span>
+          </div>
+          <div id="clients-table"><div class="loading">Chargement...</div></div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<script>
+const SUPABASE_URL = 'https://qrsceaeduwdeluzuuaww.supabase.co';
+const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InFyc2NlYWVkdXdkZWx1enV1YXd3Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODAzNDY4MTgsImV4cCI6MjA5NTkyMjgxOH0.zHIP1cH-HdXerk5bR9lA18AgPX_mXdyO5qSG2fr7TLY';
+
+const { createClient } = supabase;
+const sb = createClient(SUPABASE_URL, SUPABASE_KEY);
+
+// Auth
+async function doLogin() {
+  const email = document.getElementById('login-email').value.trim();
+  const pwd = document.getElementById('login-pwd').value;
+  const err = document.getElementById('login-error');
+  err.style.display = 'none';
+
+  const { data, error } = await sb.auth.signInWithPassword({ email, password: pwd });
+  if (error) { err.style.display = 'block'; return; }
+
+  showAdmin(data.user.email);
+}
+
+async function doLogout() {
+  await sb.auth.signOut();
+  document.getElementById('admin-screen').style.display = 'none';
+  document.getElementById('login-screen').style.display = 'flex';
+}
+
+function showAdmin(email) {
+  document.getElementById('login-screen').style.display = 'none';
+  document.getElementById('admin-screen').style.display = 'block';
+  document.getElementById('admin-email').textContent = email;
+  loadData();
+}
+
+// Check session au chargement
+sb.auth.getSession().then(({ data }) => {
+  if (data.session) showAdmin(data.session.user.email);
+});
+
+// Tabs
+function showTab(name) {
+  document.querySelectorAll('.tab-content').forEach(t => t.classList.remove('active'));
+  document.querySelectorAll('.sidebar-item').forEach(i => i.classList.remove('active'));
+  document.getElementById('tab-' + name).classList.add('active');
+  event.currentTarget.classList.add('active');
+}
+
+// Load data
+async function loadData() {
+  const { data: demandes } = await sb.from('demandes').select('*').order('created_at', { ascending: false });
+  const { data: clients } = await sb.from('clients').select('*').order('created_at', { ascending: false });
+
+  const d = demandes || [];
+  const c = clients || [];
+  const nouvelles = d.filter(x => x.statut === 'nouveau').length;
+  const mrr = c.filter(x => x.statut === 'actif').length * 69;
+
+  // Stats
+  document.getElementById('stat-demandes').textContent = d.length;
+  document.getElementById('stat-nouvelles').textContent = nouvelles;
+  document.getElementById('stat-clients').textContent = c.filter(x => x.statut === 'actif').length;
+  document.getElementById('stat-mrr').textContent = mrr + '€';
+  document.getElementById('count-demandes').textContent = d.length;
+  document.getElementById('count-demandes2').textContent = d.length;
+  document.getElementById('count-clients').textContent = c.length;
+
+  // Tables demandes
+  const demandesHTML = d.length === 0
+    ? '<div class="empty"><span>📬</span>Aucune demande pour l\'instant.</div>'
+    : `<table><thead><tr><th>Nom</th><th>Email</th><th>Téléphone</th><th>Type de site</th><th>Message</th><th>Statut</th><th>Date</th></tr></thead><tbody>
+      ${d.map(x => `<tr>
+        <td>${x.prenom} ${x.nom}</td>
+        <td><a href="mailto:${x.email}" style="color:var(--navy);text-decoration:none">${x.email}</a></td>
+        <td>${x.telephone}</td>
+        <td>${x.type_site}</td>
+        <td style="max-width:200px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">${x.message || '—'}</td>
+        <td><span class="badge badge-${x.statut === 'nouveau' ? 'nouveau' : 'actif'}">${x.statut}</span></td>
+        <td style="color:var(--muted2)">${new Date(x.created_at).toLocaleDateString('fr-FR')}</td>
+      </tr>`).join('')}
+    </tbody></table>`;
+
+  document.getElementById('demandes-table-dash').innerHTML = demandesHTML;
+  document.getElementById('demandes-table-full').innerHTML = demandesHTML;
+
+  // Table clients
+  document.getElementById('clients-table').innerHTML = c.length === 0
+    ? '<div class="empty"><span>👥</span>Aucun client encore. Les clients apparaîtront ici.</div>'
+    : `<table><thead><tr><th>Enseigne</th><th>Email</th><th>Téléphone</th><th>Type de site</th><th>Statut</th><th>Depuis</th><th>Action</th></tr></thead><tbody>
+      ${c.map(x => `<tr>
+        <td style="font-weight:500">${x.nom_enseigne}</td>
+        <td><a href="mailto:${x.email}" style="color:var(--navy);text-decoration:none">${x.email}</a></td>
+        <td>${x.telephone || '—'}</td>
+        <td>${x.type_site || '—'}</td>
+        <td><span class="badge badge-${x.statut === 'actif' ? 'actif' : 'inactif'}">${x.statut}</span></td>
+        <td style="color:var(--muted2)">${new Date(x.created_at).toLocaleDateString('fr-FR')}</td>
+        <td><button class="btn-action" onclick="contactClient('${x.email}')">Contacter</button></td>
+      </tr>`).join('')}
+    </tbody></table>`;
+}
+
+function contactClient(email) {
+  window.location.href = 'mailto:' + email;
+}
+</script>
+</body>
+</html>
