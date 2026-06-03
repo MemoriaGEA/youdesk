@@ -1,0 +1,377 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Coach Pro — Thomas Morel</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500&display=swap" rel="stylesheet">
+<style>
+:root {
+  --white: #ffffff;
+  --offwhite: #f7f5f2;
+  --offwhite2: #eeebe6;
+  --green: #2d6a4f;
+  --green2: #40916c;
+  --green3: #d8f3dc;
+  --text: #1a1a1a;
+  --muted: #5a5a5a;
+  --muted2: #9a9a9a;
+  --border: rgba(0,0,0,0.08);
+  --border2: rgba(0,0,0,0.14);
+}
+
+* { margin:0; padding:0; box-sizing:border-box; }
+html { scroll-behavior:smooth; }
+body { font-family:'DM Sans',sans-serif; background:var(--white); color:var(--text); overflow-x:hidden; -webkit-font-smoothing:antialiased; }
+
+/* NAV */
+nav {
+  position: fixed; top:0; left:0; right:0; z-index:100;
+  height: 64px; display:flex; align-items:center; justify-content:space-between;
+  padding: 0 52px;
+  background: rgba(255,255,255,0.95);
+  backdrop-filter: blur(16px);
+  border-bottom: 1px solid var(--border);
+}
+.logo { font-family:'Cormorant Garamond',serif; font-size:20px; font-weight:600; color:var(--text); letter-spacing:0.02em; }
+.nav-links { display:flex; align-items:center; gap:4px; list-style:none; }
+.nav-links a { color:var(--muted); text-decoration:none; font-size:13.5px; padding:7px 14px; border-radius:6px; transition:color 0.15s; }
+.nav-links a:hover { color:var(--text); }
+.nav-cta { background:var(--green) !important; color:var(--white) !important; font-weight:500 !important; border-radius:6px !important; }
+.nav-cta:hover { background:var(--green2) !important; }
+
+/* PAGES */
+.page { display:none; min-height:100vh; padding-top:64px; }
+.page.active { display:block; }
+
+/* HERO */
+.hero {
+  min-height: calc(100vh - 64px);
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  background: var(--offwhite);
+}
+
+.hero-left {
+  display:flex; flex-direction:column; justify-content:center;
+  padding: 80px 52px;
+}
+
+.hero-tag {
+  display:inline-flex; align-items:center; gap:8px;
+  font-size:11px; letter-spacing:0.14em; text-transform:uppercase;
+  color:var(--green); margin-bottom:28px;
+  background:var(--green3); padding:6px 14px; border-radius:20px;
+  width:fit-content;
+}
+
+.hero h1 {
+  font-family:'Cormorant Garamond',serif;
+  font-size: clamp(46px,5vw,72px);
+  line-height:1.05; font-weight:600; letter-spacing:-0.01em;
+  color:var(--text); margin-bottom:10px;
+}
+.hero h1 em { font-style:italic; color:var(--green2); }
+
+.hero-name { font-size:14px; color:var(--muted); margin-bottom:28px; letter-spacing:0.03em; }
+
+.hero-desc { font-size:16px; line-height:1.7; color:var(--muted); max-width:420px; margin-bottom:44px; font-weight:300; }
+
+.hero-btns { display:flex; gap:12px; flex-wrap:wrap; }
+
+.btn-green { background:var(--green); color:var(--white); padding:13px 28px; border:none; border-radius:6px; font-family:'DM Sans',sans-serif; font-size:14px; font-weight:500; cursor:pointer; transition:background 0.15s; }
+.btn-green:hover { background:var(--green2); }
+.btn-outline { background:transparent; color:var(--text); padding:13px 28px; border:1px solid var(--border2); border-radius:6px; font-family:'DM Sans',sans-serif; font-size:14px; cursor:pointer; transition:all 0.15s; }
+.btn-outline:hover { border-color:var(--text); }
+
+/* Hero right */
+.hero-right { position:relative; overflow:hidden; background:var(--offwhite2); display:flex; align-items:center; justify-content:center; }
+.hero-portrait { font-size:120px; opacity:0.15; }
+
+.hero-badges {
+  position:absolute; bottom:40px; left:40px;
+  display:flex; flex-direction:column; gap:10px;
+}
+.hero-badge {
+  background:var(--white); border:1px solid var(--border); border-radius:10px;
+  padding:14px 18px; display:flex; align-items:center; gap:12px;
+  box-shadow:0 4px 20px rgba(0,0,0,0.06);
+}
+.badge-ico { font-size:20px; }
+.badge-num { font-family:'Cormorant Garamond',serif; font-size:22px; font-weight:600; color:var(--green); line-height:1; }
+.badge-lbl { font-size:11px; color:var(--muted2); text-transform:uppercase; letter-spacing:0.06em; }
+
+/* SECTIONS */
+.section { padding:72px 52px; max-width:1100px; margin:0 auto; }
+.section-label { font-size:11px; letter-spacing:0.14em; text-transform:uppercase; color:var(--green); margin-bottom:16px; display:flex; align-items:center; gap:10px; }
+.section-label::before { content:''; width:16px; height:1px; background:var(--green); }
+.section h2 { font-family:'Cormorant Garamond',serif; font-size:clamp(30px,4vw,46px); font-weight:600; line-height:1.1; letter-spacing:-0.01em; color:var(--text); margin-bottom:12px; }
+.section-desc { font-size:15px; color:var(--muted); line-height:1.7; max-width:500px; margin-bottom:52px; font-weight:300; }
+
+.sep { height:1px; background:var(--border); }
+
+/* PROGRAMMES */
+.prog-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:16px; }
+.prog-card {
+  background:var(--offwhite); border:1px solid var(--border); border-radius:12px;
+  padding:32px 28px; transition:all 0.2s; cursor:default;
+}
+.prog-card:hover { border-color:var(--green2); transform:translateY(-3px); box-shadow:0 12px 32px rgba(45,106,79,0.08); }
+.prog-card.featured { background:var(--green); border-color:var(--green); }
+
+.prog-ico { font-size:28px; margin-bottom:18px; display:block; }
+.prog-card h3 { font-family:'Cormorant Garamond',serif; font-size:22px; font-weight:600; color:var(--text); margin-bottom:8px; }
+.prog-card.featured h3 { color:var(--white); }
+.prog-card p { font-size:13.5px; color:var(--muted); line-height:1.6; font-weight:300; margin-bottom:20px; }
+.prog-card.featured p { color:rgba(255,255,255,0.75); }
+
+.prog-details { display:flex; flex-direction:column; gap:6px; padding-top:18px; border-top:1px solid var(--border); }
+.prog-card.featured .prog-details { border-top-color:rgba(255,255,255,0.2); }
+.prog-detail { display:flex; justify-content:space-between; font-size:13px; }
+.prog-detail-name { color:var(--muted); }
+.prog-card.featured .prog-detail-name { color:rgba(255,255,255,0.65); }
+.prog-detail-val { font-weight:500; color:var(--text); }
+.prog-card.featured .prog-detail-val { color:var(--white); }
+
+/* TEMOIGNAGES */
+.temoignages-wrap { background:var(--offwhite); padding:72px 0; border-top:1px solid var(--border); border-bottom:1px solid var(--border); }
+.temoignages-inner { max-width:1100px; margin:0 auto; padding:0 52px; }
+.temo-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:16px; margin-top:48px; }
+.temo-card { background:var(--white); border:1px solid var(--border); border-radius:10px; padding:24px; }
+.temo-stars { color:#f59e0b; font-size:13px; margin-bottom:12px; }
+.temo-text { font-size:14px; color:var(--muted); line-height:1.65; font-weight:300; font-style:italic; margin-bottom:16px; }
+.temo-author { font-size:13px; font-weight:500; color:var(--text); }
+.temo-detail { font-size:12px; color:var(--muted2); }
+
+/* CONTACT */
+.contact-section { padding:72px 52px; max-width:1100px; margin:0 auto; }
+.contact-grid { display:grid; grid-template-columns:1fr 1.2fr; gap:72px; align-items:start; }
+
+.contact-info h2 { font-family:'Cormorant Garamond',serif; font-size:40px; font-weight:600; color:var(--text); margin-bottom:14px; }
+.contact-info p { font-size:14.5px; color:var(--muted); line-height:1.7; font-weight:300; margin-bottom:32px; }
+
+.contact-cards { display:flex; flex-direction:column; gap:10px; }
+.c-card { background:var(--offwhite); border:1px solid var(--border); border-radius:8px; padding:16px 18px; display:flex; gap:12px; align-items:center; }
+.c-ico { width:34px; height:34px; background:var(--green3); border-radius:6px; display:flex; align-items:center; justify-content:center; font-size:15px; flex-shrink:0; }
+.c-card h4 { font-size:12.5px; font-weight:500; color:var(--text); text-transform:uppercase; letter-spacing:0.05em; margin-bottom:2px; }
+.c-card p, .c-card a { font-size:13px; color:var(--muted); font-weight:300; text-decoration:none; }
+.c-card a:hover { color:var(--green); }
+
+/* FORM */
+.contact-form { background:var(--offwhite); border:1px solid var(--border); border-radius:12px; padding:34px; }
+.fgroup { margin-bottom:16px; }
+.fgroup label { display:block; font-size:11px; letter-spacing:0.08em; text-transform:uppercase; color:var(--muted); margin-bottom:7px; }
+.fgroup input, .fgroup select, .fgroup textarea {
+  width:100%; background:var(--white); border:1px solid var(--border2);
+  border-radius:7px; padding:11px 13px; color:var(--text);
+  font-family:'DM Sans',sans-serif; font-size:14px; outline:none; transition:border-color 0.15s; appearance:none;
+}
+.fgroup input:focus, .fgroup select:focus, .fgroup textarea:focus { border-color:var(--green2); }
+.fgroup input::placeholder, .fgroup textarea::placeholder { color:var(--muted2); }
+.frow { display:grid; grid-template-columns:1fr 1fr; gap:12px; }
+
+.btn-form { width:100%; background:var(--green); color:var(--white); border:none; padding:13px; border-radius:7px; font-family:'DM Sans',sans-serif; font-size:14px; font-weight:500; cursor:pointer; transition:background 0.15s; margin-top:6px; }
+.btn-form:hover { background:var(--green2); }
+
+.success-box { display:none; text-align:center; padding:48px 20px; }
+.success-box .ico { font-size:36px; display:block; margin-bottom:16px; }
+.success-box h3 { font-family:'Cormorant Garamond',serif; font-size:24px; color:var(--text); margin-bottom:8px; }
+.success-box p { font-size:14px; color:var(--muted); font-weight:300; }
+
+/* FOOTER */
+footer { border-top:1px solid var(--border); padding:26px 52px; display:flex; justify-content:space-between; align-items:center; background:var(--white); }
+footer p { font-size:12px; color:var(--muted2); font-weight:300; }
+.footer-credit a { color:var(--green); text-decoration:none; font-size:12px; }
+
+/* ANIM */
+@keyframes fadeUp { from{opacity:0;transform:translateY(18px)} to{opacity:1;transform:translateY(0)} }
+.fade{animation:fadeUp 0.5s ease both}
+.fade-1{animation-delay:.05s}.fade-2{animation-delay:.15s}.fade-3{animation-delay:.25s}.fade-4{animation-delay:.35s}
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="logo">Thomas Morel</div>
+  <ul class="nav-links">
+    <li><a href="#" onclick="showSection('accueil')">Accueil</a></li>
+    <li><a href="#" onclick="showSection('programmes')">Programmes</a></li>
+    <li><a href="#" onclick="showSection('contact')" class="nav-cta">Me contacter</a></li>
+  </ul>
+</nav>
+
+<!-- ACCUEIL -->
+<div id="section-accueil" class="page active">
+  <div class="hero">
+    <div class="hero-left">
+      <div class="hero-tag fade fade-1">Coach certifié · Paris</div>
+      <h1 class="fade fade-2">Atteins tes<br>objectifs,<br><em>vraiment.</em></h1>
+      <div class="hero-name fade fade-2">Thomas Morel — Coach sportif & nutrition</div>
+      <p class="hero-desc fade fade-3">Un suivi personnalisé, des programmes sur mesure et un accompagnement humain pour transformer ton corps et ton quotidien durablement.</p>
+      <div class="hero-btns fade fade-4">
+        <button class="btn-green" onclick="showSection('contact')">Démarrer maintenant</button>
+        <button class="btn-outline" onclick="showSection('programmes')">Voir les programmes</button>
+      </div>
+    </div>
+    <div class="hero-right">
+      <div class="hero-portrait">🏃</div>
+      <div class="hero-badges">
+        <div class="hero-badge">
+          <div class="badge-ico">🏆</div>
+          <div><div class="badge-num">+200</div><div class="badge-lbl">Clients transformés</div></div>
+        </div>
+        <div class="hero-badge">
+          <div class="badge-ico">⭐</div>
+          <div><div class="badge-num">4.9</div><div class="badge-lbl">Note moyenne</div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- TEMOIGNAGES -->
+  <div class="temoignages-wrap">
+    <div class="temoignages-inner">
+      <div class="section-label">Témoignages</div>
+      <h2 style="font-family:'Cormorant Garamond',serif;font-size:clamp(28px,3.5vw,42px);font-weight:600;color:var(--text)">Ils ont franchi le cap.</h2>
+      <div class="temo-grid">
+        <div class="temo-card">
+          <div class="temo-stars">★★★★★</div>
+          <div class="temo-text">"En 3 mois avec Thomas j'ai perdu 12kg et surtout j'ai changé mon rapport à l'alimentation. Un suivi au top, toujours disponible."</div>
+          <div class="temo-author">Sarah M.</div>
+          <div class="temo-detail">Programme Perte de poids · 3 mois</div>
+        </div>
+        <div class="temo-card">
+          <div class="temo-stars">★★★★★</div>
+          <div class="temo-text">"J'avais essayé plein de coachs avant. Thomas c'est différent — il adapte vraiment à ta vie, pas l'inverse. Résultats visibles dès le premier mois."</div>
+          <div class="temo-author">Karim D.</div>
+          <div class="temo-detail">Programme Prise de masse · 6 mois</div>
+        </div>
+        <div class="temo-card">
+          <div class="temo-stars">★★★★★</div>
+          <div class="temo-text">"Le suivi nutrition + sport en combo c'est vraiment ce qui fait la différence. Je recommande à 100%."</div>
+          <div class="temo-author">Léa B.</div>
+          <div class="temo-detail">Programme Remise en forme · 2 mois</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <footer>
+    <div class="logo" style="font-family:'Cormorant Garamond',serif;font-size:18px;font-weight:600">Thomas Morel</div>
+    <p>© 2026 Thomas Morel · Coach sportif Paris</p>
+    <div class="footer-credit">Site par <a href="https://youdesk.vercel.app">Youdesk</a></div>
+  </footer>
+</div>
+
+<!-- PROGRAMMES -->
+<div id="section-programmes" class="page">
+  <div class="section">
+    <div class="section-label">Ce que je propose</div>
+    <h2>Les programmes.</h2>
+    <p class="section-desc">Chaque programme est conçu sur mesure selon tes objectifs, ton niveau et ton mode de vie.</p>
+    <div class="prog-grid">
+      <div class="prog-card">
+        <span class="prog-ico">🔥</span>
+        <h3>Perte de poids</h3>
+        <p>Programme cardio + renforcement musculaire + plan nutrition adapté pour une perte de poids durable et sans frustration.</p>
+        <div class="prog-details">
+          <div class="prog-detail"><span class="prog-detail-name">Durée</span><span class="prog-detail-val">3 mois minimum</span></div>
+          <div class="prog-detail"><span class="prog-detail-name">Séances</span><span class="prog-detail-val">3x / semaine</span></div>
+          <div class="prog-detail"><span class="prog-detail-name">Tarif</span><span class="prog-detail-val">149€ / mois</span></div>
+        </div>
+      </div>
+      <div class="prog-card featured">
+        <span class="prog-ico">💪</span>
+        <h3>Prise de masse</h3>
+        <p>Musculation progressive, plan alimentaire hypercalorique et suivi hebdomadaire pour construire un physique solide.</p>
+        <div class="prog-details">
+          <div class="prog-detail"><span class="prog-detail-name">Durée</span><span class="prog-detail-val">6 mois minimum</span></div>
+          <div class="prog-detail"><span class="prog-detail-name">Séances</span><span class="prog-detail-val">4x / semaine</span></div>
+          <div class="prog-detail"><span class="prog-detail-name">Tarif</span><span class="prog-detail-val">179€ / mois</span></div>
+        </div>
+      </div>
+      <div class="prog-card">
+        <span class="prog-ico">🧘</span>
+        <h3>Remise en forme</h3>
+        <p>Programme doux et progressif pour reprendre le sport, améliorer votre condition physique et retrouver de l'énergie.</p>
+        <div class="prog-details">
+          <div class="prog-detail"><span class="prog-detail-name">Durée</span><span class="prog-detail-val">2 mois minimum</span></div>
+          <div class="prog-detail"><span class="prog-detail-name">Séances</span><span class="prog-detail-val">2x / semaine</span></div>
+          <div class="prog-detail"><span class="prog-detail-name">Tarif</span><span class="prog-detail-val">119€ / mois</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <footer>
+    <div class="logo" style="font-family:'Cormorant Garamond',serif;font-size:18px;font-weight:600">Thomas Morel</div>
+    <p>© 2026 Thomas Morel · Coach sportif Paris</p>
+    <div class="footer-credit">Site par <a href="https://youdesk.vercel.app">Youdesk</a></div>
+  </footer>
+</div>
+
+<!-- CONTACT -->
+<div id="section-contact" class="page">
+  <div class="contact-section">
+    <div class="contact-grid">
+      <div class="contact-info">
+        <div class="section-label">Contact</div>
+        <h2>Prêt à te lancer ?</h2>
+        <p>Envoie moi un message, on discute de tes objectifs et je te prépare un programme sur mesure.</p>
+        <div class="contact-cards">
+          <div class="c-card"><div class="c-ico">📧</div><div><h4>Email</h4><a href="mailto:thomas@coach.fr">thomas@coach.fr</a></div></div>
+          <div class="c-card"><div class="c-ico">📱</div><div><h4>Instagram</h4><a href="#">@thomasmorel.coach</a></div></div>
+          <div class="c-card"><div class="c-ico">📍</div><div><h4>Localisation</h4><p>Paris & En ligne</p></div></div>
+        </div>
+      </div>
+      <div class="contact-form">
+        <div id="contact-content">
+          <div class="frow">
+            <div class="fgroup"><label>Prénom</label><input type="text" placeholder="Jean"></div>
+            <div class="fgroup"><label>Nom</label><input type="text" placeholder="Dupont"></div>
+          </div>
+          <div class="fgroup"><label>Email</label><input type="email" placeholder="jean@email.com"></div>
+          <div class="fgroup">
+            <label>Programme souhaité</label>
+            <select>
+              <option value="" disabled selected>Choisissez</option>
+              <option>Perte de poids</option>
+              <option>Prise de masse</option>
+              <option>Remise en forme</option>
+              <option>Je ne sais pas encore</option>
+            </select>
+          </div>
+          <div class="fgroup">
+            <label>Message</label>
+            <textarea placeholder="Parlez-moi de vos objectifs..." style="min-height:100px;resize:vertical"></textarea>
+          </div>
+          <button class="btn-form" onclick="submitContact()">Envoyer ma demande</button>
+        </div>
+        <div class="success-box" id="contact-success">
+          <span class="ico">✓</span>
+          <h3>Message envoyé !</h3>
+          <p>Thomas vous répond sous 24h.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+  <footer>
+    <div class="logo" style="font-family:'Cormorant Garamond',serif;font-size:18px;font-weight:600">Thomas Morel</div>
+    <p>© 2026 Thomas Morel · Coach sportif Paris</p>
+    <div class="footer-credit">Site par <a href="https://youdesk.vercel.app">Youdesk</a></div>
+  </footer>
+</div>
+
+<script>
+function showSection(name) {
+  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+  document.getElementById('section-' + name).classList.add('active');
+  window.scrollTo(0, 0);
+}
+
+function submitContact() {
+  document.getElementById('contact-content').style.display = 'none';
+  document.getElementById('contact-success').style.display = 'block';
+}
+</script>
+</body>
+</html>
