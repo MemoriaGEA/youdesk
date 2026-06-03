@@ -400,6 +400,116 @@ nav {
 .inc-item:last-child { border-bottom:none; }
 .inc-check { color:var(--navy); font-size:12px; font-weight:500; }
 
+
+
+/* ANIMATED TAGLINE */
+.hero-animated-tag {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 28px;
+  font-size: 13px;
+  color: rgba(255,255,255,0.5);
+  font-weight: 300;
+  letter-spacing: 0.04em;
+}
+
+.typed-wrap {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: rgba(255,255,255,0.1);
+  border: 1px solid rgba(255,255,255,0.15);
+  border-radius: 6px;
+  padding: 6px 14px;
+  font-size: 13px;
+  color: var(--white);
+  font-weight: 400;
+}
+
+.typed-prefix { color: rgba(255,255,255,0.45); margin-right: 4px; }
+
+.typed-text {
+  color: var(--white);
+  font-weight: 500;
+  min-width: 180px;
+}
+
+.typed-cursor {
+  display: inline-block;
+  width: 2px;
+  height: 14px;
+  background: var(--white);
+  border-radius: 1px;
+  animation: blink 1s infinite;
+  vertical-align: middle;
+  margin-left: 2px;
+}
+
+@keyframes blink {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0; }
+}
+
+/* COMMENT CA MARCHE */
+.how-wrap {
+  background: rgba(255,255,255,0.06);
+  border-top: 1px solid rgba(255,255,255,0.08);
+  border-bottom: 1px solid rgba(255,255,255,0.08);
+  padding: 80px 0;
+}
+.how-inner { max-width:1080px; margin:0 auto; padding:0 48px; }
+
+.steps { display:grid; grid-template-columns:repeat(4,1fr); gap:1px; background:rgba(255,255,255,0.08); border:1px solid rgba(255,255,255,0.08); border-radius:12px; overflow:hidden; margin-top:52px; }
+.step { background:var(--bg); padding:28px 24px; transition:background 0.2s; }
+.step:hover { background:rgba(255,255,255,0.1); }
+.step-num { font-family:'Instrument Serif',serif; font-size:36px; color:rgba(255,255,255,0.15); line-height:1; margin-bottom:14px; }
+.step h3 { font-family:'Instrument Serif',serif; font-size:17px; color:var(--white); margin-bottom:8px; }
+.step p { font-size:13px; color:rgba(255,255,255,0.5); line-height:1.6; font-weight:300; }
+
+/* PRICING */
+.pricing-wrap { padding:80px 0; }
+.pricing-inner { max-width:1080px; margin:0 auto; padding:0 48px; }
+
+.pricing-grid { display:grid; grid-template-columns:1fr 1.1fr 1fr; gap:14px; margin-top:52px; align-items:start; }
+
+.pricing-card { background:rgba(255,255,255,0.08); border:1px solid rgba(255,255,255,0.1); border-radius:12px; padding:32px 28px; transition:border-color 0.2s; }
+.pricing-card.featured { background:var(--card); border-color:var(--white); }
+.pricing-card:hover { border-color:rgba(255,255,255,0.25); }
+.pricing-card.featured:hover { border-color:var(--white); }
+
+.pricing-label { font-size:11px; letter-spacing:0.12em; text-transform:uppercase; color:rgba(255,255,255,0.4); margin-bottom:16px; }
+.pricing-card.featured .pricing-label { color:var(--muted2); }
+
+.pricing-name { font-family:'Instrument Serif',serif; font-size:22px; color:var(--white); margin-bottom:6px; }
+.pricing-card.featured .pricing-name { color:var(--text); }
+
+.pricing-price { font-family:'Instrument Serif',serif; font-size:48px; color:var(--white); line-height:1; margin-bottom:4px; }
+.pricing-card.featured .pricing-price { color:var(--navy); }
+
+.pricing-period { font-size:13px; color:rgba(255,255,255,0.4); margin-bottom:24px; }
+.pricing-card.featured .pricing-period { color:var(--muted2); }
+
+.pricing-sep { height:1px; background:rgba(255,255,255,0.1); margin-bottom:20px; }
+.pricing-card.featured .pricing-sep { background:var(--border); }
+
+.pricing-items { display:flex; flex-direction:column; gap:9px; margin-bottom:28px; }
+.pricing-item { font-size:13.5px; color:rgba(255,255,255,0.6); display:flex; align-items:center; gap:9px; font-weight:300; }
+.pricing-card.featured .pricing-item { color:var(--muted); }
+.pricing-check { font-size:12px; color:rgba(255,255,255,0.5); }
+.pricing-card.featured .pricing-check { color:var(--navy); font-weight:500; }
+
+.btn-pricing-ghost { width:100%; background:transparent; color:var(--white); border:1px solid rgba(255,255,255,0.2); padding:12px; border-radius:7px; font-family:'DM Sans',sans-serif; font-size:13.5px; cursor:pointer; transition:all 0.15s; }
+.btn-pricing-ghost:hover { background:rgba(255,255,255,0.1); }
+
+.btn-pricing-solid { width:100%; background:var(--navy); color:var(--white); border:none; padding:12px; border-radius:7px; font-family:'DM Sans',sans-serif; font-size:13.5px; font-weight:500; cursor:pointer; transition:background 0.15s; }
+.btn-pricing-solid:hover { background:var(--navy2); }
+
+.pricing-setup { text-align:center; font-size:12.5px; color:rgba(255,255,255,0.35); margin-top:10px; }
+.pricing-card.featured .pricing-setup { color:var(--muted2); }
+
+.pricing-badge { display:inline-block; background:var(--navy); color:var(--white); font-size:10px; letter-spacing:0.1em; text-transform:uppercase; padding:4px 10px; border-radius:20px; margin-bottom:16px; }
+
 /* FOOTER */
 footer { border-top:1px solid rgba(255,255,255,0.1); padding:26px 48px; display:flex; justify-content:space-between; align-items:center; }
 footer p { font-size:12.5px; color:rgba(255,255,255,0.4); font-weight:300; }
@@ -425,7 +535,13 @@ footer p { font-size:12.5px; color:rgba(255,255,255,0.4); font-weight:300; }
 <!-- ACCUEIL -->
 <div id="page-accueil" class="page active">
   <div class="hero">
-    <div class="hero-eyebrow fade fade-1">Agence digitale</div>
+    <div class="hero-animated-tag fade fade-1">
+      <div class="typed-wrap">
+        <span class="typed-prefix">Nous créons</span>
+        <span class="typed-text" id="typed-text"></span>
+        <span class="typed-cursor"></span>
+      </div>
+    </div>
     <h1 class="fade fade-2">Votre présence<br>digitale, <em>enfin</em><br>clé en main.</h1>
     <p class="hero-sub fade fade-3">Sites vitrines, réservations en ligne et outils de gestion pour les professionnels qui veulent exister sur le web — sans prise de tête.</p>
     <div class="hero-actions fade fade-4">
@@ -474,6 +590,101 @@ footer p { font-size:12.5px; color:rgba(255,255,255,0.4); font-weight:300; }
       <div class="svc"><div class="svc-num">01</div><h3>Site vitrine</h3><p>Design sur mesure, rapide, mobile-first. Vos services, vos prix, vos photos — mis en valeur.</p></div>
       <div class="svc"><div class="svc-num">02</div><h3>Réservation en ligne</h3><p>Vos clients réservent directement depuis le site. Fini les DM Instagram et les appels manqués.</p></div>
       <div class="svc"><div class="svc-num">03</div><h3>Dashboard de gestion</h3><p>Visualisez vos RDV, gérez vos créneaux, recevez des notifications — tout depuis votre téléphone.</p></div>
+    </div>
+  </div>
+
+
+  <!-- COMMENT CA MARCHE -->
+  <div class="how-wrap">
+    <div class="how-inner">
+      <div class="section-label">Comment ça marche</div>
+      <h2 style="font-family:'Instrument Serif',serif;font-size:clamp(30px,4vw,44px);line-height:1.1;letter-spacing:-0.02em;color:var(--white)">Simple, rapide,<br>clé en main.</h2>
+      <div class="steps">
+        <div class="step">
+          <div class="step-num">01</div>
+          <h3>Vous nous contactez</h3>
+          <p>Remplissez le formulaire de devis en 2 minutes. On vous répond sous 24h.</p>
+        </div>
+        <div class="step">
+          <div class="step-num">02</div>
+          <h3>On crée votre site</h3>
+          <p>On conçoit votre site vitrine sur mesure, adapté à votre secteur et votre image.</p>
+        </div>
+        <div class="step">
+          <div class="step-num">03</div>
+          <h3>Vous validez</h3>
+          <p>Vous relisez, on ajuste. Votre site est mis en ligne une fois que vous êtes 100% satisfait.</p>
+        </div>
+        <div class="step">
+          <div class="step-num">04</div>
+          <h3>On gère tout</h3>
+          <p>Hébergement, mises à jour, support. Vous vous concentrez sur votre métier.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- PRICING -->
+  <div class="pricing-wrap">
+    <div class="pricing-inner">
+      <div class="section-label">Tarifs</div>
+      <h2 style="font-family:'Instrument Serif',serif;font-size:clamp(30px,4vw,44px);line-height:1.1;letter-spacing:-0.02em;color:var(--white)">Des prix clairs,<br>sans surprise.</h2>
+      <div class="pricing-grid">
+
+        <div class="pricing-card">
+          <div class="pricing-label">Essentiel</div>
+          <div class="pricing-name">Vitrine</div>
+          <div class="pricing-price">49€</div>
+          <div class="pricing-period">par mois</div>
+          <div class="pricing-sep"></div>
+          <div class="pricing-items">
+            <div class="pricing-item"><span class="pricing-check">✓</span> Site vitrine personnalisé</div>
+            <div class="pricing-item"><span class="pricing-check">✓</span> Design sur mesure</div>
+            <div class="pricing-item"><span class="pricing-check">✓</span> Mobile-first</div>
+            <div class="pricing-item"><span class="pricing-check">✓</span> Hébergement inclus</div>
+            <div class="pricing-item"><span class="pricing-check">✓</span> Support par message</div>
+          </div>
+          <button class="btn-pricing-ghost" onclick="showPage('devis')">Demander un devis</button>
+          <div class="pricing-setup">+ 199€ de setup</div>
+        </div>
+
+        <div class="pricing-card featured">
+          <div class="pricing-badge">Le plus populaire</div>
+          <div class="pricing-label">Complet</div>
+          <div class="pricing-name">Pro</div>
+          <div class="pricing-price">69€</div>
+          <div class="pricing-period">par mois</div>
+          <div class="pricing-sep"></div>
+          <div class="pricing-items">
+            <div class="pricing-item"><span class="pricing-check">✓</span> Site vitrine personnalisé</div>
+            <div class="pricing-item"><span class="pricing-check">✓</span> Réservation en ligne</div>
+            <div class="pricing-item"><span class="pricing-check">✓</span> Dashboard de gestion</div>
+            <div class="pricing-item"><span class="pricing-check">✓</span> Notifications automatiques</div>
+            <div class="pricing-item"><span class="pricing-check">✓</span> Hébergement inclus</div>
+            <div class="pricing-item"><span class="pricing-check">✓</span> Support réactif</div>
+          </div>
+          <button class="btn-pricing-solid" onclick="showPage('devis')">Demander un devis</button>
+          <div class="pricing-setup">+ 299€ de setup</div>
+        </div>
+
+        <div class="pricing-card">
+          <div class="pricing-label">Sur mesure</div>
+          <div class="pricing-name">Premium</div>
+          <div class="pricing-price">99€</div>
+          <div class="pricing-period">par mois</div>
+          <div class="pricing-sep"></div>
+          <div class="pricing-items">
+            <div class="pricing-item"><span class="pricing-check">✓</span> Tout le pack Pro</div>
+            <div class="pricing-item"><span class="pricing-check">✓</span> Fonctionnalités sur mesure</div>
+            <div class="pricing-item"><span class="pricing-check">✓</span> Intégrations avancées</div>
+            <div class="pricing-item"><span class="pricing-check">✓</span> Priorité support</div>
+            <div class="pricing-item"><span class="pricing-check">✓</span> Mises à jour régulières</div>
+          </div>
+          <button class="btn-pricing-ghost" onclick="showPage('devis')">Demander un devis</button>
+          <div class="pricing-setup">+ 399€ de setup</div>
+        </div>
+
+      </div>
     </div>
   </div>
 
@@ -607,6 +818,49 @@ const SUPABASE_URL = 'https://qrsceaeduwdeluzuuaww.supabase.co';
 const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InFyc2NlYWVkdXdkZWx1enV1YXd3Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODAzNDY4MTgsImV4cCI6MjA5NTkyMjgxOH0.zHIP1cH-HdXerk5bR9lA18AgPX_mXdyO5qSG2fr7TLY';
 
 emailjs.init(EMAILJS_PUBLIC_KEY);
+
+// TYPING ANIMATION
+const typedPhrases = [
+  'votre site vitrine',
+  'votre système de RDV',
+  'votre présence en ligne',
+  'votre dashboard pro',
+  'votre image digitale',
+];
+
+let phraseIndex = 0;
+let charIndex = 0;
+let isDeleting = false;
+const typedEl = document.getElementById('typed-text');
+
+function typeLoop() {
+  if (!typedEl) return;
+  const current = typedPhrases[phraseIndex];
+
+  if (isDeleting) {
+    typedEl.textContent = current.substring(0, charIndex - 1);
+    charIndex--;
+  } else {
+    typedEl.textContent = current.substring(0, charIndex + 1);
+    charIndex++;
+  }
+
+  let delay = isDeleting ? 40 : 70;
+
+  if (!isDeleting && charIndex === current.length) {
+    delay = 1800;
+    isDeleting = true;
+  } else if (isDeleting && charIndex === 0) {
+    isDeleting = false;
+    phraseIndex = (phraseIndex + 1) % typedPhrases.length;
+    delay = 300;
+  }
+
+  setTimeout(typeLoop, delay);
+}
+
+setTimeout(typeLoop, 800);
+
 const { createClient } = supabase;
 const sb = createClient(SUPABASE_URL, SUPABASE_KEY);
 
