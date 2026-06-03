@@ -171,6 +171,66 @@ tr:hover td { background:var(--card2); }
 .empty { text-align:center; padding:48px 20px; color:var(--muted2); font-size:14px; font-weight:300; }
 .empty span { font-size:32px; display:block; margin-bottom:12px; }
 
+
+/* MODAL */
+.modal-overlay {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.5);
+  z-index: 200;
+  align-items: center;
+  justify-content: center;
+}
+.modal-overlay.open { display: flex; }
+
+.modal {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 36px;
+  width: 100%;
+  max-width: 480px;
+  box-shadow: 0 24px 60px rgba(0,0,0,0.2);
+}
+
+.modal-title {
+  font-family: 'Instrument Serif', serif;
+  font-size: 22px;
+  color: var(--text);
+  margin-bottom: 24px;
+}
+
+.modal-actions { display:flex; gap:10px; margin-top:20px; }
+
+.btn-cancel {
+  flex:1; background:transparent; color:var(--muted); border:1px solid var(--border2);
+  padding:11px; border-radius:7px; font-family:'DM Sans',sans-serif; font-size:14px;
+  cursor:pointer; transition:all 0.15s;
+}
+.btn-cancel:hover { background:var(--card2); }
+
+.btn-save {
+  flex:2; background:var(--navy); color:var(--white); border:none;
+  padding:11px; border-radius:7px; font-family:'DM Sans',sans-serif; font-size:14px;
+  font-weight:500; cursor:pointer; transition:background 0.15s;
+}
+.btn-save:hover { background:var(--navy2); }
+
+.btn-add-client {
+  background: var(--navy);
+  color: var(--white);
+  border: none;
+  padding: 8px 18px;
+  border-radius: 6px;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 13px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background 0.15s;
+}
+.btn-add-client:hover { background: var(--navy2); }
+
 /* LOADING */
 .loading { text-align:center; padding:32px; color:var(--muted2); font-size:14px; }
 </style>
@@ -251,7 +311,10 @@ tr:hover td { background:var(--card2); }
         <div class="table-wrap">
           <div class="table-header">
             <span class="table-title">Clients actifs</span>
-            <span class="table-count" id="count-clients">0</span>
+            <div style="display:flex;align-items:center;gap:10px">
+              <span class="table-count" id="count-clients">0</span>
+              <button class="btn-add-client" onclick="openModal()">+ Ajouter un client</button>
+            </div>
           </div>
           <div id="clients-table"><div class="loading">Chargement...</div></div>
         </div>
@@ -259,6 +322,39 @@ tr:hover td { background:var(--card2); }
 
     </div>
   </div>
+
+<!-- MODAL AJOUTER CLIENT -->
+<div class="modal-overlay" id="modal-overlay">
+  <div class="modal">
+    <div class="modal-title">Ajouter un client</div>
+    <div class="fgroup"><label>Nom de l'enseigne</label><input type="text" id="c-enseigne" placeholder="Barbershop Élite"></div>
+    <div class="fgroup"><label>Email</label><input type="email" id="c-email" placeholder="contact@barbershop.fr"></div>
+    <div class="fgroup"><label>Téléphone</label><input type="tel" id="c-tel" placeholder="+33 6 00 00 00 00"></div>
+    <div class="fgroup">
+      <label>Type de site</label>
+      <select id="c-type">
+        <option value="" disabled selected>Choisissez</option>
+        <option>Barbershop / Coiffeur</option>
+        <option>Coach sportif / Bien-être</option>
+        <option>Restaurant / Food</option>
+        <option>Artisan / Commerce local</option>
+        <option>Autre</option>
+      </select>
+    </div>
+    <div class="fgroup">
+      <label>Statut</label>
+      <select id="c-statut">
+        <option value="actif">Actif</option>
+        <option value="inactif">Inactif</option>
+      </select>
+    </div>
+    <div class="modal-actions">
+      <button class="btn-cancel" onclick="closeModal()">Annuler</button>
+      <button class="btn-save" onclick="saveClient()">Enregistrer</button>
+    </div>
+  </div>
+</div>
+
 </div>
 
 <script>
@@ -358,6 +454,50 @@ async function loadData() {
         <td><button class="btn-action" onclick="contactClient('${x.email}')">Contacter</button></td>
       </tr>`).join('')}
     </tbody></table>`;
+}
+
+
+function openModal() {
+  document.getElementById('modal-overlay').classList.add('open');
+}
+
+function closeModal() {
+  document.getElementById('modal-overlay').classList.remove('open');
+  ['c-enseigne','c-email','c-tel','c-type','c-statut'].forEach(id => {
+    const el = document.getElementById(id);
+    if (el.tagName === 'SELECT') el.selectedIndex = 0;
+    else el.value = '';
+  });
+}
+
+async function saveClient() {
+  const enseigne = document.getElementById('c-enseigne').value.trim();
+  const email = document.getElementById('c-email').value.trim();
+  const tel = document.getElementById('c-tel').value.trim();
+  const type = document.getElementById('c-type').value;
+  const statut = document.getElementById('c-statut').value;
+
+  if (!enseigne || !email) {
+    alert('Nom de l\'enseigne et email sont obligatoires.');
+    return;
+  }
+
+  const { error } = await sb.from('clients').insert([{
+    nom_enseigne: enseigne,
+    email: email,
+    telephone: tel || null,
+    type_site: type || null,
+    statut: statut
+  }]);
+
+  if (error) {
+    alert('Erreur lors de l\'enregistrement.');
+    console.error(error);
+    return;
+  }
+
+  closeModal();
+  loadData();
 }
 
 function contactClient(email) {
