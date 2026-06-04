@@ -432,48 +432,89 @@ footer{background:var(--dark);color:white;padding:48px 40px 24px;}
         </div>
       </div>
       <div class="fade-up" style="animation-delay:.2s">
-        <!-- IDF Animated SVG Map -->
-        <svg viewBox="0 0 300 320" style="width:100%;max-width:380px;margin:0 auto;display:block;filter:drop-shadow(0 10px 40px rgba(26,63,160,0.2));">
-          <defs>
-            <style>
-              .dept-zone { transition: fill .3s, filter .3s; cursor: pointer; }
-              .dept-zone:hover { filter: brightness(1.2); }
-              @keyframes mapPulse { 0%,100%{opacity:1} 50%{opacity:.7} }
-              .dept-75 { animation: mapPulse 2s infinite; }
-            </style>
-          </defs>
-          <!-- 95 Val-d'Oise (top) -->
-          <path class="dept-zone" d="M 60 30 L 160 20 L 200 50 L 180 80 L 140 75 L 80 85 L 50 60 Z" fill="#dbeafe" stroke="#1a3fa0" stroke-width="1.5"/>
-          <text x="130" y="57" text-anchor="middle" font-family="Barlow Condensed,sans-serif" font-weight="700" font-size="11" fill="#1a3fa0">95</text>
-          <!-- 78 Yvelines (left) -->
-          <path class="dept-zone" d="M 10 85 L 80 85 L 100 130 L 80 170 L 30 160 L 10 120 Z" fill="#dbeafe" stroke="#1a3fa0" stroke-width="1.5"/>
-          <text x="50" y="128" text-anchor="middle" font-family="Barlow Condensed,sans-serif" font-weight="700" font-size="11" fill="#1a3fa0">78</text>
-          <!-- 93 Seine-Saint-Denis (top-right) -->
-          <path class="dept-zone" d="M 180 80 L 230 70 L 250 100 L 220 120 L 185 115 Z" fill="#dbeafe" stroke="#1a3fa0" stroke-width="1.5"/>
-          <text x="215" y="100" text-anchor="middle" font-family="Barlow Condensed,sans-serif" font-weight="700" font-size="10" fill="#1a3fa0">93</text>
-          <!-- 92 Hauts-de-Seine (center-left) -->
-          <path class="dept-zone" d="M 100 115 L 140 110 L 150 140 L 125 155 L 95 145 Z" fill="#bfdbfe" stroke="#1a3fa0" stroke-width="1.5"/>
-          <text x="122" y="135" text-anchor="middle" font-family="Barlow Condensed,sans-serif" font-weight="700" font-size="9" fill="#1a3fa0">92</text>
-          <!-- 75 Paris (center - star) -->
-          <path class="dept-zone dept-75" d="M 140 110 L 185 115 L 190 150 L 165 165 L 150 140 Z" fill="#1a3fa0" stroke="white" stroke-width="2"/>
-          <text x="164" y="142" text-anchor="middle" font-family="Barlow Condensed,sans-serif" font-weight="900" font-size="13" fill="white">75</text>
-          <!-- 94 Val-de-Marne (right-center) -->
-          <path class="dept-zone" d="M 185 115 L 250 100 L 265 145 L 230 170 L 190 150 Z" fill="#dbeafe" stroke="#1a3fa0" stroke-width="1.5"/>
-          <text x="225" y="140" text-anchor="middle" font-family="Barlow Condensed,sans-serif" font-weight="700" font-size="10" fill="#1a3fa0">94</text>
-          <!-- 91 Essonne (bottom-left) -->
-          <path class="dept-zone" d="M 80 170 L 165 165 L 175 220 L 130 265 L 70 250 L 50 210 Z" fill="#dbeafe" stroke="#1a3fa0" stroke-width="1.5"/>
-          <text x="118" y="218" text-anchor="middle" font-family="Barlow Condensed,sans-serif" font-weight="700" font-size="11" fill="#1a3fa0">91</text>
-          <!-- 77 Seine-et-Marne (right) -->
-          <path class="dept-zone" d="M 190 150 L 265 145 L 285 200 L 260 280 L 175 290 L 175 220 Z" fill="#dbeafe" stroke="#1a3fa0" stroke-width="1.5"/>
-          <text x="228" y="220" text-anchor="middle" font-family="Barlow Condensed,sans-serif" font-weight="700" font-size="11" fill="#1a3fa0">77</text>
-          <!-- Labels -->
-          <text x="150" y="308" text-anchor="middle" font-family="Barlow Condensed,sans-serif" font-weight="700" font-size="12" fill="#6b7280">Île-de-France</text>
-          <!-- Pulse on Paris -->
-          <circle cx="164" cy="138" r="20" fill="none" stroke="#e87820" stroke-width="2" opacity="0.6">
-            <animate attributeName="r" from="15" to="35" dur="2s" repeatCount="indefinite"/>
-            <animate attributeName="opacity" from="0.6" to="0" dur="2s" repeatCount="indefinite"/>
-          </circle>
-        </svg>
+        <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"/>
+        <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"><\/script>
+        <div id="idf-map" style="width:100%;height:420px;border-radius:16px;overflow:hidden;box-shadow:0 10px 40px rgba(26,63,160,0.15);"></div>
+        <script>
+        (function(){
+          var map = L.map('idf-map', {
+            center: [48.7, 2.5],
+            zoom: 9,
+            zoomControl: true,
+            scrollWheelZoom: false,
+            attributionControl: false
+          });
+
+          L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png', {
+            attribution: ''
+          }).addTo(map);
+
+          var depts = [
+            { code: '75', nom: 'Paris', coords: [[48.815,2.225],[48.902,2.225],[48.902,2.470],[48.815,2.470]] },
+            { code: '77', nom: 'Seine-et-Marne', coords: [[48.12,2.39],[48.12,3.56],[49.12,3.56],[49.12,2.39]] },
+            { code: '78', nom: 'Yvelines', coords: [[48.44,1.44],[48.44,2.21],[49.09,2.21],[49.09,1.44]] },
+            { code: '91', nom: 'Essonne', coords: [[48.22,1.94],[48.22,2.58],[48.77,2.58],[48.77,1.94]] },
+            { code: '92', nom: 'Hauts-de-Seine', coords: [[48.76,2.14],[48.76,2.34],[48.95,2.34],[48.95,2.14]] },
+            { code: '93', nom: 'Seine-Saint-Denis', coords: [[48.82,2.30],[48.82,2.64],[49.02,2.64],[49.02,2.30]] },
+            { code: '94', nom: 'Val-de-Marne', coords: [[48.68,2.27],[48.68,2.62],[48.87,2.62],[48.87,2.27]] },
+            { code: '95', nom: "Val-d'Oise", coords: [[48.92,1.61],[48.92,2.64],[49.24,2.64],[49.24,1.61]] }
+          ];
+
+          // Use real GeoJSON from a public API
+          fetch('https://raw.githubusercontent.com/gregoiredavid/france-geojson/master/departements-version-simplifiee.geojson')
+            .then(r => r.json())
+            .then(data => {
+              var idfCodes = ['75','77','78','91','92','93','94','95'];
+              var idfFeatures = data.features.filter(f => idfCodes.includes(f.properties.code));
+
+              L.geoJSON({type:'FeatureCollection', features: idfFeatures}, {
+                style: function(feature) {
+                  var code = feature.properties.code;
+                  return {
+                    fillColor: code === '75' ? '#1a3fa0' : '#dbeafe',
+                    fillOpacity: code === '75' ? 0.9 : 0.6,
+                    color: '#1a3fa0',
+                    weight: 2
+                  };
+                },
+                onEachFeature: function(feature, layer) {
+                  var code = feature.properties.code;
+                  var nom = feature.properties.nom;
+                  layer.bindTooltip('<strong>' + code + '</strong> — ' + nom, {
+                    permanent: false,
+                    direction: 'center',
+                    className: 'dept-tooltip'
+                  });
+                  layer.on('mouseover', function() {
+                    if (code !== '75') layer.setStyle({fillColor: '#2652c8', fillOpacity: 0.8});
+                  });
+                  layer.on('mouseout', function() {
+                    if (code !== '75') layer.setStyle({fillColor: '#dbeafe', fillOpacity: 0.6});
+                  });
+                }
+              }).addTo(map);
+
+              // Add Paris pulse marker
+              var parisMarker = L.circleMarker([48.8566, 2.3522], {
+                radius: 8,
+                fillColor: '#e87820',
+                color: 'white',
+                weight: 2,
+                fillOpacity: 1
+              }).addTo(map);
+              parisMarker.bindTooltip('📍 MH Service — Paris', {permanent: false});
+            })
+            .catch(function() {
+              // Fallback si pas de réseau
+              console.log('Map fallback');
+            });
+        })();
+        <\/script>
+        <style>
+          .dept-tooltip { background: white; border: 1px solid #1a3fa0; color: #1a3fa0; font-family: "Barlow Condensed", sans-serif; font-weight: 700; font-size: 13px; padding: 4px 10px; border-radius: 6px; }
+          .leaflet-control-zoom { border: none !important; }
+          .leaflet-control-zoom a { background: white !important; color: #1a3fa0 !important; border: 1.5px solid #e5e7eb !important; font-weight: 700; }
+        </style>
       </div>
     </div>
   </section>
