@@ -1,0 +1,396 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Le Clos Saint-Martin — Restaurant Gastronomique</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500&display=swap" rel="stylesheet">
+<style>
+:root {
+  --black: #0a0a0a;
+  --black2: #141414;
+  --black3: #1c1c1c;
+  --gold: #c9a84c;
+  --gold2: #e8c87a;
+  --gold3: rgba(201,168,76,0.1);
+  --cream: #f5f0e8;
+  --cream2: #ede7d9;
+  --text: #f5f0e8;
+  --muted: #8a8070;
+  --muted2: #5a5248;
+  --border: rgba(201,168,76,0.12);
+  --border2: rgba(201,168,76,0.22);
+}
+
+* { margin:0; padding:0; box-sizing:border-box; }
+html { scroll-behavior:smooth; }
+body { font-family:'DM Sans',sans-serif; background:var(--black); color:var(--text); overflow-x:hidden; -webkit-font-smoothing:antialiased; }
+
+nav {
+  position:fixed; top:0; left:0; right:0; z-index:100;
+  height:68px; display:flex; align-items:center; justify-content:space-between;
+  padding:0 56px;
+  background:rgba(10,10,10,0.95); backdrop-filter:blur(16px);
+  border-bottom:1px solid var(--border);
+}
+.logo { font-family:'Cormorant Garamond',serif; font-size:20px; font-weight:400; color:var(--cream); letter-spacing:0.12em; text-transform:uppercase; }
+.logo span { color:var(--gold); }
+.nav-links { display:flex; align-items:center; gap:4px; list-style:none; }
+.nav-links a { color:var(--muted); text-decoration:none; font-size:13px; padding:7px 14px; border-radius:4px; transition:color 0.15s; letter-spacing:0.05em; }
+.nav-links a:hover { color:var(--cream); }
+.nav-cta { border:1px solid var(--border2) !important; color:var(--gold) !important; }
+.nav-cta:hover { background:var(--gold3) !important; color:var(--gold2) !important; }
+
+.page { display:none; min-height:100vh; padding-top:68px; }
+.page.active { display:block; }
+
+/* HERO */
+.hero {
+  min-height: calc(100vh - 68px);
+  display:flex; flex-direction:column; align-items:center; justify-content:center;
+  text-align:center; padding:80px 52px;
+  position:relative; overflow:hidden;
+}
+
+.hero::before {
+  content:'';
+  position:absolute; inset:0;
+  background: radial-gradient(ellipse at center, rgba(201,168,76,0.06) 0%, transparent 70%);
+  pointer-events:none;
+}
+
+.hero-line { width:1px; height:60px; background:linear-gradient(to bottom, transparent, var(--gold)); margin:0 auto 32px; }
+
+.hero-tag { font-size:11px; letter-spacing:0.22em; text-transform:uppercase; color:var(--gold); margin-bottom:28px; }
+
+.hero h1 {
+  font-family:'Cormorant Garamond',serif;
+  font-size:clamp(54px,7vw,96px);
+  font-weight:300; line-height:1.0;
+  letter-spacing:0.04em; color:var(--cream);
+  text-transform:uppercase; margin-bottom:10px;
+}
+.hero h1 em { font-style:italic; font-weight:300; color:var(--gold); }
+
+.hero-subtitle { font-family:'Cormorant Garamond',serif; font-size:18px; font-weight:300; font-style:italic; color:var(--muted); margin-bottom:48px; letter-spacing:0.06em; }
+
+.hero-btns { display:flex; gap:16px; justify-content:center; flex-wrap:wrap; }
+
+.btn-gold { background:var(--gold); color:var(--black); padding:14px 36px; border:none; border-radius:2px; font-family:'DM Sans',sans-serif; font-size:12px; font-weight:500; letter-spacing:0.1em; text-transform:uppercase; cursor:pointer; transition:background 0.15s; }
+.btn-gold:hover { background:var(--gold2); }
+.btn-ghost-gold { background:transparent; color:var(--gold); padding:14px 36px; border:1px solid var(--border2); border-radius:2px; font-family:'DM Sans',sans-serif; font-size:12px; letter-spacing:0.1em; text-transform:uppercase; cursor:pointer; transition:all 0.15s; }
+.btn-ghost-gold:hover { background:var(--gold3); }
+
+.hero-scroll { position:absolute; bottom:40px; left:50%; transform:translateX(-50%); display:flex; flex-direction:column; align-items:center; gap:8px; }
+.hero-scroll span { font-size:10px; letter-spacing:0.15em; text-transform:uppercase; color:var(--muted2); }
+.scroll-line { width:1px; height:40px; background:linear-gradient(to bottom, var(--muted2), transparent); }
+
+/* SECTION */
+.section { padding:80px 56px; max-width:1100px; margin:0 auto; }
+.section-ornament { display:flex; align-items:center; gap:16px; margin-bottom:20px; }
+.ornament-line { flex:1; height:1px; background:var(--border); max-width:48px; }
+.ornament-text { font-size:10px; letter-spacing:0.2em; text-transform:uppercase; color:var(--gold); }
+
+.section h2 { font-family:'Cormorant Garamond',serif; font-size:clamp(32px,4vw,52px); font-weight:300; line-height:1.1; letter-spacing:0.04em; color:var(--cream); text-transform:uppercase; margin-bottom:14px; }
+.section-desc { font-family:'Cormorant Garamond',serif; font-size:16px; font-style:italic; color:var(--muted); line-height:1.7; max-width:520px; margin-bottom:56px; }
+
+.sep { height:1px; background:var(--border); margin:0 56px; }
+
+/* MENU */
+.menu-tabs { display:flex; gap:0; margin-bottom:48px; border-bottom:1px solid var(--border); }
+.menu-tab { padding:12px 24px; font-size:12px; letter-spacing:0.1em; text-transform:uppercase; color:var(--muted); cursor:pointer; border-bottom:2px solid transparent; margin-bottom:-1px; transition:all 0.15s; }
+.menu-tab.active { color:var(--gold); border-bottom-color:var(--gold); }
+.menu-tab:hover { color:var(--cream); }
+
+.menu-content { display:none; }
+.menu-content.active { display:block; }
+
+.menu-grid { display:grid; grid-template-columns:1fr 1fr; gap:1px; background:var(--border); border:1px solid var(--border); }
+.menu-item { background:var(--black2); padding:28px 32px; transition:background 0.2s; }
+.menu-item:hover { background:var(--black3); }
+.menu-item-header { display:flex; justify-content:space-between; align-items:baseline; margin-bottom:8px; }
+.menu-item-name { font-family:'Cormorant Garamond',serif; font-size:19px; font-weight:400; color:var(--cream); letter-spacing:0.02em; }
+.menu-item-price { font-family:'Cormorant Garamond',serif; font-size:17px; color:var(--gold); }
+.menu-item-desc { font-size:13px; color:var(--muted); line-height:1.6; font-weight:300; font-style:italic; }
+.menu-item-tag { display:inline-block; font-size:9px; letter-spacing:0.12em; text-transform:uppercase; color:var(--gold); border:1px solid var(--border); padding:2px 8px; border-radius:1px; margin-top:10px; }
+
+/* RESERVATION */
+.resa-wrap { background:var(--black2); border-top:1px solid var(--border); border-bottom:1px solid var(--border); padding:80px 0; }
+.resa-inner { max-width:1100px; margin:0 auto; padding:0 56px; display:grid; grid-template-columns:1fr 1.1fr; gap:80px; align-items:start; }
+
+.resa-info h2 { font-family:'Cormorant Garamond',serif; font-size:44px; font-weight:300; text-transform:uppercase; color:var(--cream); margin-bottom:16px; letter-spacing:0.04em; }
+.resa-info p { font-family:'Cormorant Garamond',serif; font-style:italic; font-size:15px; color:var(--muted); line-height:1.7; margin-bottom:36px; }
+
+.horaires { display:flex; flex-direction:column; }
+.horaire-row { display:flex; justify-content:space-between; padding:10px 0; border-bottom:1px solid var(--border); font-size:13px; }
+.horaire-row:first-child { border-top:1px solid var(--border); }
+.horaire-jour { color:var(--muted); letter-spacing:0.04em; }
+.horaire-heure { color:var(--cream); }
+.horaire-closed { color:var(--muted2); }
+
+.resa-form { background:var(--black3); border:1px solid var(--border); border-radius:4px; padding:36px; }
+.fgroup { margin-bottom:18px; }
+.fgroup label { display:block; font-size:10px; letter-spacing:0.14em; text-transform:uppercase; color:var(--muted); margin-bottom:8px; }
+.fgroup input, .fgroup select {
+  width:100%; background:var(--black2); border:1px solid var(--border);
+  border-radius:2px; padding:12px 14px; color:var(--cream);
+  font-family:'DM Sans',sans-serif; font-size:14px; outline:none; transition:border-color 0.15s; appearance:none;
+}
+.fgroup input:focus, .fgroup select:focus { border-color:var(--gold); }
+.fgroup input::placeholder { color:var(--muted2); }
+.fgroup select option { background:var(--black3); }
+.frow { display:grid; grid-template-columns:1fr 1fr; gap:14px; }
+
+.btn-resa { width:100%; background:var(--gold); color:var(--black); border:none; padding:14px; border-radius:2px; font-family:'DM Sans',sans-serif; font-size:12px; font-weight:500; letter-spacing:0.1em; text-transform:uppercase; cursor:pointer; transition:background 0.15s; margin-top:4px; }
+.btn-resa:hover { background:var(--gold2); }
+.resa-note { text-align:center; font-size:11px; color:var(--muted2); margin-top:12px; letter-spacing:0.04em; }
+
+.resa-success { display:none; text-align:center; padding:48px 20px; }
+.resa-success .ico { font-size:32px; display:block; margin-bottom:16px; }
+.resa-success h3 { font-family:'Cormorant Garamond',serif; font-size:26px; font-weight:300; color:var(--cream); margin-bottom:8px; text-transform:uppercase; letter-spacing:0.06em; }
+.resa-success p { font-size:13px; color:var(--muted); font-style:italic; }
+
+/* CONTACT */
+.contact-section { padding:80px 56px; max-width:1100px; margin:0 auto; display:grid; grid-template-columns:1fr 1fr; gap:80px; }
+.c-card { background:var(--black2); border:1px solid var(--border); border-radius:2px; padding:20px 22px; display:flex; gap:14px; align-items:center; margin-bottom:12px; transition:border-color 0.15s; }
+.c-card:hover { border-color:var(--border2); }
+.c-ico { width:36px; height:36px; background:var(--gold3); border-radius:2px; display:flex; align-items:center; justify-content:center; font-size:16px; flex-shrink:0; }
+.c-card h4 { font-size:10px; letter-spacing:0.12em; text-transform:uppercase; color:var(--gold); margin-bottom:3px; }
+.c-card p, .c-card a { font-size:13px; color:var(--muted); font-weight:300; text-decoration:none; }
+.c-card a:hover { color:var(--cream); }
+
+footer { border-top:1px solid var(--border); padding:28px 56px; display:flex; justify-content:space-between; align-items:center; }
+footer p { font-size:12px; color:var(--muted2); font-weight:300; }
+.footer-credit a { color:var(--gold); text-decoration:none; font-size:12px; }
+
+@keyframes fadeUp { from{opacity:0;transform:translateY(18px)} to{opacity:1;transform:translateY(0)} }
+.fade{animation:fadeUp 0.6s ease both}
+.fade-1{animation-delay:.05s}.fade-2{animation-delay:.2s}.fade-3{animation-delay:.35s}.fade-4{animation-delay:.5s}
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="logo">Le Clos <span>Saint-Martin</span></div>
+  <ul class="nav-links">
+    <li><a href="#" onclick="showSection('accueil')">Accueil</a></li>
+    <li><a href="#" onclick="showSection('menu')">La carte</a></li>
+    <li><a href="#" onclick="showSection('contact')">Nous trouver</a></li>
+    <li><a href="#" onclick="showSection('reservation')" class="nav-cta">Réserver</a></li>
+  </ul>
+</nav>
+
+<!-- ACCUEIL -->
+<div id="section-accueil" class="page active">
+  <div class="hero">
+    <div class="hero-line"></div>
+    <div class="hero-tag fade fade-1">Cuisine française · Paris 8e · Depuis 2010</div>
+    <h1 class="fade fade-2">Le Clos<br><em>Saint-Martin</em></h1>
+    <div class="hero-subtitle fade fade-3">Une cuisine d'auteur, des produits d'exception</div>
+    <div class="hero-btns fade fade-4">
+      <button class="btn-gold" onclick="showSection('reservation')">Réserver une table</button>
+      <button class="btn-ghost-gold" onclick="showSection('menu')">Découvrir la carte</button>
+    </div>
+    <div class="hero-scroll">
+      <span>Découvrir</span>
+      <div class="scroll-line"></div>
+    </div>
+  </div>
+
+  <div class="sep"></div>
+
+  <div class="section" style="text-align:center">
+    <div class="section-ornament" style="justify-content:center">
+      <div class="ornament-line"></div>
+      <div class="ornament-text">Notre philosophie</div>
+      <div class="ornament-line"></div>
+    </div>
+    <h2 style="max-width:700px;margin:0 auto 20px">L'excellence<br>dans chaque assiette.</h2>
+    <p class="section-desc" style="margin:0 auto 0;text-align:center;font-size:17px">Chaque plat est une invitation au voyage. Des produits soigneusement sélectionnés, des recettes travaillées avec passion, dans un cadre intimiste et chaleureux au cœur de Paris.</p>
+  </div>
+
+  <div class="sep"></div>
+
+  <div class="section">
+    <div class="section-ornament">
+      <div class="ornament-line" style="max-width:none"></div>
+      <div class="ornament-text" style="white-space:nowrap">Menus du moment</div>
+      <div class="ornament-line" style="max-width:none"></div>
+    </div>
+    <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--border);border:1px solid var(--border);margin-top:32px">
+      <div style="background:var(--black2);padding:36px 28px;text-align:center">
+        <div style="font-size:11px;letter-spacing:0.16em;text-transform:uppercase;color:var(--gold);margin-bottom:16px">Déjeuner</div>
+        <div style="font-family:'Cormorant Garamond',serif;font-size:42px;font-weight:300;color:var(--cream)">38€</div>
+        <div style="font-size:12px;color:var(--muted);margin:8px 0 20px;font-style:italic">Entrée · Plat · Dessert</div>
+        <button class="btn-ghost-gold" style="width:100%" onclick="showSection('reservation')">Réserver</button>
+      </div>
+      <div style="background:var(--black3);padding:36px 28px;text-align:center;border-left:1px solid var(--border2);border-right:1px solid var(--border2)">
+        <div style="font-size:11px;letter-spacing:0.16em;text-transform:uppercase;color:var(--gold);margin-bottom:8px">Dîner</div>
+        <div style="font-size:9px;letter-spacing:0.12em;text-transform:uppercase;color:var(--muted2);margin-bottom:8px;border:1px solid var(--border);padding:3px 10px;border-radius:1px;display:inline-block">Notre signature</div>
+        <div style="font-family:'Cormorant Garamond',serif;font-size:42px;font-weight:300;color:var(--cream)">68€</div>
+        <div style="font-size:12px;color:var(--muted);margin:8px 0 20px;font-style:italic">5 services · Accord mets-vins</div>
+        <button class="btn-gold" style="width:100%" onclick="showSection('reservation')">Réserver</button>
+      </div>
+      <div style="background:var(--black2);padding:36px 28px;text-align:center">
+        <div style="font-size:11px;letter-spacing:0.16em;text-transform:uppercase;color:var(--gold);margin-bottom:16px">Privatisation</div>
+        <div style="font-family:'Cormorant Garamond',serif;font-size:42px;font-weight:300;color:var(--cream)">Sur devis</div>
+        <div style="font-size:12px;color:var(--muted);margin:8px 0 20px;font-style:italic">Événements · Séminaires</div>
+        <button class="btn-ghost-gold" style="width:100%" onclick="showSection('contact')">Nous contacter</button>
+      </div>
+    </div>
+  </div>
+
+  <footer>
+    <div class="logo">Le Clos <span>Saint-Martin</span></div>
+    <p>© 2026 Le Clos Saint-Martin · Paris 8e</p>
+    <div class="footer-credit">Site par <a href="https://youdesk.vercel.app">Youdesk</a></div>
+  </footer>
+</div>
+
+<!-- MENU -->
+<div id="section-menu" class="page">
+  <div class="section">
+    <div class="section-ornament">
+      <div class="ornament-line"></div>
+      <div class="ornament-text">Notre carte</div>
+      <div class="ornament-line"></div>
+    </div>
+    <h2>La carte.</h2>
+    <p class="section-desc">Une sélection de saison, renouvelée chaque mois selon les arrivages du marché.</p>
+    <div class="menu-tabs">
+      <div class="menu-tab active" onclick="showTab('entrees',this)">Entrées</div>
+      <div class="menu-tab" onclick="showTab('plats',this)">Plats</div>
+      <div class="menu-tab" onclick="showTab('desserts',this)">Desserts</div>
+    </div>
+    <div id="tab-entrees" class="menu-content active">
+      <div class="menu-grid">
+        <div class="menu-item"><div class="menu-item-header"><span class="menu-item-name">Foie gras mi-cuit</span><span class="menu-item-price">28€</span></div><div class="menu-item-desc">Chutney de figues, brioche toastée, fleur de sel de Guérande.</div><span class="menu-item-tag">Signature</span></div>
+        <div class="menu-item"><div class="menu-item-header"><span class="menu-item-name">Saint-Jacques poêlées</span><span class="menu-item-price">32€</span></div><div class="menu-item-desc">Velouté de butternut, émulsion au champagne, noisettes torréfiées.</div></div>
+        <div class="menu-item"><div class="menu-item-header"><span class="menu-item-name">Tartare de thon</span><span class="menu-item-price">24€</span></div><div class="menu-item-desc">Avocat, mangue, vinaigrette yuzu, tuile de sésame noir.</div></div>
+        <div class="menu-item"><div class="menu-item-header"><span class="menu-item-name">Burrata des Pouilles</span><span class="menu-item-price">19€</span></div><div class="menu-item-desc">Tomates anciennes, basilic frais, huile d'olive AOP Nyons.</div></div>
+      </div>
+    </div>
+    <div id="tab-plats" class="menu-content">
+      <div class="menu-grid">
+        <div class="menu-item"><div class="menu-item-header"><span class="menu-item-name">Filet de bœuf Rossini</span><span class="menu-item-price">52€</span></div><div class="menu-item-desc">Foie gras poêlé, sauce Périgueux, pommes dauphine.</div><span class="menu-item-tag">Signature</span></div>
+        <div class="menu-item"><div class="menu-item-header"><span class="menu-item-name">Homard bleu rôti</span><span class="menu-item-price">68€</span></div><div class="menu-item-desc">Bisque légère, légumes de saison, beurre nantais.</div></div>
+        <div class="menu-item"><div class="menu-item-header"><span class="menu-item-name">Pigeon de Bresse</span><span class="menu-item-price">44€</span></div><div class="menu-item-desc">Jus corsé, polenta crémeuse, champignons des bois.</div></div>
+        <div class="menu-item"><div class="menu-item-header"><span class="menu-item-name">Turbot sauvage</span><span class="menu-item-price">48€</span></div><div class="menu-item-desc">Vierge d'herbes, fenouil confit, caviar d'Aquitaine.</div></div>
+      </div>
+    </div>
+    <div id="tab-desserts" class="menu-content">
+      <div class="menu-grid">
+        <div class="menu-item"><div class="menu-item-header"><span class="menu-item-name">Soufflé au Grand Marnier</span><span class="menu-item-price">18€</span></div><div class="menu-item-desc">Crème anglaise à la vanille de Tahiti.</div><span class="menu-item-tag">Signature</span></div>
+        <div class="menu-item"><div class="menu-item-header"><span class="menu-item-name">Tarte Tatin revisitée</span><span class="menu-item-price">16€</span></div><div class="menu-item-desc">Pommes caramélisées, crème fraîche d'Isigny, caramel beurre salé.</div></div>
+        <div class="menu-item"><div class="menu-item-header"><span class="menu-item-name">Millefeuille minute</span><span class="menu-item-price">17€</span></div><div class="menu-item-desc">Crème légère à la vanille Bourbon, caramel feuilleté.</div></div>
+        <div class="menu-item"><div class="menu-item-header"><span class="menu-item-name">Sélection de fromages</span><span class="menu-item-price">22€</span></div><div class="menu-item-desc">Affinés par notre fromager, pain de campagne, confiture maison.</div></div>
+      </div>
+    </div>
+  </div>
+  <footer>
+    <div class="logo">Le Clos <span>Saint-Martin</span></div>
+    <p>© 2026 Le Clos Saint-Martin · Paris 8e</p>
+    <div class="footer-credit">Site par <a href="https://youdesk.vercel.app">Youdesk</a></div>
+  </footer>
+</div>
+
+<!-- RESERVATION -->
+<div id="section-reservation" class="page">
+  <div class="resa-wrap">
+    <div class="resa-inner">
+      <div class="resa-info">
+        <div class="section-ornament"><div class="ornament-line"></div><div class="ornament-text">Réservation</div></div>
+        <h2>Réserver<br>votre table.</h2>
+        <p>Nous vous accueillons du mardi au dimanche. Pour les groupes de plus de 8 personnes, contactez-nous directement.</p>
+        <div class="horaires">
+          <div class="horaire-row"><span class="horaire-jour">Lundi</span><span class="horaire-closed">Fermé</span></div>
+          <div class="horaire-row"><span class="horaire-jour">Mardi — Jeudi</span><span class="horaire-heure">12h–14h · 19h–22h</span></div>
+          <div class="horaire-row"><span class="horaire-jour">Vendredi — Samedi</span><span class="horaire-heure">12h–14h30 · 19h–23h</span></div>
+          <div class="horaire-row"><span class="horaire-jour">Dimanche</span><span class="horaire-heure">12h–15h</span></div>
+        </div>
+      </div>
+      <div class="resa-form">
+        <div id="resa-content">
+          <div class="frow">
+            <div class="fgroup"><label>Prénom</label><input type="text" placeholder="Jean"></div>
+            <div class="fgroup"><label>Nom</label><input type="text" placeholder="Dupont"></div>
+          </div>
+          <div class="fgroup"><label>Email</label><input type="email" placeholder="jean@email.com"></div>
+          <div class="fgroup"><label>Téléphone</label><input type="tel" placeholder="+33 6 00 00 00 00"></div>
+          <div class="frow">
+            <div class="fgroup"><label>Date</label><input type="date"></div>
+            <div class="fgroup"><label>Service</label>
+              <select><option value="" disabled selected>Choisir</option><option>Déjeuner</option><option>Dîner</option></select>
+            </div>
+          </div>
+          <div class="frow">
+            <div class="fgroup"><label>Couverts</label>
+              <select><option value="" disabled selected>Nombre</option><option>1</option><option>2</option><option>3</option><option>4</option><option>5</option><option>6</option><option>7</option><option>8+</option></select>
+            </div>
+            <div class="fgroup"><label>Menu</label>
+              <select><option value="" disabled selected>Choisir</option><option>Menu déjeuner — 38€</option><option>Menu dîner — 68€</option><option>À la carte</option></select>
+            </div>
+          </div>
+          <button class="btn-resa" onclick="submitResa()">Confirmer la réservation</button>
+          <p class="resa-note">Confirmation par email · Annulation gratuite 48h avant</p>
+        </div>
+        <div class="resa-success" id="resa-success">
+          <span class="ico">✦</span>
+          <h3>Table réservée</h3>
+          <p>Nous avons hâte de vous accueillir.<br>Un email de confirmation vous a été envoyé.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+  <footer>
+    <div class="logo">Le Clos <span>Saint-Martin</span></div>
+    <p>© 2026 Le Clos Saint-Martin · Paris 8e</p>
+    <div class="footer-credit">Site par <a href="https://youdesk.vercel.app">Youdesk</a></div>
+  </footer>
+</div>
+
+<!-- CONTACT -->
+<div id="section-contact" class="page">
+  <div class="contact-section">
+    <div>
+      <div class="section-ornament"><div class="ornament-line"></div><div class="ornament-text">Nous trouver</div></div>
+      <h2 style="font-family:'Cormorant Garamond',serif;font-size:42px;font-weight:300;text-transform:uppercase;color:var(--cream);margin-bottom:14px;letter-spacing:0.04em">Venez nous<br>rendre visite.</h2>
+      <p style="font-family:'Cormorant Garamond',serif;font-style:italic;font-size:15px;color:var(--muted);line-height:1.7;margin-bottom:32px">Au cœur du 8e arrondissement, dans un cadre intimiste et élégant.</p>
+      <div class="c-card"><div class="c-ico">📍</div><div><h4>Adresse</h4><p>24 rue du Faubourg Saint-Honoré, 75008 Paris</p></div></div>
+      <div class="c-card"><div class="c-ico">📞</div><div><h4>Téléphone</h4><a href="tel:+33142000000">+33 1 42 00 00 00</a></div></div>
+      <div class="c-card"><div class="c-ico">📧</div><div><h4>Email</h4><a href="mailto:contact@leclos-saintmartin.fr">contact@leclos-saintmartin.fr</a></div></div>
+      <div class="c-card"><div class="c-ico">⏱</div><div><h4>Horaires</h4><p>Mar–Sam 12h–14h & 19h–23h · Dim 12h–15h</p></div></div>
+    </div>
+    <div style="background:var(--black2);border:1px solid var(--border);border-radius:4px;height:400px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:12px">
+      <span style="font-size:36px;opacity:0.2">🗺️</span>
+      <p style="font-size:13px;color:var(--muted2);font-style:italic">24 rue du Faubourg Saint-Honoré, Paris 8e</p>
+    </div>
+  </div>
+  <footer>
+    <div class="logo">Le Clos <span>Saint-Martin</span></div>
+    <p>© 2026 Le Clos Saint-Martin · Paris 8e</p>
+    <div class="footer-credit">Site par <a href="https://youdesk.vercel.app">Youdesk</a></div>
+  </footer>
+</div>
+
+<script>
+function showSection(name) {
+  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+  document.getElementById('section-' + name).classList.add('active');
+  window.scrollTo(0, 0);
+}
+
+function showTab(name, el) {
+  document.querySelectorAll('.menu-content').forEach(t => t.classList.remove('active'));
+  document.querySelectorAll('.menu-tab').forEach(t => t.classList.remove('active'));
+  document.getElementById('tab-' + name).classList.add('active');
+  el.classList.add('active');
+}
+
+function submitResa() {
+  document.getElementById('resa-content').style.display = 'none';
+  document.getElementById('resa-success').style.display = 'block';
+}
+</script>
+</body>
+</html>
