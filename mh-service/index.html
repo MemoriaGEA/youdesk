@@ -313,7 +313,7 @@ footer{background:var(--dark);color:white;padding:48px 40px 24px;}
 }
 
 /* ANIM */
-.fade-up{opacity:0;transform:translateY(30px);transition:all .6s ease;}
+.fade-up{opacity:1;transform:translateY(0);transition:all .6s ease;}
 .fade-up.visible{opacity:1;transform:translateY(0);}
 </style>
 </head>
@@ -950,13 +950,20 @@ document.getElementById('modal-overlay').addEventListener('click', function(e) {
 });
 
 function observeFadeUps() {
-  const obs = new IntersectionObserver((entries) => {
-    entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
-  }, {threshold: 0.1});
-  document.querySelectorAll('.fade-up:not(.visible)').forEach(el => obs.observe(el));
+  if ('IntersectionObserver' in window) {
+    const obs = new IntersectionObserver((entries) => {
+      entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+    }, {threshold: 0.05, rootMargin: '0px 0px -50px 0px'});
+    document.querySelectorAll('.fade-up').forEach(el => obs.observe(el));
+  } else {
+    document.querySelectorAll('.fade-up').forEach(el => el.classList.add('visible'));
+  }
 }
-window.addEventListener('load', observeFadeUps);
-window.addEventListener('scroll', observeFadeUps);
+window.addEventListener('load', function() {
+  // Make all visible immediately as fallback
+  document.querySelectorAll('.fade-up').forEach(el => el.classList.add('visible'));
+  observeFadeUps();
+});
 </script>
 </body>
 </html>
