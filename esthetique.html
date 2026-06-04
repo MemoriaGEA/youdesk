@@ -1,0 +1,548 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Rosa — Institut de beauté</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500&display=swap" rel="stylesheet">
+<style>
+:root {
+  --white: #ffffff;
+  --rose: #f2c4ce;
+  --rose2: #e8a4b2;
+  --rose3: #fdf0f3;
+  --rose4: #fae4e9;
+  --rose-dark: #c47a8a;
+  --text: #2a1a1f;
+  --muted: #7a5a62;
+  --muted2: #b08090;
+  --border: rgba(180,100,120,0.12);
+  --border2: rgba(180,100,120,0.22);
+}
+
+* { margin:0; padding:0; box-sizing:border-box; }
+html { scroll-behavior:smooth; }
+body { font-family:'DM Sans',sans-serif; background:var(--white); color:var(--text); overflow-x:hidden; -webkit-font-smoothing:antialiased; }
+
+/* NAV */
+nav {
+  position:fixed; top:0; left:0; right:0; z-index:100;
+  height:66px; display:flex; align-items:center; justify-content:space-between;
+  padding:0 52px;
+  background:rgba(255,255,255,0.96); backdrop-filter:blur(16px);
+  border-bottom:1px solid var(--border);
+}
+.logo { font-family:'Cormorant Garamond',serif; font-size:24px; font-weight:400; color:var(--text); letter-spacing:0.14em; text-transform:uppercase; }
+.logo span { color:var(--rose-dark); }
+.nav-links { display:flex; align-items:center; gap:4px; list-style:none; }
+.nav-links a { color:var(--muted); text-decoration:none; font-size:13px; padding:7px 14px; border-radius:4px; transition:color 0.15s; letter-spacing:0.04em; }
+.nav-links a:hover { color:var(--text); }
+.nav-cta { background:var(--rose) !important; color:var(--text) !important; font-weight:500 !important; border-radius:24px !important; }
+.nav-cta:hover { background:var(--rose2) !important; }
+
+/* PAGES */
+.page { display:none; min-height:100vh; padding-top:66px; }
+.page.active { display:block; }
+
+/* HERO */
+.hero {
+  min-height:calc(100vh - 66px);
+  display:grid; grid-template-columns:1fr 1fr;
+  background:var(--rose3);
+}
+.hero-left { display:flex; flex-direction:column; justify-content:center; padding:80px 52px; }
+
+.hero-tag {
+  display:inline-flex; align-items:center; gap:8px;
+  font-size:11px; letter-spacing:0.16em; text-transform:uppercase;
+  color:var(--rose-dark); margin-bottom:28px;
+}
+.hero-tag::before { content:'✦'; font-size:10px; }
+
+.hero h1 {
+  font-family:'Cormorant Garamond',serif;
+  font-size:clamp(48px,5.5vw,76px);
+  font-weight:300; line-height:1.05; letter-spacing:0.02em;
+  color:var(--text); margin-bottom:8px;
+}
+.hero h1 em { font-style:italic; color:var(--rose-dark); }
+
+.hero-sub { font-family:'Cormorant Garamond',serif; font-size:17px; font-style:italic; color:var(--muted); margin-bottom:32px; }
+.hero-desc { font-size:15px; line-height:1.7; color:var(--muted); max-width:400px; margin-bottom:44px; font-weight:300; }
+
+.hero-btns { display:flex; gap:12px; flex-wrap:wrap; }
+.btn-rose { background:var(--rose-dark); color:var(--white); padding:13px 28px; border:none; border-radius:24px; font-family:'DM Sans',sans-serif; font-size:13.5px; font-weight:500; cursor:pointer; transition:background 0.15s; }
+.btn-rose:hover { background:var(--rose2); }
+.btn-outline-rose { background:transparent; color:var(--rose-dark); padding:13px 28px; border:1.5px solid var(--rose2); border-radius:24px; font-family:'DM Sans',sans-serif; font-size:13.5px; cursor:pointer; transition:all 0.15s; }
+.btn-outline-rose:hover { background:var(--rose4); }
+
+/* Hero right */
+.hero-right { background:var(--rose4); display:flex; align-items:center; justify-content:center; position:relative; overflow:hidden; }
+.hero-right::before { content:''; position:absolute; width:500px; height:500px; border-radius:50%; background:rgba(242,196,206,0.4); top:-100px; right:-100px; }
+.hero-portrait { font-size:110px; opacity:0.2; position:relative; z-index:1; }
+
+.hero-badges { position:absolute; bottom:40px; left:40px; display:flex; flex-direction:column; gap:10px; }
+.hero-badge { background:var(--white); border:1px solid var(--border); border-radius:12px; padding:14px 18px; display:flex; align-items:center; gap:12px; box-shadow:0 4px 20px rgba(180,100,120,0.1); }
+.badge-ico { font-size:20px; }
+.badge-num { font-family:'Cormorant Garamond',serif; font-size:22px; font-weight:600; color:var(--rose-dark); line-height:1; }
+.badge-lbl { font-size:11px; color:var(--muted2); text-transform:uppercase; letter-spacing:0.06em; }
+
+/* ORNEMENT */
+.ornament { display:flex; align-items:center; gap:14px; margin-bottom:18px; }
+.ornament-line { height:1px; background:var(--border); flex:1; max-width:40px; }
+.ornament-text { font-size:10px; letter-spacing:0.2em; text-transform:uppercase; color:var(--rose-dark); }
+
+/* SECTIONS */
+.section { padding:72px 52px; max-width:1100px; margin:0 auto; }
+.section h2 { font-family:'Cormorant Garamond',serif; font-size:clamp(30px,4vw,48px); font-weight:300; line-height:1.1; color:var(--text); margin-bottom:12px; }
+.section-desc { font-family:'Cormorant Garamond',serif; font-style:italic; font-size:16px; color:var(--muted); line-height:1.7; max-width:500px; margin-bottom:52px; }
+.sep { height:1px; background:var(--border); }
+
+/* SOINS */
+.soins-tabs { display:flex; gap:0; margin-bottom:44px; border-bottom:1px solid var(--border); }
+.soin-tab { padding:12px 22px; font-size:12.5px; letter-spacing:0.08em; color:var(--muted); cursor:pointer; border-bottom:2px solid transparent; margin-bottom:-1px; transition:all 0.15s; }
+.soin-tab.active { color:var(--rose-dark); border-bottom-color:var(--rose-dark); }
+
+.soins-content { display:none; }
+.soins-content.active { display:block; }
+
+.soins-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:16px; }
+.soin-card { background:var(--rose3); border:1px solid var(--border); border-radius:12px; padding:28px 24px; transition:all 0.2s; }
+.soin-card:hover { border-color:var(--rose2); transform:translateY(-3px); box-shadow:0 10px 32px rgba(180,100,120,0.1); }
+.soin-card.featured { background:var(--rose-dark); border-color:var(--rose-dark); }
+
+.soin-ico { font-size:26px; margin-bottom:16px; display:block; }
+.soin-card h3 { font-family:'Cormorant Garamond',serif; font-size:21px; font-weight:400; color:var(--text); margin-bottom:8px; }
+.soin-card.featured h3 { color:var(--white); }
+.soin-card p { font-size:13px; color:var(--muted); line-height:1.6; font-weight:300; margin-bottom:18px; }
+.soin-card.featured p { color:rgba(255,255,255,0.75); }
+
+.soin-details { border-top:1px solid var(--border); padding-top:16px; display:flex; flex-direction:column; gap:7px; }
+.soin-card.featured .soin-details { border-top-color:rgba(255,255,255,0.2); }
+.soin-detail { display:flex; justify-content:space-between; font-size:13px; }
+.soin-detail-name { color:var(--muted); }
+.soin-card.featured .soin-detail-name { color:rgba(255,255,255,0.65); }
+.soin-detail-price { font-weight:500; color:var(--text); }
+.soin-card.featured .soin-detail-price { color:var(--white); }
+
+/* TEMOIGNAGES */
+.temo-wrap { background:var(--rose3); padding:72px 0; border-top:1px solid var(--border); border-bottom:1px solid var(--border); }
+.temo-inner { max-width:1100px; margin:0 auto; padding:0 52px; }
+.temo-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:16px; margin-top:48px; }
+.temo-card { background:var(--white); border:1px solid var(--border); border-radius:12px; padding:24px; }
+.temo-stars { color:var(--rose-dark); font-size:13px; margin-bottom:12px; }
+.temo-text { font-size:14px; color:var(--muted); line-height:1.65; font-weight:300; font-style:italic; margin-bottom:14px; }
+.temo-author { font-size:13px; font-weight:500; color:var(--text); }
+.temo-detail { font-size:12px; color:var(--muted2); }
+
+/* RESERVATION */
+.resa-wrap { padding:72px 52px; max-width:1100px; margin:0 auto; }
+.resa-grid { display:grid; grid-template-columns:1fr 1.1fr; gap:72px; align-items:start; }
+
+.resa-info h2 { font-family:'Cormorant Garamond',serif; font-size:42px; font-weight:300; color:var(--text); margin-bottom:14px; }
+.resa-info p { font-family:'Cormorant Garamond',serif; font-style:italic; font-size:15px; color:var(--muted); line-height:1.7; margin-bottom:32px; }
+
+.horaires { display:flex; flex-direction:column; }
+.horaire-row { display:flex; justify-content:space-between; padding:10px 0; border-bottom:1px solid var(--border); font-size:13px; }
+.horaire-row:first-child { border-top:1px solid var(--border); }
+.horaire-jour { color:var(--muted); }
+.horaire-heure { color:var(--text); font-weight:500; }
+.horaire-closed { color:var(--muted2); }
+
+.resa-form { background:var(--rose3); border:1px solid var(--border); border-radius:12px; padding:34px; }
+.fgroup { margin-bottom:15px; }
+.fgroup label { display:block; font-size:11px; letter-spacing:0.08em; text-transform:uppercase; color:var(--muted); margin-bottom:7px; }
+.fgroup input, .fgroup select {
+  width:100%; background:var(--white); border:1px solid var(--border2);
+  border-radius:7px; padding:11px 13px; color:var(--text);
+  font-family:'DM Sans',sans-serif; font-size:14px; outline:none; transition:border-color 0.15s; appearance:none;
+}
+.fgroup input:focus, .fgroup select:focus { border-color:var(--rose-dark); }
+.fgroup input::placeholder { color:var(--muted2); }
+.fgroup select option { background:var(--white); }
+.frow { display:grid; grid-template-columns:1fr 1fr; gap:12px; }
+
+.btn-resa { width:100%; background:var(--rose-dark); color:var(--white); border:none; padding:13px; border-radius:24px; font-family:'DM Sans',sans-serif; font-size:14px; font-weight:500; cursor:pointer; transition:background 0.15s; margin-top:6px; }
+.btn-resa:hover { background:var(--rose2); }
+.resa-note { text-align:center; font-size:12px; color:var(--muted2); margin-top:11px; }
+
+.resa-success { display:none; text-align:center; padding:48px 20px; }
+.resa-success .ico { font-size:36px; display:block; margin-bottom:16px; }
+.resa-success h3 { font-family:'Cormorant Garamond',serif; font-size:26px; font-weight:300; color:var(--text); margin-bottom:8px; }
+.resa-success p { font-size:14px; color:var(--muted); font-weight:300; font-style:italic; }
+
+/* CONTACT */
+.contact-wrap { background:var(--rose3); border-top:1px solid var(--border); padding:72px 52px; }
+.contact-inner { max-width:1100px; margin:0 auto; display:grid; grid-template-columns:1fr 1fr; gap:72px; }
+.c-card { background:var(--white); border:1px solid var(--border); border-radius:8px; padding:18px 20px; display:flex; gap:14px; align-items:center; margin-bottom:10px; transition:border-color 0.15s; }
+.c-card:hover { border-color:var(--rose2); }
+.c-ico { width:36px; height:36px; background:var(--rose4); border-radius:8px; display:flex; align-items:center; justify-content:center; font-size:16px; flex-shrink:0; }
+.c-card h4 { font-size:11px; letter-spacing:0.1em; text-transform:uppercase; color:var(--rose-dark); margin-bottom:3px; }
+.c-card p, .c-card a { font-size:13px; color:var(--muted); font-weight:300; text-decoration:none; }
+.c-card a:hover { color:var(--rose-dark); }
+
+.map-placeholder { background:var(--white); border:1px solid var(--border); border-radius:12px; height:320px; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:12px; }
+.map-placeholder span { font-size:36px; opacity:0.3; }
+.map-placeholder p { font-size:13px; color:var(--muted2); font-style:italic; }
+
+/* FOOTER */
+footer { border-top:1px solid var(--border); padding:26px 52px; display:flex; justify-content:space-between; align-items:center; background:var(--white); }
+footer p { font-size:12px; color:var(--muted2); font-weight:300; }
+.footer-credit a { color:var(--rose-dark); text-decoration:none; font-size:12px; }
+
+@keyframes fadeUp { from{opacity:0;transform:translateY(18px)} to{opacity:1;transform:translateY(0)} }
+.fade{animation:fadeUp 0.5s ease both}
+.fade-1{animation-delay:.05s}.fade-2{animation-delay:.15s}.fade-3{animation-delay:.25s}.fade-4{animation-delay:.35s}
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="logo">Rosa<span>.</span></div>
+  <ul class="nav-links">
+    <li><a href="#" onclick="showSection('accueil')">Accueil</a></li>
+    <li><a href="#" onclick="showSection('soins')">Nos soins</a></li>
+    <li><a href="#" onclick="showSection('contact')">Contact</a></li>
+    <li><a href="#" onclick="showSection('reservation')" class="nav-cta">Prendre RDV</a></li>
+  </ul>
+</nav>
+
+<!-- ACCUEIL -->
+<div id="section-accueil" class="page active">
+  <div class="hero">
+    <div class="hero-left">
+      <div class="hero-tag fade fade-1">Institut de beauté · Paris 16e</div>
+      <h1 class="fade fade-2">L'art de<br>prendre soin<br>de <em>soi.</em></h1>
+      <div class="hero-sub fade fade-2">Rosa — Institut de beauté & bien-être</div>
+      <p class="hero-desc fade fade-3">Un cocon de douceur au cœur de Paris. Des soins personnalisés pour sublimer votre beauté naturelle et vous offrir un moment de sérénité absolue.</p>
+      <div class="hero-btns fade fade-4">
+        <button class="btn-rose" onclick="showSection('reservation')">Prendre rendez-vous</button>
+        <button class="btn-outline-rose" onclick="showSection('soins')">Découvrir nos soins</button>
+      </div>
+    </div>
+    <div class="hero-right">
+      <div class="hero-portrait">🌸</div>
+      <div class="hero-badges">
+        <div class="hero-badge">
+          <div class="badge-ico">✨</div>
+          <div><div class="badge-num">+500</div><div class="badge-lbl">Clientes fidèles</div></div>
+        </div>
+        <div class="hero-badge">
+          <div class="badge-ico">⭐</div>
+          <div><div class="badge-num">4.9</div><div class="badge-lbl">Note Google</div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- TEMOIGNAGES -->
+  <div class="temo-wrap">
+    <div class="temo-inner">
+      <div class="ornament"><div class="ornament-line"></div><div class="ornament-text">Témoignages</div><div class="ornament-line" style="max-width:none;flex:0;width:40px"></div></div>
+      <h2 style="font-family:'Cormorant Garamond',serif;font-size:clamp(28px,3.5vw,42px);font-weight:300;color:var(--text)">Elles nous font confiance.</h2>
+      <div class="temo-grid">
+        <div class="temo-card">
+          <div class="temo-stars">✦✦✦✦✦</div>
+          <div class="temo-text">"Un soin du visage absolument divin. Mes amies me demandent toutes ce que j'ai fait, j'ai la peau lumineuse depuis !"</div>
+          <div class="temo-author">Camille R.</div>
+          <div class="temo-detail">Soin visage éclat · Cliente depuis 2 ans</div>
+        </div>
+        <div class="temo-card">
+          <div class="temo-stars">✦✦✦✦✦</div>
+          <div class="temo-text">"L'ambiance est magnifique, on se sent vraiment chouchoutée. Les prothésistes ongulaires sont des artistes !"</div>
+          <div class="temo-author">Sophie M.</div>
+          <div class="temo-detail">Pose ongles gel · Cliente régulière</div>
+        </div>
+        <div class="temo-card">
+          <div class="temo-stars">✦✦✦✦✦</div>
+          <div class="temo-text">"J'y vais pour le massage mais je repars toujours avec plein d'autres soins tellement c'est agréable. Adresse incontournable."</div>
+          <div class="temo-author">Laura D.</div>
+          <div class="temo-detail">Massage relaxant · Cliente depuis 3 ans</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <footer>
+    <div class="logo" style="font-family:'Cormorant Garamond',serif;font-size:20px;letter-spacing:0.14em;text-transform:uppercase">Rosa<span style="color:var(--rose-dark)">.</span></div>
+    <p>© 2026 Rosa Institut · Paris 16e</p>
+    <div class="footer-credit">Site par <a href="https://youdesk.vercel.app">Youdesk</a></div>
+  </footer>
+</div>
+
+<!-- SOINS -->
+<div id="section-soins" class="page">
+  <div class="section">
+    <div class="ornament"><div class="ornament-line"></div><div class="ornament-text">Nos prestations</div></div>
+    <h2>Nos soins.</h2>
+    <p class="section-desc">Des soins pensés pour vous, réalisés avec des produits premium sélectionnés avec soin.</p>
+    <div class="soins-tabs">
+      <div class="soin-tab active" onclick="showTab('visage',this)">Visage</div>
+      <div class="soin-tab" onclick="showTab('corps',this)">Corps</div>
+      <div class="soin-tab" onclick="showTab('ongles',this)">Ongles</div>
+      <div class="soin-tab" onclick="showTab('epilation',this)">Épilation</div>
+    </div>
+
+    <div id="tab-visage" class="soins-content active">
+      <div class="soins-grid">
+        <div class="soin-card">
+          <span class="soin-ico">✨</span>
+          <h3>Soin éclat</h3>
+          <p>Nettoyage en profondeur, exfoliation douce, masque lumineux. Teint unifié et peau rayonnante.</p>
+          <div class="soin-details">
+            <div class="soin-detail"><span class="soin-detail-name">Soin express 30min</span><span class="soin-detail-price">55€</span></div>
+            <div class="soin-detail"><span class="soin-detail-name">Soin complet 60min</span><span class="soin-detail-price">85€</span></div>
+          </div>
+        </div>
+        <div class="soin-card featured">
+          <span class="soin-ico">🌹</span>
+          <h3>Soin signature Rosa</h3>
+          <p>Notre soin phare. Rituel complet avec massage crânien, modelage du visage et masque à la rose.</p>
+          <div class="soin-details">
+            <div class="soin-detail"><span class="soin-detail-name">Rituel complet 90min</span><span class="soin-detail-price">130€</span></div>
+          </div>
+        </div>
+        <div class="soin-card">
+          <span class="soin-ico">💆</span>
+          <h3>Anti-âge</h3>
+          <p>Soin raffermissant avec actifs anti-rides, massage lifting et masque repulpant à l'acide hyaluronique.</p>
+          <div class="soin-details">
+            <div class="soin-detail"><span class="soin-detail-name">Soin anti-âge 75min</span><span class="soin-detail-price">110€</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div id="tab-corps" class="soins-content">
+      <div class="soins-grid">
+        <div class="soin-card">
+          <span class="soin-ico">🌿</span>
+          <h3>Massage relaxant</h3>
+          <p>Massage suédois aux huiles essentielles. Détente musculaire profonde et apaisement du système nerveux.</p>
+          <div class="soin-details">
+            <div class="soin-detail"><span class="soin-detail-name">30 minutes</span><span class="soin-detail-price">55€</span></div>
+            <div class="soin-detail"><span class="soin-detail-name">60 minutes</span><span class="soin-detail-price">90€</span></div>
+          </div>
+        </div>
+        <div class="soin-card featured">
+          <span class="soin-ico">🛁</span>
+          <h3>Gommage + Enveloppement</h3>
+          <p>Exfoliation corps complète suivie d'un enveloppement nourrissant. Peau soyeuse et hydratée.</p>
+          <div class="soin-details">
+            <div class="soin-detail"><span class="soin-detail-name">Rituel 90min</span><span class="soin-detail-price">120€</span></div>
+          </div>
+        </div>
+        <div class="soin-card">
+          <span class="soin-ico">✦</span>
+          <h3>Modelage minceur</h3>
+          <p>Techniques de drainage et palper-rouler pour affiner la silhouette et réduire la cellulite.</p>
+          <div class="soin-details">
+            <div class="soin-detail"><span class="soin-detail-name">Séance 60min</span><span class="soin-detail-price">95€</span></div>
+            <div class="soin-detail"><span class="soin-detail-name">Cure 5 séances</span><span class="soin-detail-price">420€</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div id="tab-ongles" class="soins-content">
+      <div class="soins-grid">
+        <div class="soin-card">
+          <span class="soin-ico">💅</span>
+          <h3>Manucure</h3>
+          <p>Soin complet des mains, pose de vernis semi-permanent au choix parmi +200 couleurs.</p>
+          <div class="soin-details">
+            <div class="soin-detail"><span class="soin-detail-name">Manucure simple</span><span class="soin-detail-price">35€</span></div>
+            <div class="soin-detail"><span class="soin-detail-name">Semi-permanent</span><span class="soin-detail-price">45€</span></div>
+          </div>
+        </div>
+        <div class="soin-card featured">
+          <span class="soin-ico">✨</span>
+          <h3>Pose gel</h3>
+          <p>Pose d'ongles en gel avec nail art sur mesure. Résultat impeccable et durable jusqu'à 4 semaines.</p>
+          <div class="soin-details">
+            <div class="soin-detail"><span class="soin-detail-name">Pose gel</span><span class="soin-detail-price">65€</span></div>
+            <div class="soin-detail"><span class="soin-detail-name">Remplissage</span><span class="soin-detail-price">45€</span></div>
+          </div>
+        </div>
+        <div class="soin-card">
+          <span class="soin-ico">🦶</span>
+          <h3>Pédicure</h3>
+          <p>Soin complet des pieds, pose de vernis semi-permanent. Pieds doux et soignés.</p>
+          <div class="soin-details">
+            <div class="soin-detail"><span class="soin-detail-name">Pédicure simple</span><span class="soin-detail-price">40€</span></div>
+            <div class="soin-detail"><span class="soin-detail-name">Semi-permanent</span><span class="soin-detail-price">50€</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div id="tab-epilation" class="soins-content">
+      <div class="soins-grid">
+        <div class="soin-card">
+          <span class="soin-ico">🌸</span>
+          <h3>Épilation à la cire</h3>
+          <p>Cire tiède ou froide selon les zones. Résultats durables, peau douce et sans irritation.</p>
+          <div class="soin-details">
+            <div class="soin-detail"><span class="soin-detail-name">Demi-jambes</span><span class="soin-detail-price">22€</span></div>
+            <div class="soin-detail"><span class="soin-detail-name">Jambes complètes</span><span class="soin-detail-price">38€</span></div>
+            <div class="soin-detail"><span class="soin-detail-name">Maillot classique</span><span class="soin-detail-price">18€</span></div>
+            <div class="soin-detail"><span class="soin-detail-name">Maillot intégral</span><span class="soin-detail-price">35€</span></div>
+          </div>
+        </div>
+        <div class="soin-card featured">
+          <span class="soin-ico">✦</span>
+          <h3>Corps complet</h3>
+          <p>Épilation complète du corps. Jambes, bras, aisselles, maillot. Forfait tout inclus.</p>
+          <div class="soin-details">
+            <div class="soin-detail"><span class="soin-detail-name">Corps complet</span><span class="soin-detail-price">85€</span></div>
+          </div>
+        </div>
+        <div class="soin-card">
+          <span class="soin-ico">💆</span>
+          <h3>Sourcils & Visage</h3>
+          <p>Épilation et mise en forme des sourcils, duvet, lèvre supérieure.</p>
+          <div class="soin-details">
+            <div class="soin-detail"><span class="soin-detail-name">Sourcils</span><span class="soin-detail-price">12€</span></div>
+            <div class="soin-detail"><span class="soin-detail-name">Lèvre supérieure</span><span class="soin-detail-price">8€</span></div>
+            <div class="soin-detail"><span class="soin-detail-name">Visage complet</span><span class="soin-detail-price">25€</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <footer>
+    <div class="logo" style="font-family:'Cormorant Garamond',serif;font-size:20px;letter-spacing:0.14em;text-transform:uppercase">Rosa<span style="color:var(--rose-dark)">.</span></div>
+    <p>© 2026 Rosa Institut · Paris 16e</p>
+    <div class="footer-credit">Site par <a href="https://youdesk.vercel.app">Youdesk</a></div>
+  </footer>
+</div>
+
+<!-- RESERVATION -->
+<div id="section-reservation" class="page">
+  <div class="resa-wrap">
+    <div class="resa-grid">
+      <div class="resa-info">
+        <div class="ornament"><div class="ornament-line"></div><div class="ornament-text">Prise de RDV</div></div>
+        <h2>Réservez<br>votre moment.</h2>
+        <p>Choisissez votre soin, votre créneau et laissez-vous chouchouter. Confirmation immédiate.</p>
+        <div class="horaires">
+          <div class="horaire-row"><span class="horaire-jour">Lundi</span><span class="horaire-closed">Fermé</span></div>
+          <div class="horaire-row"><span class="horaire-jour">Mardi — Vendredi</span><span class="horaire-heure">10h — 19h</span></div>
+          <div class="horaire-row"><span class="horaire-jour">Samedi</span><span class="horaire-heure">9h — 18h</span></div>
+          <div class="horaire-row"><span class="horaire-jour">Dimanche</span><span class="horaire-closed">Fermé</span></div>
+        </div>
+      </div>
+      <div class="resa-form">
+        <div id="resa-content">
+          <div class="frow">
+            <div class="fgroup"><label>Prénom</label><input type="text" placeholder="Sophie"></div>
+            <div class="fgroup"><label>Nom</label><input type="text" placeholder="Martin"></div>
+          </div>
+          <div class="fgroup"><label>Téléphone</label><input type="tel" placeholder="+33 6 00 00 00 00"></div>
+          <div class="fgroup">
+            <label>Soin souhaité</label>
+            <select>
+              <option value="" disabled selected>Choisissez votre soin</option>
+              <optgroup label="Visage">
+                <option>Soin éclat express — 55€</option>
+                <option>Soin éclat complet — 85€</option>
+                <option>Soin signature Rosa — 130€</option>
+                <option>Soin anti-âge — 110€</option>
+              </optgroup>
+              <optgroup label="Corps">
+                <option>Massage relaxant 30min — 55€</option>
+                <option>Massage relaxant 60min — 90€</option>
+                <option>Gommage + Enveloppement — 120€</option>
+              </optgroup>
+              <optgroup label="Ongles">
+                <option>Manucure simple — 35€</option>
+                <option>Semi-permanent — 45€</option>
+                <option>Pose gel — 65€</option>
+              </optgroup>
+              <optgroup label="Épilation">
+                <option>Sourcils — 12€</option>
+                <option>Demi-jambes — 22€</option>
+                <option>Jambes complètes — 38€</option>
+                <option>Corps complet — 85€</option>
+              </optgroup>
+            </select>
+          </div>
+          <div class="frow">
+            <div class="fgroup"><label>Date</label><input type="date"></div>
+            <div class="fgroup">
+              <label>Créneau</label>
+              <select>
+                <option value="" disabled selected>Heure</option>
+                <option>10:00</option><option>10:30</option><option>11:00</option>
+                <option>11:30</option><option>14:00</option><option>14:30</option>
+                <option>15:00</option><option>15:30</option><option>16:00</option>
+                <option>16:30</option><option>17:00</option><option>17:30</option>
+              </select>
+            </div>
+          </div>
+          <button class="btn-resa" onclick="submitResa()">Confirmer mon rendez-vous</button>
+          <p class="resa-note">Confirmation immédiate · Annulation gratuite 24h avant</p>
+        </div>
+        <div class="resa-success" id="resa-success">
+          <span class="ico">🌸</span>
+          <h3>RDV confirmé !</h3>
+          <p>À très bientôt chez Rosa.<br>Un email de confirmation vous a été envoyé.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+  <footer>
+    <div class="logo" style="font-family:'Cormorant Garamond',serif;font-size:20px;letter-spacing:0.14em;text-transform:uppercase">Rosa<span style="color:var(--rose-dark)">.</span></div>
+    <p>© 2026 Rosa Institut · Paris 16e</p>
+    <div class="footer-credit">Site par <a href="https://youdesk.vercel.app">Youdesk</a></div>
+  </footer>
+</div>
+
+<!-- CONTACT -->
+<div id="section-contact" class="page">
+  <div class="contact-wrap">
+    <div class="contact-inner">
+      <div>
+        <div class="ornament"><div class="ornament-line"></div><div class="ornament-text">Nous trouver</div></div>
+        <h2 style="font-family:'Cormorant Garamond',serif;font-size:40px;font-weight:300;color:var(--text);margin-bottom:14px">Venez nous<br>rendre visite.</h2>
+        <p style="font-family:'Cormorant Garamond',serif;font-style:italic;font-size:15px;color:var(--muted);line-height:1.7;margin-bottom:28px">Dans un cadre chaleureux et élégant au cœur du 16e arrondissement.</p>
+        <div class="c-card"><div class="c-ico">📍</div><div><h4>Adresse</h4><p>8 avenue Victor Hugo, 75016 Paris</p></div></div>
+        <div class="c-card"><div class="c-ico">📞</div><div><h4>Téléphone</h4><a href="tel:+33145000000">+33 1 45 00 00 00</a></div></div>
+        <div class="c-card"><div class="c-ico">📱</div><div><h4>Instagram</h4><a href="#">@rosa.institut</a></div></div>
+        <div class="c-card"><div class="c-ico">⏱</div><div><h4>Horaires</h4><p>Mar–Ven 10h–19h · Sam 9h–18h</p></div></div>
+      </div>
+      <div class="map-placeholder">
+        <span>🗺️</span>
+        <p>8 avenue Victor Hugo, Paris 16e</p>
+      </div>
+    </div>
+  </div>
+  <footer>
+    <div class="logo" style="font-family:'Cormorant Garamond',serif;font-size:20px;letter-spacing:0.14em;text-transform:uppercase">Rosa<span style="color:var(--rose-dark)">.</span></div>
+    <p>© 2026 Rosa Institut · Paris 16e</p>
+    <div class="footer-credit">Site par <a href="https://youdesk.vercel.app">Youdesk</a></div>
+  </footer>
+</div>
+
+<script>
+function showSection(name) {
+  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+  document.getElementById('section-' + name).classList.add('active');
+  window.scrollTo(0, 0);
+}
+
+function showTab(name, el) {
+  document.querySelectorAll('.soins-content').forEach(t => t.classList.remove('active'));
+  document.querySelectorAll('.soin-tab').forEach(t => t.classList.remove('active'));
+  document.getElementById('tab-' + name).classList.add('active');
+  el.classList.add('active');
+}
+
+function submitResa() {
+  document.getElementById('resa-content').style.display = 'none';
+  document.getElementById('resa-success').style.display = 'block';
+}
+</script>
+</body>
+</html>
