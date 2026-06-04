@@ -187,6 +187,35 @@ footer p { font-size:12px; color:var(--muted2); font-weight:300; }
 @keyframes fadeUp { from{opacity:0;transform:translateY(18px)} to{opacity:1;transform:translateY(0)} }
 .fade{animation:fadeUp 0.5s ease both}
 .fade-1{animation-delay:.05s}.fade-2{animation-delay:.15s}.fade-3{animation-delay:.25s}.fade-4{animation-delay:.35s}
+
+@media (max-width: 768px) {
+  nav { padding: 0 20px; }
+  .nav-links { display: none; }
+  .nav-hamburger { display: flex !important; flex-direction: column; gap: 5px; cursor: pointer; padding: 8px; }
+  .nav-hamburger span { width: 22px; height: 2px; background: var(--text); border-radius: 2px; display: block; }
+  .nav-mobile { display: none; position: fixed; top: 64px; left: 0; right: 0; background: rgba(247,245,242,0.98); border-bottom: 1px solid var(--border); padding: 16px 20px; z-index: 99; flex-direction: column; gap: 4px; }
+  .nav-mobile.open { display: flex; }
+  .nav-mobile a { color: var(--muted); text-decoration: none; font-size: 15px; padding: 12px 16px; border-radius: 6px; }
+  .nav-mobile .cta-mob { background: var(--green); color: white !important; text-align: center; margin-top: 8px; font-weight: 500; border-radius: 6px; }
+
+  .hero { grid-template-columns: 1fr; min-height: auto; }
+  .hero-left { padding: 48px 20px 40px; }
+  .hero h1 { font-size: 42px; }
+  .hero-right { display: none; }
+  .hero-btns { flex-direction: column; }
+  .btn-green, .btn-outline { width: 100%; }
+
+  .section { padding: 48px 20px; }
+  .prog-grid { grid-template-columns: 1fr; }
+  .temo-grid { grid-template-columns: 1fr; }
+  .temoignages-inner { padding: 0 20px; }
+
+  .contact-grid { grid-template-columns: 1fr; gap: 32px; }
+  .contact-section { padding: 48px 20px; }
+  .frow { grid-template-columns: 1fr; }
+  footer { padding: 20px; flex-direction: column; gap: 8px; text-align: center; font-size: 11px; }
+}
+
 </style>
 </head>
 <body>
@@ -198,7 +227,9 @@ footer p { font-size:12px; color:var(--muted2); font-weight:300; }
     <li><a href="#" onclick="showSection('programmes')">Programmes</a></li>
     <li><a href="#" onclick="showSection('contact')" class="nav-cta">Me contacter</a></li>
   </ul>
+  <div class="nav-hamburger" style="display:none" onclick="toggleMobileMenu()"><span></span><span></span><span></span></div>
 </nav>
+<div class="nav-mobile" id="nav-mobile"><a href="#" onclick="showSection('accueil');closeMobileMenu()">Accueil</a><a href="#" onclick="showSection('programmes');closeMobileMenu()">Programmes</a><a href="#" onclick="showSection('contact');closeMobileMenu()" class="cta-mob">Me contacter</a></div>
 
 <!-- ACCUEIL -->
 <div id="section-accueil" class="page active">
@@ -362,6 +393,14 @@ footer p { font-size:12px; color:var(--muted2); font-weight:300; }
 </div>
 
 <script>
+
+function toggleMobileMenu() {
+  document.getElementById('nav-mobile').classList.toggle('open');
+}
+function closeMobileMenu() {
+  document.getElementById('nav-mobile').classList.remove('open');
+}
+
 function showSection(name) {
   document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
   document.getElementById('section-' + name).classList.add('active');

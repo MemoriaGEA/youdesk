@@ -211,6 +211,35 @@ nav {
   white-space:nowrap; display:flex; align-items:center; gap:8px;
 }
 .toast.show { transform:translateX(-50%) translateY(0); }
+
+@media (max-width: 768px) {
+  nav { padding: 0 16px; }
+  .nav-info { display: none; }
+  .logo { font-size: 20px; }
+  .cart-btn { padding: 8px 14px; font-size: 12px; }
+
+  .hero-banner { padding: 36px 20px; }
+  .hero-banner h1 { font-size: 44px; }
+  .hero-emoji { display: none; }
+
+  .menu-section { padding: 24px 16px; }
+  .categories { gap: 6px; }
+  .cat-btn { padding: 7px 14px; font-size: 12px; }
+  .products-grid { grid-template-columns: 1fr 1fr; gap: 10px; }
+  .product-img { height: 110px; font-size: 40px; }
+  .product-name { font-size: 13px; }
+  .product-desc { display: none; }
+  .product-price { font-size: 18px; }
+
+  .cart-panel { width: 100%; right: -100%; }
+  .cart-panel.open { right: 0; }
+
+  .checkout-overlay { padding: 0; align-items: flex-end; }
+  .checkout-modal { border-radius: 16px 16px 0 0; max-height: 90vh; overflow-y: auto; }
+
+  .payment-methods { grid-template-columns: 1fr 1fr; }
+}
+
 </style>
 </head>
 <body>
