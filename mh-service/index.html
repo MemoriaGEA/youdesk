@@ -33,17 +33,17 @@ nav{position:fixed;top:0;left:0;right:0;z-index:1000;background:rgba(255,255,255
 
 /* LEFT */
 .hero-left{display:flex;flex-direction:column;gap:16px;}
-.hero-logo-badge{display:flex;align-items:center;gap:14px;background:var(--light);border:1.5px solid #e5e7eb;border-radius:12px;padding:16px 20px;}
-.hero-logo-badge img{height:56px;width:auto;object-fit:contain;}
-.hero-badge-text{color:var(--blue);font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:18px;letter-spacing:1px;}
+.hero-logo-badge{display:flex;align-items:center;gap:16px;background:none;border:none;padding:8px 0 16px 0;}
+.hero-logo-badge img{height:72px;width:auto;object-fit:contain;}
+.hero-badge-text{color:var(--blue);font-family:'Barlow Condensed',sans-serif;font-weight:800;font-size:22px;letter-spacing:1px;}
 .hero-badge-text span{color:var(--orange);}
-.hero-badge-sub{color:var(--gray);font-size:12px;letter-spacing:2px;text-transform:uppercase;margin-top:2px;}
+.hero-badge-sub{color:var(--gray);font-size:13px;letter-spacing:2px;text-transform:uppercase;margin-top:4px;}
 .hero-cards{display:grid;grid-template-columns:1fr 1fr;gap:10px;}
-.hero-card{background:white;border:1.5px solid #e5e7eb;border-radius:10px;padding:14px 16px;transition:all .2s;box-shadow:0 2px 8px rgba(26,63,160,0.06);}
+.hero-card{background:white;border:1.5px solid #e5e7eb;border-radius:12px;padding:20px 18px;transition:all .2s;box-shadow:0 2px 8px rgba(26,63,160,0.06);}
 .hero-card:hover{border-color:var(--blue);}
-.hero-card-icon{font-size:22px;margin-bottom:6px;}
-.hero-card-title{font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:13px;letter-spacing:1px;text-transform:uppercase;color:var(--orange);}
-.hero-card-val{font-size:13px;color:var(--gray);margin-top:2px;}
+.hero-card-icon{font-size:28px;margin-bottom:8px;}
+.hero-card-title{font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:14px;letter-spacing:1px;text-transform:uppercase;color:var(--orange);}
+.hero-card-val{font-size:14px;color:var(--gray);margin-top:4px;}
 
 /* RIGHT */
 .hero-right{}
@@ -238,6 +238,11 @@ footer{background:var(--dark);color:white;padding:48px 40px 24px;}
   nav{padding:0 16px;height:64px;}
   .nav-links{display:none;}
   .hamburger{display:flex;}
+  .hero-logo-badge img{height:56px;}
+  .hero-badge-text{font-size:18px;}
+  .hero-cards{grid-template-columns:1fr 1fr;}
+  .hero-card{padding:16px 14px;}
+  .hero-card-icon{font-size:24px;}
   .nav-cta{padding:9px 14px;font-size:13px;}
   .hero-inner{grid-template-columns:1fr;gap:28px;padding:30px 20px;}
   .hero-left{order:2;}
@@ -358,7 +363,7 @@ footer{background:var(--dark);color:white;padding:48px 40px 24px;}
         </div>
         <div class="scard" onclick="showPage('installation')">
           <div class="scard-head"><div class="scard-badge">Clim &amp; &Eacute;lec</div><div class="scard-icon">&#128268;</div><div class="scard-title">Installation</div></div>
-          <div class="scard-body"><p class="scard-desc">Installation de climatisation et travaux &eacute;lectriques. Pose propre et garantie.</p><ul class="scard-list"><li>Pose de climatisation split</li><li>Spots, prises, &eacute;clairage</li><li>Raccordement &eacute;lectrique</li><li>Travail soign&eacute; &amp; garanti</li></ul><div class="scard-link">Voir le service &rarr;</div></div>
+          <div class="scard-body"><p class="scard-desc">Installation de climatisation et travaux &eacute;lectriques. Pose propre et garantie.</p><ul class="scard-list"><li>Pose de climatisation murale</li><li>Spots, prises, &eacute;clairage</li><li>Raccordement &eacute;lectrique</li><li>Travail soign&eacute; &amp; garanti</li></ul><div class="scard-link">Voir le service &rarr;</div></div>
         </div>
       </div>
     </div>
@@ -420,7 +425,7 @@ footer{background:var(--dark);color:white;padding:48px 40px 24px;}
           <div class="footer-brand-name">MH <span>SERVICE</span></div>
           <div class="footer-brand-sub">Expert clim &amp; &eacute;lec &mdash; Paris &amp; IDF</div>
           <p class="footer-brand-desc">Bas&eacute;s &agrave; Paris, nous intervenons dans toute l&apos;&Icirc;le-de-France pour vos besoins en climatisation et &eacute;lectricit&eacute;.</p>
-          <p class="footer-brand-contact">Snap : clim.sos &nbsp;|&nbsp; 06 66 60 75 50</p>
+          <p class="footer-brand-contact">06 66 60 75 50</p>
         </div>
         <div class="footer-col"><h5>Services</h5><a onclick="showPage('depannage')">D&eacute;pannage</a><a onclick="showPage('entretien')">Entretien</a><a onclick="showPage('installation')">Installation</a><a onclick="openDevis()">Devis gratuit</a></div>
         <div class="footer-col"><h5>Zone</h5><a>Paris (75)</a><a>Seine-et-Marne (77)</a><a>Yvelines (78)</a><a>Essonne (91)</a><a>Hauts-de-Seine (92)</a><a>Val-de-Marne (94)</a></div>
@@ -461,7 +466,7 @@ footer{background:var(--dark);color:white;padding:48px 40px 24px;}
         <p>Disponibles maintenant &mdash; on d&eacute;croche, on r&eacute;pond, on intervient.</p>
         <div class="urgence-phones">
           <a href="tel:0666607550" class="phone-btn">06 66 60 75 50</a>
-          <a href="https://snapchat.com/add/clim.sos" target="_blank" class="phone-btn alt">Snap : clim.sos</a>
+          
         </div>
       </div>
     </div>
