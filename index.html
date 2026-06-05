@@ -3,1034 +3,609 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Youdesk — Votre présence digitale</title>
-<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500&display=swap" rel="stylesheet">
+<title>Youdesk — Maquette</title>
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500;9..40,600&display=swap" rel="stylesheet">
 <style>
 :root {
-  --bg:      #919191;
-  --bg2:     #a0a0a0;
-  --bg3:     #888888;
-  --card:    #f4f4f4;
-  --card2:   #ebebeb;
-  --navy:    #0f2340;
-  --navy2:   #1a3560;
-  --text:    #111111;
-  --muted:   #444444;
-  --muted2:  #777777;
-  --border:  rgba(0,0,0,0.10);
-  --border2: rgba(0,0,0,0.18);
-  --white:   #ffffff;
+  --white: #ffffff;
+  --bg: #f8f8f8;
+  --bg2: #f0f0f0;
+  --navy: #0f2340;
+  --navy2: #1a3560;
+  --navy-light: rgba(15,35,64,0.06);
+  --text: #0a0a0a;
+  --muted: #555555;
+  --muted2: #999999;
+  --border: rgba(0,0,0,0.08);
+  --border2: rgba(0,0,0,0.14);
 }
 
 * { margin:0; padding:0; box-sizing:border-box; }
 html { scroll-behavior:smooth; }
-
-body {
-  font-family: 'DM Sans', sans-serif;
-  background: var(--bg);
-  color: var(--text);
-  overflow-x: hidden;
-  -webkit-font-smoothing: antialiased;
-}
+body { font-family:'DM Sans',sans-serif; background:var(--white); color:var(--text); -webkit-font-smoothing:antialiased; }
 
 /* NAV */
 nav {
-  position: fixed;
-  top: 0; left: 0; right: 0;
-  z-index: 100;
-  height: 64px;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 0 48px;
-  background: rgba(145,145,145,0.92);
-  backdrop-filter: blur(16px);
-  border-bottom: 1px solid var(--border);
+  position:sticky; top:0; z-index:100;
+  height:64px; display:flex; align-items:center; justify-content:space-between;
+  padding:0 52px; background:var(--white);
+  border-bottom:1px solid var(--border);
 }
-
-.logo {
-  font-family: 'Instrument Serif', serif;
-  font-size: 20px;
-  color: var(--white);
-  cursor: pointer;
-  letter-spacing: -0.01em;
-}
-
+.logo { font-family:'Instrument Serif',serif; font-size:20px; color:var(--text); letter-spacing:-0.01em; }
 .nav-links { display:flex; align-items:center; gap:4px; list-style:none; }
-
-.nav-links a {
-  color: rgba(255,255,255,0.7);
-  text-decoration: none;
-  font-size: 13.5px;
-  font-weight: 400;
-  padding: 7px 14px;
-  border-radius: 6px;
-  transition: color 0.15s, background 0.15s;
-}
-.nav-links a:hover { color: var(--white); background: rgba(255,255,255,0.1); }
-.nav-links a.active { color: var(--white); }
-
-.nav-links .cta-link {
-  background: var(--navy);
-  color: var(--white) !important;
-  font-weight: 500;
-  padding: 7px 18px;
-}
-.nav-links .cta-link:hover { background: var(--navy2); }
-
-/* PAGES */
-.page { display:none; min-height:100vh; padding-top:64px; }
-.page.active { display:block; }
+.nav-links a { color:var(--muted); text-decoration:none; font-size:13.5px; padding:7px 14px; border-radius:6px; transition:color 0.15s; }
+.nav-links a:hover { color:var(--text); }
+.nav-cta { background:var(--navy) !important; color:var(--white) !important; font-weight:500 !important; border-radius:7px !important; }
+.nav-cta:hover { background:var(--navy2) !important; }
 
 /* HERO */
 .hero {
-  padding: 90px 48px 60px;
-  max-width: 1080px;
+  padding: 90px 52px 80px;
+  max-width: 1100px;
   margin: 0 auto;
+  display: grid;
+  grid-template-columns: 1.1fr 1fr;
+  gap: 80px;
+  align-items: center;
 }
 
-.hero-eyebrow {
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-  font-size: 11.5px;
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
-  color: rgba(255,255,255,0.6);
-  margin-bottom: 28px;
+.hero-left {}
+
+.hero-badge {
+  display:inline-flex; align-items:center; gap:8px;
+  background:var(--navy-light); border:1px solid rgba(15,35,64,0.12);
+  border-radius:20px; padding:6px 14px;
+  font-size:12px; color:var(--navy); font-weight:500;
+  margin-bottom:28px; letter-spacing:0.02em;
 }
-.hero-eyebrow::before {
-  content:'';
-  width:18px; height:1px;
-  background: rgba(255,255,255,0.4);
-}
+.hero-badge-dot { width:7px; height:7px; border-radius:50%; background:var(--navy); }
 
 .hero h1 {
-  font-family: 'Instrument Serif', serif;
-  font-size: clamp(46px, 6vw, 76px);
-  line-height: 1.05;
-  letter-spacing: -0.02em;
-  color: var(--white);
-  max-width: 680px;
-  margin-bottom: 24px;
+  font-family:'Instrument Serif',serif;
+  font-size:clamp(44px,5vw,68px);
+  line-height:1.06; letter-spacing:-0.02em;
+  color:var(--text); margin-bottom:20px;
 }
-.hero h1 em { font-style:italic; color: rgba(255,255,255,0.55); }
+.hero h1 em { font-style:italic; color:var(--navy); }
 
-.hero-sub {
-  font-size: 16px;
-  line-height: 1.7;
-  color: rgba(255,255,255,0.65);
-  max-width: 460px;
-  margin-bottom: 44px;
-  font-weight: 300;
+.hero-desc {
+  font-size:16px; line-height:1.75; color:var(--muted);
+  max-width:440px; margin-bottom:40px; font-weight:300;
 }
 
-.hero-actions { display:flex; gap:12px; flex-wrap:wrap; }
+.hero-btns { display:flex; gap:12px; flex-wrap:wrap; margin-bottom:48px; }
+.btn-navy { background:var(--navy); color:var(--white); padding:13px 28px; border:none; border-radius:8px; font-family:'DM Sans',sans-serif; font-size:14px; font-weight:500; cursor:pointer; transition:background 0.15s; }
+.btn-navy:hover { background:var(--navy2); }
+.btn-outline { background:transparent; color:var(--text); padding:13px 28px; border:1.5px solid var(--border2); border-radius:8px; font-family:'DM Sans',sans-serif; font-size:14px; cursor:pointer; transition:all 0.15s; }
+.btn-outline:hover { border-color:var(--text); }
 
-.btn {
-  font-family: 'DM Sans', sans-serif;
-  font-size: 14px;
-  font-weight: 500;
-  padding: 12px 28px;
-  border-radius: 8px;
-  border: none;
-  cursor: pointer;
-  transition: all 0.15s;
+.hero-social-proof {
+  display:flex; align-items:center; gap:16px;
+  padding-top:28px; border-top:1px solid var(--border);
 }
-.btn-white { background:var(--white); color:var(--navy); }
-.btn-white:hover { background:#e8e8e8; }
-.btn-ghost { background:rgba(255,255,255,0.12); color:var(--white); border:1px solid rgba(255,255,255,0.2); }
-.btn-ghost:hover { background:rgba(255,255,255,0.2); }
-
-/* MOCKUP */
-.mockup-section {
-  padding: 0 48px 80px;
-  max-width: 1080px;
-  margin: 0 auto;
+.proof-avatars { display:flex; }
+.proof-avatar {
+  width:32px; height:32px; border-radius:50%;
+  background:var(--bg2); border:2px solid var(--white);
+  margin-left:-8px; display:flex; align-items:center; justify-content:center;
+  font-size:14px;
 }
+.proof-avatar:first-child { margin-left:0; }
+.proof-text { font-size:13px; color:var(--muted); font-weight:300; }
+.proof-text strong { color:var(--text); font-weight:500; }
 
-.mockup-wrap {
-  background: var(--card);
-  border: 1px solid var(--border);
-  border-radius: 16px;
-  overflow: hidden;
-  box-shadow: 0 20px 60px rgba(0,0,0,0.15);
-}
+/* Hero right — browser mockup */
+.hero-right {}
 
-.mockup-topbar {
-  padding: 12px 18px;
-  background: var(--card2);
-  border-bottom: 1px solid var(--border);
-  display: flex;
-  align-items: center;
-  gap: 10px;
-}
-.dots { display:flex; gap:6px; }
-.dot { width:10px; height:10px; border-radius:50%; }
-.dot:nth-child(1){ background:#ff5f57; }
-.dot:nth-child(2){ background:#febc2e; }
-.dot:nth-child(3){ background:#28c840; }
-
-.url-bar {
-  background: rgba(0,0,0,0.06);
-  border-radius: 5px;
-  padding: 4px 12px;
-  font-size: 12px;
-  color: var(--muted2);
-  max-width: 340px;
+.browser-mockup {
+  background:var(--white);
+  border:1px solid var(--border2);
+  border-radius:14px;
+  overflow:hidden;
+  box-shadow:0 24px 64px rgba(0,0,0,0.1), 0 4px 16px rgba(0,0,0,0.06);
 }
 
-.mockup-inner {
-  display: grid;
-  grid-template-columns: 210px 1fr;
-  min-height: 320px;
+.browser-bar {
+  background:var(--bg);
+  padding:11px 16px;
+  display:flex;
+  align-items:center;
+  gap:10px;
+  border-bottom:1px solid var(--border);
+}
+.b-dots { display:flex; gap:5px; }
+.b-dot { width:10px; height:10px; border-radius:50%; }
+.b-dot-r { background:#ff5f57; }
+.b-dot-y { background:#febc2e; }
+.b-dot-g { background:#28c840; }
+.b-url {
+  flex:1; background:var(--white); border:1px solid var(--border);
+  border-radius:5px; padding:4px 12px; font-size:11.5px; color:var(--muted2);
 }
 
-.sidebar {
-  background: var(--navy);
-  padding: 22px 14px;
-}
-.sidebar-logo {
-  font-family: 'Instrument Serif', serif;
-  font-size: 15px;
-  color: var(--white);
-  padding: 0 8px 18px;
-  border-bottom: 1px solid rgba(255,255,255,0.1);
-  margin-bottom: 14px;
-}
-.sidebar-item {
-  padding: 8px 10px;
-  border-radius: 6px;
-  font-size: 13px;
-  color: rgba(255,255,255,0.45);
-  margin-bottom: 3px;
-  display: flex;
-  align-items: center;
-  gap: 9px;
-  cursor: default;
-}
-.sidebar-item.active { background: rgba(255,255,255,0.1); color: var(--white); }
-.s-dot { width:5px; height:5px; border-radius:50%; background: rgba(255,255,255,0.2); flex-shrink:0; }
-.sidebar-item.active .s-dot { background: #4a90d9; }
+.browser-content { padding:20px; }
 
-.dash-main { padding: 26px; background: var(--white); }
-.dash-title { font-size: 14px; font-weight: 500; color: var(--text); margin-bottom: 18px; }
+/* Simulated website in browser */
+.sim-header {
+  background:var(--navy);
+  border-radius:6px; padding:12px 14px;
+  display:flex; justify-content:space-between; align-items:center;
+  margin-bottom:12px;
+}
+.sim-logo { font-family:'Instrument Serif',serif; font-size:13px; color:white; }
+.sim-nav { display:flex; gap:8px; }
+.sim-nav-item { width:28px; height:6px; background:rgba(255,255,255,0.3); border-radius:3px; }
 
-.dash-stats {
-  display: grid;
-  grid-template-columns: repeat(3,1fr);
-  gap: 10px;
-  margin-bottom: 16px;
+.sim-hero {
+  background:var(--bg);
+  border-radius:6px; padding:16px;
+  margin-bottom:10px;
 }
-.stat-box {
-  background: var(--card2);
-  border: 1px solid var(--border);
-  border-radius: 8px;
-  padding: 13px 14px;
-}
-.stat-num {
-  font-family: 'Instrument Serif', serif;
-  font-size: 24px;
-  color: var(--navy);
-  line-height: 1;
-  margin-bottom: 3px;
-}
-.stat-lbl { font-size: 11px; color: var(--muted2); letter-spacing: 0.04em; }
+.sim-title { width:70%; height:10px; background:var(--text); border-radius:3px; margin-bottom:6px; opacity:0.8; }
+.sim-title-2 { width:50%; height:10px; background:var(--text); border-radius:3px; margin-bottom:12px; opacity:0.8; }
+.sim-desc { width:90%; height:6px; background:var(--muted2); border-radius:3px; margin-bottom:4px; opacity:0.5; }
+.sim-desc-2 { width:75%; height:6px; background:var(--muted2); border-radius:3px; margin-bottom:14px; opacity:0.5; }
+.sim-btns { display:flex; gap:8px; }
+.sim-btn { height:24px; border-radius:5px; }
+.sim-btn-1 { width:80px; background:var(--navy); }
+.sim-btn-2 { width:70px; background:transparent; border:1px solid var(--border2); }
 
-.rdv-list { display:flex; flex-direction:column; gap:7px; }
-.rdv-row {
-  background: var(--card2);
-  border: 1px solid var(--border);
-  border-radius: 7px;
-  padding: 9px 13px;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
-.rdv-name { font-size: 13px; color: var(--text); }
-.rdv-meta { display:flex; align-items:center; gap:8px; }
-.rdv-time { font-size: 12px; color: var(--muted2); }
-.rdv-badge { font-size: 10px; padding: 2px 8px; border-radius: 20px; font-weight:500; }
-.badge-green { background: rgba(52,211,153,0.15); color: #059669; }
-.badge-yellow { background: rgba(245,158,11,0.15); color: #b45309; }
+.sim-cards { display:grid; grid-template-columns:repeat(3,1fr); gap:6px; margin-bottom:10px; }
+.sim-card { background:var(--bg); border:1px solid var(--border); border-radius:6px; padding:10px; }
+.sim-card-ico { width:20px; height:20px; background:var(--navy-light); border-radius:4px; margin-bottom:6px; }
+.sim-card-title { width:60%; height:6px; background:var(--text); border-radius:2px; margin-bottom:4px; opacity:0.7; }
+.sim-card-line { width:90%; height:4px; background:var(--muted2); border-radius:2px; opacity:0.4; }
+.sim-card-line-2 { width:75%; height:4px; background:var(--muted2); border-radius:2px; opacity:0.4; margin-top:3px; }
 
-/* SECTION */
-.section { padding: 72px 48px; max-width: 1080px; margin: 0 auto; }
+.sim-badge {
+  position:absolute; bottom:-12px; right:16px;
+  background:var(--white); border:1px solid var(--border);
+  border-radius:8px; padding:8px 12px;
+  font-size:11px; font-weight:500; color:var(--navy);
+  box-shadow:0 4px 12px rgba(0,0,0,0.08);
+  display:flex; align-items:center; gap:6px;
+}
+
+.browser-wrap { position:relative; }
+
+/* WHAT WE DO */
+.what-section {
+  background:var(--bg);
+  border-top:1px solid var(--border);
+  border-bottom:1px solid var(--border);
+  padding:80px 52px;
+}
+.what-inner { max-width:1100px; margin:0 auto; }
 
 .section-label {
-  font-size: 11px;
-  letter-spacing: 0.14em;
-  text-transform: uppercase;
-  color: rgba(255,255,255,0.5);
-  margin-bottom: 18px;
-  display: flex;
-  align-items: center;
-  gap: 10px;
+  font-size:11px; letter-spacing:0.14em; text-transform:uppercase;
+  color:var(--navy); margin-bottom:16px;
+  display:flex; align-items:center; gap:10px;
 }
-.section-label::before { content:''; width:14px; height:1px; background: rgba(255,255,255,0.3); }
+.section-label::before { content:''; width:16px; height:2px; background:var(--navy); border-radius:1px; }
 
-.section h2 {
-  font-family: 'Instrument Serif', serif;
-  font-size: clamp(30px, 4vw, 44px);
-  line-height: 1.1;
-  letter-spacing: -0.02em;
-  color: var(--white);
-  margin-bottom: 12px;
+.what-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:24px; margin-top:48px; }
+
+.what-card {
+  background:var(--white); border:1px solid var(--border);
+  border-radius:12px; padding:28px 24px;
+  transition:all 0.2s;
 }
+.what-card:hover { border-color:var(--navy); box-shadow:0 8px 24px rgba(15,35,64,0.08); transform:translateY(-2px); }
 
-.section-desc { font-size: 15px; color: rgba(255,255,255,0.6); line-height: 1.7; max-width: 480px; margin-bottom: 48px; font-weight:300; }
-
-.sep { height:1px; background: rgba(255,255,255,0.1); margin: 0 48px; }
-
-/* SERVICES */
-.services {
-  display: grid;
-  grid-template-columns: repeat(3,1fr);
-  border: 1px solid rgba(255,255,255,0.15);
-  border-radius: 12px;
-  overflow: hidden;
+.what-card-num {
+  font-family:'Instrument Serif',serif;
+  font-size:36px; color:var(--navy); opacity:0.15;
+  line-height:1; margin-bottom:16px;
 }
-.svc {
-  background: rgba(255,255,255,0.08);
-  padding: 30px 26px;
-  border-right: 1px solid rgba(255,255,255,0.1);
-  transition: background 0.2s;
+.what-card h3 { font-family:'Instrument Serif',serif; font-size:20px; color:var(--text); margin-bottom:8px; }
+.what-card p { font-size:13.5px; color:var(--muted); line-height:1.65; font-weight:300; }
+.what-card-tag { display:inline-block; margin-top:16px; font-size:11px; color:var(--navy); background:var(--navy-light); padding:4px 10px; border-radius:20px; }
+
+/* EXAMPLES */
+.examples-section { padding:80px 52px; max-width:1100px; margin:0 auto; }
+
+.examples-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:16px; margin-top:48px; }
+
+.example-card {
+  border:1px solid var(--border); border-radius:12px; overflow:hidden;
+  transition:all 0.2s; cursor:pointer;
 }
-.svc:last-child { border-right: none; }
-.svc:hover { background: rgba(255,255,255,0.14); }
-.svc-num { font-family:'Instrument Serif',serif; font-size:13px; color:rgba(255,255,255,0.3); margin-bottom:18px; }
-.svc h3 { font-family:'Instrument Serif',serif; font-size:19px; color:var(--white); margin-bottom:9px; letter-spacing:-0.01em; }
-.svc p { font-size:13.5px; color:rgba(255,255,255,0.55); line-height:1.6; font-weight:300; }
+.example-card:hover { border-color:var(--navy); transform:translateY(-3px); box-shadow:0 12px 32px rgba(0,0,0,0.08); }
 
-/* PORTFOLIO */
-.portfolio-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:14px; }
-
-.p-card {
-  background: var(--card);
-  border: 1px solid var(--border);
-  border-radius: 12px;
-  overflow: hidden;
-  transition: transform 0.2s, box-shadow 0.2s;
-  cursor: pointer;
+.example-preview {
+  height:160px; display:flex; align-items:center; justify-content:center;
+  font-size:44px; position:relative;
 }
-.p-card:hover:not(.soon) { transform: translateY(-3px); box-shadow: 0 12px 32px rgba(0,0,0,0.15); }
-.p-card.soon { opacity: 0.5; pointer-events: none; }
+.preview-barbier { background:linear-gradient(135deg,#0e0e0e,#1f1f1f); }
+.preview-coach { background:linear-gradient(135deg,#f7f5f2,#eeebe6); }
+.preview-resto { background:linear-gradient(135deg,#0a0a0a,#1c1c1c); }
+.preview-fast { background:linear-gradient(135deg,#0f0f0f,#1a1a1a); }
+.preview-esthe { background:linear-gradient(135deg,#fdf0f3,#fae4e9); }
+.preview-artisan { background:linear-gradient(135deg,#f0f4f8,#e8edf2); }
 
-.p-thumb {
-  height: 170px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 40px;
-  background: var(--card2);
-  border-bottom: 1px solid var(--border);
-  position: relative;
-}
-.soon-overlay {
-  position:absolute; inset:0;
-  background: rgba(244,244,244,0.7);
-  display:flex; align-items:center; justify-content:center;
-}
-.soon-pill {
-  font-size:11px; letter-spacing:0.1em; text-transform:uppercase;
-  color:var(--muted); border:1px solid var(--border2);
-  padding:5px 14px; border-radius:20px; background:var(--white);
-}
-.p-info { padding:18px 20px; }
-.p-niche { font-size:11px; letter-spacing:0.1em; text-transform:uppercase; color:var(--muted2); margin-bottom:5px; }
-.p-info h3 { font-family:'Instrument Serif',serif; font-size:19px; color:var(--text); margin-bottom:5px; }
-.p-info p { font-size:13px; color:var(--muted); font-weight:300; line-height:1.5; }
-.p-tags { display:flex; gap:6px; margin-top:10px; flex-wrap:wrap; }
-.p-tag { font-size:11px; color:var(--muted2); border:1px solid var(--border2); padding:3px 10px; border-radius:20px; }
+.example-info { padding:16px 18px; }
+.example-niche { font-size:10.5px; letter-spacing:0.1em; text-transform:uppercase; color:var(--muted2); margin-bottom:4px; }
+.example-name { font-family:'Instrument Serif',serif; font-size:17px; color:var(--text); margin-bottom:4px; }
+.example-desc { font-size:12.5px; color:var(--muted); font-weight:300; }
+.example-link { font-size:12px; color:var(--navy); font-weight:500; margin-top:10px; display:block; }
 
-/* DEVIS */
-.devis-layout { display:grid; grid-template-columns:1fr 1.2fr; gap:64px; align-items:start; }
+/* HOW */
+.how-section { background:var(--navy); padding:80px 52px; }
+.how-inner { max-width:1100px; margin:0 auto; }
+.how-section .section-label { color:rgba(255,255,255,0.4); }
+.how-section .section-label::before { background:rgba(255,255,255,0.3); }
+.how-section h2 { font-family:'Instrument Serif',serif; font-size:clamp(30px,4vw,46px); color:white; margin-bottom:12px; letter-spacing:-0.01em; }
+.how-section .section-desc { color:rgba(255,255,255,0.5); font-size:15px; line-height:1.7; max-width:480px; margin-bottom:52px; font-weight:300; }
 
-.devis-side h2 { font-family:'Instrument Serif',serif; font-size:36px; line-height:1.15; letter-spacing:-0.02em; color:var(--white); margin-bottom:14px; }
-.devis-side > p { font-size:14.5px; color:rgba(255,255,255,0.6); line-height:1.7; font-weight:300; margin-bottom:36px; }
-
-.promises { display:flex; flex-direction:column; gap:10px; }
-.promise { display:flex; gap:14px; align-items:flex-start; padding:14px 16px; background:rgba(255,255,255,0.1); border:1px solid rgba(255,255,255,0.15); border-radius:8px; }
-.promise-ico { font-size:15px; flex-shrink:0; margin-top:1px; }
-.promise h4 { font-size:13.5px; font-weight:500; color:var(--white); margin-bottom:2px; }
-.promise p { font-size:12.5px; color:rgba(255,255,255,0.55); font-weight:300; }
-
-.form-box { background:var(--card); border:1px solid var(--border); border-radius:12px; padding:34px; box-shadow: 0 8px 32px rgba(0,0,0,0.1); }
-.fgroup { margin-bottom:16px; }
-.fgroup label { display:block; font-size:11.5px; letter-spacing:0.07em; text-transform:uppercase; color:var(--muted); margin-bottom:6px; }
-.fgroup input, .fgroup select {
-  width:100%; background:var(--white); border:1px solid var(--border2);
-  border-radius:7px; padding:11px 13px; color:var(--text);
-  font-family:'DM Sans',sans-serif; font-size:14px; outline:none;
-  transition:border-color 0.15s; appearance:none;
-}
-.fgroup input:focus, .fgroup select:focus { border-color: var(--navy2); }
-.fgroup input::placeholder { color:var(--muted2); }
-.frow { display:grid; grid-template-columns:1fr 1fr; gap:12px; }
-
-.btn-form {
-  width:100%; background:var(--navy); color:var(--white); border:none;
-  padding:13px; border-radius:8px; font-family:'DM Sans',sans-serif;
-  font-size:14px; font-weight:500; cursor:pointer; transition:background 0.15s; margin-top:6px;
-}
-.btn-form:hover { background:var(--navy2); }
-.form-hint { text-align:center; font-size:12px; color:var(--muted2); margin-top:11px; }
-
-.success-box { display:none; text-align:center; padding:48px 20px; }
-.success-box .ico { font-size:36px; display:block; margin-bottom:16px; }
-.success-box h3 { font-family:'Instrument Serif',serif; font-size:24px; color:var(--text); margin-bottom:8px; }
-.success-box p { font-size:14px; color:var(--muted); font-weight:300; }
-
-/* CONTACT */
-.contact-layout { display:grid; grid-template-columns:1fr 1fr; gap:64px; align-items:start; }
-.contact-cards { display:flex; flex-direction:column; gap:10px; }
-.c-card { background:rgba(255,255,255,0.1); border:1px solid rgba(255,255,255,0.15); border-radius:8px; padding:18px 20px; display:flex; gap:14px; align-items:center; transition:background 0.15s; }
-.c-card:hover { background:rgba(255,255,255,0.16); }
-.c-ico { width:36px; height:36px; background:rgba(255,255,255,0.15); border-radius:6px; display:flex; align-items:center; justify-content:center; font-size:16px; flex-shrink:0; }
-.c-card h4 { font-size:13px; font-weight:500; color:var(--white); margin-bottom:2px; }
-.c-card p, .c-card a { font-size:13px; color:rgba(255,255,255,0.6); font-weight:300; text-decoration:none; }
-.c-card a:hover { color:var(--white); }
-
-.contact-box { background:var(--card); border:1px solid var(--border); border-radius:12px; padding:30px; box-shadow: 0 8px 32px rgba(0,0,0,0.1); }
-.contact-box h3 { font-family:'Instrument Serif',serif; font-size:21px; color:var(--text); margin-bottom:7px; }
-.contact-box > p { font-size:13.5px; color:var(--muted); font-weight:300; line-height:1.6; margin-bottom:22px; }
-.includes { margin-top:24px; padding-top:20px; border-top:1px solid var(--border); }
-.includes-title { font-size:11px; letter-spacing:0.1em; text-transform:uppercase; color:var(--muted2); margin-bottom:12px; }
-.inc-item { font-size:13.5px; color:var(--muted); display:flex; align-items:center; gap:10px; padding:6px 0; border-bottom:1px solid var(--border); }
-.inc-item:last-child { border-bottom:none; }
-.inc-check { color:var(--navy); font-size:12px; font-weight:500; }
-
-
-
-/* ANIMATED TAGLINE */
-.hero-animated-tag {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  margin-bottom: 28px;
-  font-size: 13px;
-  color: rgba(255,255,255,0.5);
-  font-weight: 300;
-  letter-spacing: 0.04em;
-}
-
-.typed-wrap {
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-  background: rgba(255,255,255,0.1);
-  border: 1px solid rgba(255,255,255,0.15);
-  border-radius: 6px;
-  padding: 6px 14px;
-  font-size: 13px;
-  color: var(--white);
-  font-weight: 400;
-}
-
-.typed-prefix { color: rgba(255,255,255,0.45); margin-right: 4px; }
-
-.typed-text {
-  color: var(--white);
-  font-weight: 500;
-  min-width: 180px;
-}
-
-.typed-cursor {
-  display: inline-block;
-  width: 2px;
-  height: 14px;
-  background: var(--white);
-  border-radius: 1px;
-  animation: blink 1s infinite;
-  vertical-align: middle;
-  margin-left: 2px;
-}
-
-@keyframes blink {
-  0%, 100% { opacity: 1; }
-  50% { opacity: 0; }
-}
-
-/* COMMENT CA MARCHE */
-.how-wrap {
-  background: rgba(255,255,255,0.06);
-  border-top: 1px solid rgba(255,255,255,0.08);
-  border-bottom: 1px solid rgba(255,255,255,0.08);
-  padding: 80px 0;
-}
-.how-inner { max-width:1080px; margin:0 auto; padding:0 48px; }
-
-.steps { display:grid; grid-template-columns:repeat(4,1fr); gap:1px; background:rgba(255,255,255,0.08); border:1px solid rgba(255,255,255,0.08); border-radius:12px; overflow:hidden; margin-top:52px; }
-.step { background:var(--bg); padding:28px 24px; transition:background 0.2s; }
-.step:hover { background:rgba(255,255,255,0.1); }
-.step-num { font-family:'Instrument Serif',serif; font-size:36px; color:rgba(255,255,255,0.15); line-height:1; margin-bottom:14px; }
-.step h3 { font-family:'Instrument Serif',serif; font-size:17px; color:var(--white); margin-bottom:8px; }
+.steps { display:grid; grid-template-columns:repeat(4,1fr); gap:1px; background:rgba(255,255,255,0.08); border:1px solid rgba(255,255,255,0.08); border-radius:12px; overflow:hidden; }
+.step { background:var(--navy); padding:28px 24px; transition:background 0.2s; }
+.step:hover { background:var(--navy2); }
+.step-num { font-family:'Instrument Serif',serif; font-size:32px; color:rgba(255,255,255,0.12); margin-bottom:14px; }
+.step h3 { font-family:'Instrument Serif',serif; font-size:17px; color:white; margin-bottom:8px; }
 .step p { font-size:13px; color:rgba(255,255,255,0.5); line-height:1.6; font-weight:300; }
 
 /* PRICING */
-.pricing-wrap { padding:80px 0; }
-.pricing-inner { max-width:1080px; margin:0 auto; padding:0 48px; }
+.pricing-section { padding:80px 52px; max-width:1100px; margin:0 auto; }
+.pricing-grid { display:grid; grid-template-columns:1fr 1.1fr 1fr; gap:16px; margin-top:48px; align-items:start; }
 
-.pricing-grid { display:grid; grid-template-columns:1fr 1.1fr 1fr; gap:14px; margin-top:52px; align-items:start; }
+.pricing-card {
+  background:var(--bg); border:1.5px solid var(--border);
+  border-radius:14px; padding:32px 28px; transition:all 0.2s;
+}
+.pricing-card:hover { border-color:var(--navy); }
+.pricing-card.featured { background:var(--white); border-color:var(--navy); box-shadow:0 8px 32px rgba(15,35,64,0.12); }
 
-.pricing-card { background:rgba(255,255,255,0.08); border:1px solid rgba(255,255,255,0.1); border-radius:12px; padding:32px 28px; transition:border-color 0.2s; }
-.pricing-card.featured { background:var(--card); border-color:var(--white); }
-.pricing-card:hover { border-color:rgba(255,255,255,0.25); }
-.pricing-card.featured:hover { border-color:var(--white); }
+.pricing-name { font-family:'Instrument Serif',serif; font-size:22px; color:var(--text); margin-bottom:6px; }
+.pricing-price { font-family:'Instrument Serif',serif; font-size:52px; color:var(--text); line-height:1; margin-bottom:4px; }
+.pricing-price sup { font-size:24px; vertical-align:top; margin-top:10px; display:inline-block; }
+.pricing-period { font-size:13px; color:var(--muted); margin-bottom:24px; }
+.pricing-sep { height:1px; background:var(--border); margin-bottom:20px; }
+.pricing-items { display:flex; flex-direction:column; gap:9px; margin-bottom:24px; }
+.pricing-item { font-size:13.5px; color:var(--muted); display:flex; align-items:center; gap:9px; }
+.pricing-check { color:var(--navy); font-weight:600; font-size:12px; }
+.btn-pricing { width:100%; background:var(--navy); color:var(--white); border:none; padding:13px; border-radius:8px; font-family:'DM Sans',sans-serif; font-size:14px; font-weight:500; cursor:pointer; transition:background 0.15s; }
+.btn-pricing:hover { background:var(--navy2); }
+.btn-pricing-ghost { width:100%; background:transparent; color:var(--navy); border:1.5px solid var(--navy); padding:12px; border-radius:8px; font-family:'DM Sans',sans-serif; font-size:14px; cursor:pointer; transition:all 0.15s; }
+.btn-pricing-ghost:hover { background:var(--navy-light); }
+.pricing-setup { text-align:center; font-size:12px; color:var(--muted2); margin-top:10px; }
+.pricing-badge { display:inline-block; background:var(--navy); color:white; font-size:10px; letter-spacing:0.1em; text-transform:uppercase; padding:4px 10px; border-radius:20px; margin-bottom:14px; }
 
-.pricing-label { font-size:11px; letter-spacing:0.12em; text-transform:uppercase; color:rgba(255,255,255,0.4); margin-bottom:16px; }
-.pricing-card.featured .pricing-label { color:var(--muted2); }
+/* FOOTER */
+footer {
+  border-top:1px solid var(--border); padding:28px 52px;
+  display:flex; justify-content:space-between; align-items:center;
+  background:var(--white);
+}
+footer p { font-size:12px; color:var(--muted2); font-weight:300; }
 
-.pricing-name { font-family:'Instrument Serif',serif; font-size:22px; color:var(--white); margin-bottom:6px; }
-.pricing-card.featured .pricing-name { color:var(--text); }
-
-.pricing-price { font-family:'Instrument Serif',serif; font-size:48px; color:var(--white); line-height:1; margin-bottom:4px; }
-.pricing-card.featured .pricing-price { color:var(--navy); }
-
-.pricing-period { font-size:13px; color:rgba(255,255,255,0.4); margin-bottom:24px; }
-.pricing-card.featured .pricing-period { color:var(--muted2); }
-
-.pricing-sep { height:1px; background:rgba(255,255,255,0.1); margin-bottom:20px; }
-.pricing-card.featured .pricing-sep { background:var(--border); }
-
-.pricing-items { display:flex; flex-direction:column; gap:9px; margin-bottom:28px; }
-.pricing-item { font-size:13.5px; color:rgba(255,255,255,0.6); display:flex; align-items:center; gap:9px; font-weight:300; }
-.pricing-card.featured .pricing-item { color:var(--muted); }
-.pricing-check { font-size:12px; color:rgba(255,255,255,0.5); }
-.pricing-card.featured .pricing-check { color:var(--navy); font-weight:500; }
-
-.btn-pricing-ghost { width:100%; background:transparent; color:var(--white); border:1px solid rgba(255,255,255,0.2); padding:12px; border-radius:7px; font-family:'DM Sans',sans-serif; font-size:13.5px; cursor:pointer; transition:all 0.15s; }
-.btn-pricing-ghost:hover { background:rgba(255,255,255,0.1); }
-
-.btn-pricing-solid { width:100%; background:var(--navy); color:var(--white); border:none; padding:12px; border-radius:7px; font-family:'DM Sans',sans-serif; font-size:13.5px; font-weight:500; cursor:pointer; transition:background 0.15s; }
-.btn-pricing-solid:hover { background:var(--navy2); }
-
-.pricing-setup { text-align:center; font-size:12.5px; color:rgba(255,255,255,0.35); margin-top:10px; }
-.pricing-card.featured .pricing-setup { color:var(--muted2); }
-
-.pricing-badge { display:inline-block; background:var(--navy); color:var(--white); font-size:10px; letter-spacing:0.1em; text-transform:uppercase; padding:4px 10px; border-radius:20px; margin-bottom:16px; }
-
+/* TYPED */
+.typed-wrap {
+  display:inline-flex; align-items:center; gap:6px;
+  background:var(--navy-light); border:1px solid rgba(15,35,64,0.1);
+  border-radius:6px; padding:5px 12px; font-size:13px; color:var(--navy);
+  font-weight:400; margin-bottom:20px;
+}
+.typed-prefix { color:var(--muted); margin-right:2px; }
+.typed-cursor { display:inline-block; width:1.5px; height:14px; background:var(--navy); border-radius:1px; animation:blink 1s infinite; vertical-align:middle; margin-left:2px; }
+@keyframes blink { 0%,100%{opacity:1} 50%{opacity:0} }
 
 /* ===== RESPONSIVE MOBILE ===== */
 @media (max-width: 768px) {
   nav { padding: 0 20px; }
   .nav-links { display: none; }
-
-  /* Hamburger */
-  .nav-hamburger {
-    display: flex !important;
-    flex-direction: column;
-    gap: 5px;
-    cursor: pointer;
-    padding: 8px;
-  }
-  .nav-hamburger span {
-    width: 22px; height: 2px;
-    background: var(--white); border-radius: 2px;
-    display: block; transition: all 0.3s;
-  }
-
-  /* Mobile menu */
-  .nav-mobile {
-    display: none;
-    position: fixed;
-    top: 64px; left: 0; right: 0;
-    background: rgba(145,145,145,0.98);
-    backdrop-filter: blur(16px);
-    border-bottom: 1px solid rgba(255,255,255,0.1);
-    padding: 16px 20px;
-    z-index: 99;
-    flex-direction: column;
-    gap: 4px;
-  }
+  .nav-hamburger { display: flex !important; flex-direction: column; gap: 5px; cursor: pointer; padding: 8px; }
+  .nav-hamburger span { width: 22px; height: 2px; background: var(--text); border-radius: 2px; display: block; }
+  .nav-mobile { display: none; position: fixed; top: 64px; left: 0; right: 0; background: rgba(255,255,255,0.98); backdrop-filter: blur(16px); border-bottom: 1px solid var(--border); padding: 16px 20px; z-index: 99; flex-direction: column; gap: 4px; }
   .nav-mobile.open { display: flex; }
-  .nav-mobile a {
-    color: rgba(255,255,255,0.8);
-    text-decoration: none;
-    font-size: 15px;
-    padding: 12px 16px;
-    border-radius: 8px;
-    transition: background 0.15s;
+  .nav-mobile a { color: var(--muted); text-decoration: none; font-size: 15px; padding: 12px 16px; border-radius: 6px; display: block; }
+  .nav-mobile .cta-mob { background: var(--navy); color: white !important; text-align: center; margin-top: 8px; border-radius: 8px; font-weight: 500; }
+
+  /* Hero */
+  [style*="grid-template-columns:1.1fr 1fr"] {
+    grid-template-columns: 1fr !important;
+    padding: 48px 20px 40px !important;
+    gap: 40px !important;
   }
-  .nav-mobile a:hover { background: rgba(255,255,255,0.1); }
-  .nav-mobile .cta-mob {
-    background: var(--navy);
-    color: var(--white) !important;
-    font-weight: 500;
-    margin-top: 8px;
-    text-align: center;
-  }
+  .browser-wrap { display: none; }
+  .hero-btns, [style*="display:flex;gap:12px;margin-bottom:36px"] { flex-direction: column; }
+  .btn-navy, .btn-outline { width: 100%; }
 
-  .hero { padding: 48px 20px 40px; }
-  .hero h1 { font-size: 38px; }
-  .hero-sub { font-size: 14px; }
-  .hero-actions { flex-direction: column; }
-  .hero-actions .btn { width: 100%; text-align: center; }
+  /* Sections */
+  .what-section { padding: 48px 20px; }
+  .what-grid { grid-template-columns: 1fr; gap: 14px; }
 
-  .mockup-section { padding: 0 20px 48px; }
-  .mockup-inner { grid-template-columns: 1fr; }
-  .sidebar { display: none; }
-  .dash-stats { grid-template-columns: repeat(3,1fr); gap: 8px; }
-  .stat-num { font-size: 18px; }
+  .examples-section { padding: 48px 20px; }
+  .examples-grid { grid-template-columns: 1fr 1fr; gap: 12px; }
+  .example-preview { height: 110px; font-size: 32px; }
+  .example-name { font-size: 14px; }
+  .example-desc { display: none; }
 
-  .section { padding: 48px 20px; }
-  .services { grid-template-columns: 1fr; }
-  .svc { border-right: none !important; border-bottom: 1px solid rgba(255,255,255,0.1); }
-  .svc:last-child { border-bottom: none; }
-
-  .portfolio-grid { grid-template-columns: 1fr !important; }
-
-  .devis-layout { grid-template-columns: 1fr; gap: 36px; }
-  .frow { grid-template-columns: 1fr; }
-
-  .contact-layout { grid-template-columns: 1fr; gap: 32px; }
-
-  .how-inner { padding: 0 20px; }
+  .how-section { padding: 48px 20px; }
   .steps { grid-template-columns: 1fr; }
-  .step { border-right: none !important; border-bottom: 1px solid rgba(255,255,255,0.1); }
+  .step { border-bottom: 1px solid rgba(255,255,255,0.08); }
   .step:last-child { border-bottom: none; }
 
-  .pricing-inner { padding: 0 20px; }
+  .pricing-section { padding: 48px 20px; }
   .pricing-grid { grid-template-columns: 1fr; }
 
   footer { padding: 20px; flex-direction: column; gap: 8px; text-align: center; }
 
-  .sep { margin: 0 20px; }
+  .typed-wrap { font-size: 12px; }
 }
 
-/* FOOTER */
-footer { border-top:1px solid rgba(255,255,255,0.1); padding:26px 48px; display:flex; justify-content:space-between; align-items:center; }
-footer p { font-size:12.5px; color:rgba(255,255,255,0.4); font-weight:300; }
-
-/* ANIM */
-@keyframes fadeUp { from{opacity:0;transform:translateY(18px)} to{opacity:1;transform:translateY(0)} }
-.fade { animation: fadeUp 0.5s ease both; }
-.fade-1{animation-delay:.05s} .fade-2{animation-delay:.15s} .fade-3{animation-delay:.25s} .fade-4{animation-delay:.35s}
 </style>
 </head>
 <body>
 
 <nav>
-  <div class="logo" onclick="showPage('accueil')">Youdesk</div>
+  <div class="logo">Youdesk</div>
   <ul class="nav-links">
-    <li><a href="#" onclick="showPage('accueil')" id="nav-accueil" class="active">Accueil</a></li>
-    <li><a href="#" onclick="showPage('portfolio')" id="nav-portfolio">Portfolio</a></li>
-    <li><a href="#" onclick="showPage('devis')" id="nav-devis">Devis</a></li>
-    <li><a href="#" onclick="showPage('contact')" id="nav-contact" class="cta-link">Contact</a></li>
+    <li><a href="#">Accueil</a></li>
+    <li><a href="#">Portfolio</a></li>
+    <li><a href="#">Tarifs</a></li>
+    <li><a href="#" class="nav-cta">Demander un devis</a></li>
   </ul>
-  <div class="nav-hamburger" style="display:none" onclick="toggleMobileMenu()">
-    <span></span><span></span><span></span>
-  </div>
+  <div class="nav-hamburger" style="display:none" onclick="toggleMobileMenu()"><span></span><span></span><span></span></div>
 </nav>
 
-<div class="nav-mobile" id="nav-mobile">
-  <a href="#" onclick="showPage('accueil');closeMobileMenu()">Accueil</a>
-  <a href="#" onclick="showPage('portfolio');closeMobileMenu()">Portfolio</a>
-  <a href="#" onclick="showPage('devis');closeMobileMenu()">Devis</a>
-  <a href="#" onclick="showPage('contact');closeMobileMenu()" class="cta-mob">Contact</a>
+<div class="nav-mobile" id="nav-mobile"><a href="#">Accueil</a><a href="#">Portfolio</a><a href="#">Tarifs</a><a href="#" class="cta-mob">Demander un devis</a></div>
+
+<!-- HERO -->
+<div style="max-width:1100px;margin:0 auto;padding:80px 52px 70px;display:grid;grid-template-columns:1.1fr 1fr;gap:72px;align-items:center">
+  <div>
+    <div class="typed-wrap">
+      <span class="typed-prefix">Nous créons</span>
+      <span id="typed-text" style="min-width:170px;font-weight:500"></span>
+      <span class="typed-cursor"></span>
+    </div>
+    <h1 style="font-family:'Instrument Serif',serif;font-size:clamp(44px,5vw,66px);line-height:1.06;letter-spacing:-0.02em;color:var(--text);margin-bottom:20px">Votre site web<br>professionnel,<br><em style="font-style:italic;color:var(--navy)">livré en 7 jours.</em></h1>
+    <p style="font-size:16px;line-height:1.75;color:var(--muted);max-width:440px;margin-bottom:36px;font-weight:300">On conçoit et gère votre présence en ligne de A à Z — site vitrine, réservations, dashboard client. Vous vous concentrez sur votre métier.</p>
+    <div style="display:flex;gap:12px;margin-bottom:40px">
+      <button class="btn-navy">Voir les tarifs</button>
+      <button class="btn-outline">Voir nos réalisations</button>
+    </div>
+    <div style="display:flex;align-items:center;gap:14px;padding-top:24px;border-top:1px solid var(--border)">
+      <div style="display:flex">
+        <div style="width:30px;height:30px;border-radius:50%;background:#e8e8e8;border:2px solid white;display:flex;align-items:center;justify-content:center;font-size:13px">💈</div>
+        <div style="width:30px;height:30px;border-radius:50%;background:#f0f4f8;border:2px solid white;display:flex;align-items:center;justify-content:center;font-size:13px;margin-left:-8px">🏋️</div>
+        <div style="width:30px;height:30px;border-radius:50%;background:#fdf0f3;border:2px solid white;display:flex;align-items:center;justify-content:center;font-size:13px;margin-left:-8px">🍽️</div>
+      </div>
+      <div style="font-size:13px;color:var(--muted);font-weight:300"><strong style="color:var(--text);font-weight:500">+12 professionnels</strong> nous font déjà confiance</div>
+    </div>
+  </div>
+
+  <div class="browser-wrap">
+    <div class="browser-mockup">
+      <div class="browser-bar">
+        <div class="b-dots"><div class="b-dot b-dot-r"></div><div class="b-dot b-dot-y"></div><div class="b-dot b-dot-g"></div></div>
+        <div class="b-url">youdesk.vercel.app / barbershop-elite</div>
+      </div>
+      <div class="browser-content">
+        <div class="sim-header">
+          <div class="sim-logo">Barbershop Élite</div>
+          <div class="sim-nav"><div class="sim-nav-item"></div><div class="sim-nav-item"></div><div class="sim-nav-item"></div></div>
+        </div>
+        <div class="sim-hero">
+          <div class="sim-title"></div>
+          <div class="sim-title-2"></div>
+          <div class="sim-desc"></div>
+          <div class="sim-desc-2"></div>
+          <div class="sim-btns"><div class="sim-btn sim-btn-1"></div><div class="sim-btn sim-btn-2"></div></div>
+        </div>
+        <div class="sim-cards">
+          <div class="sim-card"><div class="sim-card-ico"></div><div class="sim-card-title"></div><div class="sim-card-line"></div><div class="sim-card-line-2"></div></div>
+          <div class="sim-card"><div class="sim-card-ico"></div><div class="sim-card-title"></div><div class="sim-card-line"></div><div class="sim-card-line-2"></div></div>
+          <div class="sim-card"><div class="sim-card-ico"></div><div class="sim-card-title"></div><div class="sim-card-line"></div><div class="sim-card-line-2"></div></div>
+        </div>
+      </div>
+    </div>
+    <div class="sim-badge">✓ Site livré en 7 jours</div>
+  </div>
 </div>
 
-<!-- ACCUEIL -->
-<div id="page-accueil" class="page active">
-  <div class="hero">
-    <div class="hero-animated-tag fade fade-1">
-      <div class="typed-wrap">
-        <span class="typed-prefix">Nous créons</span>
-        <span class="typed-text" id="typed-text"></span>
-        <span class="typed-cursor"></span>
+<!-- CE QU'ON FAIT -->
+<div class="what-section">
+  <div class="what-inner">
+    <div class="section-label">Ce qu'on crée pour vous</div>
+    <h2 style="font-family:'Instrument Serif',serif;font-size:clamp(30px,4vw,46px);color:var(--text);margin-bottom:12px;letter-spacing:-0.01em">Tout ce dont votre<br>business a besoin en ligne.</h2>
+    <p style="font-size:15px;color:var(--muted);line-height:1.7;max-width:500px;margin-bottom:0;font-weight:300">Un site internet complet, fonctionnel et à votre image — sans vous prendre la tête.</p>
+    <div class="what-grid">
+      <div class="what-card">
+        <div class="what-card-num">01</div>
+        <h3>Site vitrine pro</h3>
+        <p>Un site beau, rapide et mobile-first qui présente vos services, vos prix et votre image de marque.</p>
+        <span class="what-card-tag">Design sur mesure</span>
       </div>
-    </div>
-    <h1 class="fade fade-2">Votre présence<br>digitale, <em>enfin</em><br>clé en main.</h1>
-    <p class="hero-sub fade fade-3">Sites vitrines, réservations en ligne et outils de gestion pour les professionnels qui veulent exister sur le web — sans prise de tête.</p>
-    <div class="hero-actions fade fade-4">
-      <button class="btn btn-white" onclick="showPage('devis')">Demander un devis</button>
-      <button class="btn btn-ghost" onclick="showPage('portfolio')">Voir le portfolio</button>
-    </div>
-  </div>
-
-  <div class="mockup-section">
-    <div class="mockup-wrap">
-      <div class="mockup-topbar">
-        <div class="dots"><div class="dot"></div><div class="dot"></div><div class="dot"></div></div>
-        <div class="url-bar">dashboard.youdesk.fr / barbershop-elite</div>
+      <div class="what-card">
+        <div class="what-card-num">02</div>
+        <h3>Réservation en ligne</h3>
+        <p>Vos clients réservent directement depuis votre site, 24h/24. Fini les appels et les DM Instagram.</p>
+        <span class="what-card-tag">Automatique</span>
       </div>
-      <div class="mockup-inner">
-        <div class="sidebar">
-          <div class="sidebar-logo">Youdesk</div>
-          <div class="sidebar-item active"><div class="s-dot"></div>Tableau de bord</div>
-          <div class="sidebar-item"><div class="s-dot"></div>Réservations</div>
-          <div class="sidebar-item"><div class="s-dot"></div>Mon site</div>
-          <div class="sidebar-item"><div class="s-dot"></div>Statistiques</div>
-          <div class="sidebar-item"><div class="s-dot"></div>Paramètres</div>
-        </div>
-        <div class="dash-main">
-          <div class="dash-title">Barbershop Élite — Aujourd'hui</div>
-          <div class="dash-stats">
-            <div class="stat-box"><div class="stat-num">24</div><div class="stat-lbl">RDV ce mois</div></div>
-            <div class="stat-box"><div class="stat-num">94%</div><div class="stat-lbl">Taux rempli</div></div>
-            <div class="stat-box"><div class="stat-num">4.9</div><div class="stat-lbl">Note Google</div></div>
-          </div>
-          <div class="rdv-list">
-            <div class="rdv-row"><span class="rdv-name">Thomas M. — Dégradé</span><div class="rdv-meta"><span class="rdv-time">14:00</span><span class="rdv-badge badge-green">Confirmé</span></div></div>
-            <div class="rdv-row"><span class="rdv-name">Karim B. — Barbe complète</span><div class="rdv-meta"><span class="rdv-time">15:30</span><span class="rdv-badge badge-green">Confirmé</span></div></div>
-            <div class="rdv-row"><span class="rdv-name">Lucas D. — Coupe + Barbe</span><div class="rdv-meta"><span class="rdv-time">17:00</span><span class="rdv-badge badge-yellow">En attente</span></div></div>
-          </div>
-        </div>
+      <div class="what-card">
+        <div class="what-card-num">03</div>
+        <h3>Dashboard de gestion</h3>
+        <p>Un espace personnel pour gérer vos RDV, voir vos stats et modifier votre site facilement.</p>
+        <span class="what-card-tag">Tout en un</span>
+      </div>
+      <div class="what-card">
+        <div class="what-card-num">04</div>
+        <h3>Commande en ligne</h3>
+        <p>Pour les restaurants et commerces : carte interactive, panier, paiement et retrait en boutique.</p>
+        <span class="what-card-tag">E-commerce</span>
+      </div>
+      <div class="what-card">
+        <div class="what-card-num">05</div>
+        <h3>Hébergement inclus</h3>
+        <p>On gère tout : hébergement, nom de domaine, mises à jour et support technique. Vous ne faites rien.</p>
+        <span class="what-card-tag">Clé en main</span>
+      </div>
+      <div class="what-card">
+        <div class="what-card-num">06</div>
+        <h3>Notifications auto</h3>
+        <p>Vos clients reçoivent des confirmations de RDV automatiques. Vous recevez une alerte à chaque réservation.</p>
+        <span class="what-card-tag">Gain de temps</span>
       </div>
     </div>
   </div>
-
-  <div class="section">
-    <div class="section-label">Ce qu'on fait</div>
-    <h2>Un pack complet,<br>sans friction.</h2>
-    <p class="section-desc">On s'occupe de tout. Vous vous concentrez sur votre métier.</p>
-    <div class="services">
-      <div class="svc"><div class="svc-num">01</div><h3>Site vitrine</h3><p>Design sur mesure, rapide, mobile-first. Vos services, vos prix, vos photos — mis en valeur.</p></div>
-      <div class="svc"><div class="svc-num">02</div><h3>Réservation en ligne</h3><p>Vos clients réservent directement depuis le site. Fini les DM Instagram et les appels manqués.</p></div>
-      <div class="svc"><div class="svc-num">03</div><h3>Dashboard de gestion</h3><p>Visualisez vos RDV, gérez vos créneaux, recevez des notifications — tout depuis votre téléphone.</p></div>
-    </div>
-  </div>
-
-
-  <!-- COMMENT CA MARCHE -->
-  <div class="how-wrap">
-    <div class="how-inner">
-      <div class="section-label">Comment ça marche</div>
-      <h2 style="font-family:'Instrument Serif',serif;font-size:clamp(30px,4vw,44px);line-height:1.1;letter-spacing:-0.02em;color:var(--white)">Simple, rapide,<br>clé en main.</h2>
-      <div class="steps">
-        <div class="step">
-          <div class="step-num">01</div>
-          <h3>Vous nous contactez</h3>
-          <p>Remplissez le formulaire de devis en 2 minutes. On vous répond sous 24h.</p>
-        </div>
-        <div class="step">
-          <div class="step-num">02</div>
-          <h3>On crée votre site</h3>
-          <p>On conçoit votre site vitrine sur mesure, adapté à votre secteur et votre image.</p>
-        </div>
-        <div class="step">
-          <div class="step-num">03</div>
-          <h3>Vous validez</h3>
-          <p>Vous relisez, on ajuste. Votre site est mis en ligne une fois que vous êtes 100% satisfait.</p>
-        </div>
-        <div class="step">
-          <div class="step-num">04</div>
-          <h3>On gère tout</h3>
-          <p>Hébergement, mises à jour, support. Vous vous concentrez sur votre métier.</p>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <!-- PRICING -->
-  <div class="pricing-wrap">
-    <div class="pricing-inner">
-      <div class="section-label">Tarifs</div>
-      <h2 style="font-family:'Instrument Serif',serif;font-size:clamp(30px,4vw,44px);line-height:1.1;letter-spacing:-0.02em;color:var(--white)">Des prix clairs,<br>sans surprise.</h2>
-      <div class="pricing-grid">
-
-        <div class="pricing-card">
-          <div class="pricing-label">Essentiel</div>
-          <div class="pricing-name">Vitrine</div>
-          <div class="pricing-price">49€</div>
-          <div class="pricing-period">par mois</div>
-          <div class="pricing-sep"></div>
-          <div class="pricing-items">
-            <div class="pricing-item"><span class="pricing-check">✓</span> Site vitrine personnalisé</div>
-            <div class="pricing-item"><span class="pricing-check">✓</span> Design sur mesure</div>
-            <div class="pricing-item"><span class="pricing-check">✓</span> Mobile-first</div>
-            <div class="pricing-item"><span class="pricing-check">✓</span> Hébergement inclus</div>
-            <div class="pricing-item"><span class="pricing-check">✓</span> Support par message</div>
-          </div>
-          <button class="btn-pricing-ghost" onclick="showPage('devis')">Demander un devis</button>
-          <div class="pricing-setup">+ 199€ de setup</div>
-        </div>
-
-        <div class="pricing-card featured">
-          <div class="pricing-badge">Le plus populaire</div>
-          <div class="pricing-label">Complet</div>
-          <div class="pricing-name">Pro</div>
-          <div class="pricing-price">69€</div>
-          <div class="pricing-period">par mois</div>
-          <div class="pricing-sep"></div>
-          <div class="pricing-items">
-            <div class="pricing-item"><span class="pricing-check">✓</span> Site vitrine personnalisé</div>
-            <div class="pricing-item"><span class="pricing-check">✓</span> Réservation en ligne</div>
-            <div class="pricing-item"><span class="pricing-check">✓</span> Dashboard de gestion</div>
-            <div class="pricing-item"><span class="pricing-check">✓</span> Notifications automatiques</div>
-            <div class="pricing-item"><span class="pricing-check">✓</span> Hébergement inclus</div>
-            <div class="pricing-item"><span class="pricing-check">✓</span> Support réactif</div>
-          </div>
-          <button class="btn-pricing-solid" onclick="showPage('devis')">Demander un devis</button>
-          <div class="pricing-setup">+ 299€ de setup</div>
-        </div>
-
-        <div class="pricing-card">
-          <div class="pricing-label">Sur mesure</div>
-          <div class="pricing-name">Premium</div>
-          <div class="pricing-price">99€</div>
-          <div class="pricing-period">par mois</div>
-          <div class="pricing-sep"></div>
-          <div class="pricing-items">
-            <div class="pricing-item"><span class="pricing-check">✓</span> Tout le pack Pro</div>
-            <div class="pricing-item"><span class="pricing-check">✓</span> Fonctionnalités sur mesure</div>
-            <div class="pricing-item"><span class="pricing-check">✓</span> Intégrations avancées</div>
-            <div class="pricing-item"><span class="pricing-check">✓</span> Priorité support</div>
-            <div class="pricing-item"><span class="pricing-check">✓</span> Mises à jour régulières</div>
-          </div>
-          <button class="btn-pricing-ghost" onclick="showPage('devis')">Demander un devis</button>
-          <div class="pricing-setup">+ 399€ de setup</div>
-        </div>
-
-      </div>
-    </div>
-  </div>
-
-  <footer>
-    <div class="logo">Youdesk</div>
-    <p>© 2026 Youdesk — Votre présence digitale</p>
-  </footer>
 </div>
 
-<!-- PORTFOLIO -->
-<div id="page-portfolio" class="page">
-  <div class="section">
-    <div class="section-label">Réalisations</div>
-    <h2>Le portfolio.</h2>
-    <p class="section-desc">Des sites conçus pour convertir, adaptés à chaque secteur.</p>
-    <div class="portfolio-grid">
-      <div class="p-card" onclick="window.open('https://youdesk.vercel.app/barbershop.html','_blank')" style="cursor:pointer">
-        <div class="p-thumb" style="position:relative">💈<div style="position:absolute;bottom:10px;right:10px;background:rgba(0,0,0,0.6);color:#fff;font-size:11px;padding:4px 10px;border-radius:20px;letter-spacing:0.05em">Voir le site →</div></div>
-        <div class="p-info">
-          <div class="p-niche">Barbershop</div>
-          <h3>Barbershop Élite</h3>
-          <p>Site vitrine + réservation en ligne + dashboard de gestion.</p>
-          <div class="p-tags"><span class="p-tag">Site vitrine</span><span class="p-tag">Réservation</span><span class="p-tag">Dashboard</span></div>
-        </div>
-      </div>
-      <div class="p-card" onclick="window.open('https://youdesk.vercel.app/coach.html','_blank')" style="cursor:pointer">
-        <div class="p-thumb" style="position:relative;background:var(--card2)">🏋️
-          <div style="position:absolute;bottom:10px;right:10px;background:rgba(0,0,0,0.6);color:#fff;font-size:11px;padding:4px 10px;border-radius:20px;letter-spacing:0.05em">Voir le site →</div>
-        </div>
-        <div class="p-info"><div class="p-niche">Coach sportif</div><h3>Coach Pro</h3><p>Site vitrine + programmes + prise de contact.</p><div class="p-tags"><span class="p-tag">Site vitrine</span><span class="p-tag">Formulaire</span></div></div>
-      </div>
-      <div class="p-card" onclick="window.open('https://youdesk.vercel.app/restaurant-gastro.html','_blank')" style="cursor:pointer">
-        <div class="p-thumb" style="position:relative;background:var(--card2)">🍽️
-          <div style="position:absolute;bottom:10px;right:10px;background:rgba(0,0,0,0.6);color:#fff;font-size:11px;padding:4px 10px;border-radius:20px;letter-spacing:0.05em">Voir le site →</div>
-        </div>
-        <div class="p-info"><div class="p-niche">Restaurant</div><h3>Le Clos Saint-Martin</h3><p>Site gastronomique + carte + réservation de table.</p><div class="p-tags"><span class="p-tag">Carte</span><span class="p-tag">Réservation</span></div></div>
-      </div>
-      <div class="p-card" onclick="window.open('https://youdesk.vercel.app/esthetique.html','_blank')" style="cursor:pointer">
-        <div class="p-thumb" style="position:relative;background:var(--card2)">🌸
-          <div style="position:absolute;bottom:10px;right:10px;background:rgba(0,0,0,0.6);color:#fff;font-size:11px;padding:4px 10px;border-radius:20px;letter-spacing:0.05em">Voir le site →</div>
-        </div>
-        <div class="p-info"><div class="p-niche">Institut esthétique</div><h3>Rosa Institut</h3><p>Site vitrine + soins + réservation en ligne.</p><div class="p-tags"><span class="p-tag">Soins</span><span class="p-tag">Réservation</span></div></div>
-      <div class="p-card" onclick="window.open('https://youdesk.vercel.app/fastfood.html','_blank')" style="cursor:pointer">
-        <div class="p-thumb" style="position:relative;background:var(--card2)">🍔
-          <div style="position:absolute;bottom:10px;right:10px;background:rgba(0,0,0,0.6);color:#fff;font-size:11px;padding:4px 10px;border-radius:20px;letter-spacing:0.05em">Voir le site →</div>
-        </div>
-        <div class="p-info"><div class="p-niche">Fast food</div><h3>BurgerDrop</h3><p>Carte interactive + commande en ligne + retrait boutique.</p><div class="p-tags"><span class="p-tag">Commande</span><span class="p-tag">Panier</span><span class="p-tag">Paiement</span></div></div>
-      </div>
+<!-- EXEMPLES -->
+<div class="examples-section">
+  <div class="section-label">Nos réalisations</div>
+  <h2 style="font-family:'Instrument Serif',serif;font-size:clamp(30px,4vw,46px);color:var(--text);margin-bottom:12px;letter-spacing:-0.01em">Des sites pour<br>chaque secteur.</h2>
+  <p style="font-size:15px;color:var(--muted);line-height:1.7;max-width:480px;font-weight:300">Barbiers, coachs, restaurants, instituts... On s'adapte à votre activité.</p>
+  <div class="examples-grid">
+    <div class="example-card">
+      <div class="example-preview preview-barbier">💈</div>
+      <div class="example-info">
+        <div class="example-niche">Barbershop</div>
+        <div class="example-name">Barbershop Élite</div>
+        <div class="example-desc">Site vitrine + réservation + dashboard</div>
+        <span class="example-link">Voir le site →</span>
       </div>
     </div>
-  </div>
-  <footer><div class="logo">Youdesk</div><p>© 2026 Youdesk — Votre présence digitale</p></footer>
-</div>
-
-<!-- DEVIS -->
-<div id="page-devis" class="page">
-  <div class="section">
-    <div class="devis-layout">
-      <div class="devis-side">
-        <div class="section-label">Devis gratuit</div>
-        <h2>Parlons de<br>votre projet.</h2>
-        <p>Remplissez le formulaire, je vous réponds sous 24h avec une proposition adaptée à votre activité.</p>
-        <div class="promises">
-          <div class="promise"><div class="promise-ico">⚡</div><div><h4>Réponse rapide</h4><p>Retour garanti sous 24h.</p></div></div>
-          <div class="promise"><div class="promise-ico">🎯</div><div><h4>Sur mesure</h4><p>Adapté à votre secteur et votre image.</p></div></div>
-          <div class="promise"><div class="promise-ico">🤝</div><div><h4>Sans engagement</h4><p>Devis gratuit, sans obligation.</p></div></div>
-        </div>
-      </div>
-      <div class="form-box">
-        <div id="form-content">
-          <div class="frow">
-            <div class="fgroup"><label>Prénom</label><input type="text" placeholder="Jean" id="f-prenom"></div>
-            <div class="fgroup"><label>Nom</label><input type="text" placeholder="Dupont" id="f-nom"></div>
-          </div>
-          <div class="fgroup"><label>Email</label><input type="email" placeholder="jean@email.com" id="f-email"></div>
-          <div class="fgroup"><label>Téléphone</label><input type="tel" placeholder="+33 6 00 00 00 00" id="f-tel"></div>
-          <div class="fgroup">
-            <label>Type de site souhaité</label>
-            <select id="f-type">
-              <option value="" disabled selected>Choisissez votre secteur</option>
-              <option>Barbershop / Coiffeur</option>
-              <option>Coach sportif / Bien-être</option>
-              <option>Restaurant / Food</option>
-              <option>Artisan / Commerce local</option>
-              <option>Autre</option>
-            </select>
-          </div>
-          <div class="fgroup"><label>Message</label><textarea id="f-message" placeholder="Décrivez votre projet, vos besoins, vos questions..." style="width:100%;background:var(--white);border:1px solid var(--border2);border-radius:7px;padding:11px 13px;color:var(--text);font-family:DM Sans,sans-serif;font-size:14px;outline:none;resize:vertical;min-height:110px;transition:border-color 0.15s;" onfocus="this.style.borderColor='var(--navy2)'" onblur="this.style.borderColor='var(--border2)'"></textarea></div>
-          <button class="btn-form" onclick="submitForm()">Envoyer ma demande</button>
-          <p class="form-hint">Devis gratuit · Réponse sous 24h · Sans engagement</p>
-        </div>
-        <div class="success-box" id="form-success">
-          <span class="ico">✓</span>
-          <h3>Demande envoyée !</h3>
-          <p>Merci. Je vous réponds dans les 24h.</p>
-        </div>
+    <div class="example-card">
+      <div class="example-preview preview-coach">🏋️</div>
+      <div class="example-info">
+        <div class="example-niche">Coach sportif</div>
+        <div class="example-name">Coach Pro</div>
+        <div class="example-desc">Site vitrine + programmes + contact</div>
+        <span class="example-link">Voir le site →</span>
       </div>
     </div>
-  </div>
-  <footer><div class="logo">Youdesk</div><p>© 2026 Youdesk — Votre présence digitale</p></footer>
-</div>
-
-<!-- CONTACT -->
-<div id="page-contact" class="page">
-  <div class="section">
-    <div class="contact-layout">
-      <div>
-        <div class="section-label">Contact</div>
-        <h2 style="font-family:'Instrument Serif',serif;font-size:36px;line-height:1.15;letter-spacing:-0.02em;color:var(--white);margin-bottom:14px">Prenons contact.</h2>
-        <p style="font-size:14.5px;color:rgba(255,255,255,0.6);line-height:1.7;font-weight:300;margin-bottom:28px">Une question avant de demander un devis ? Contactez-moi directement.</p>
-        <div class="contact-cards">
-          <div class="c-card"><div class="c-ico">📧</div><div><h4>Email</h4><a href="mailto:contact@youdesk.fr">contact@youdesk.fr</a></div></div>
-          <div class="c-card"><div class="c-ico">📱</div><div><h4>Instagram</h4><a href="#">@youdesk.fr</a></div></div>
-          <div class="c-card"><div class="c-ico">⏱</div><div><h4>Délai de réponse</h4><p>Moins de 24h en général</p></div></div>
-        </div>
-      </div>
-      <div class="contact-box">
-        <h3>Vous préférez un devis direct ?</h3>
-        <p>Remplissez le formulaire, c'est plus rapide et je pourrai vous faire une proposition personnalisée.</p>
-        <button class="btn btn-white" onclick="showPage('devis')" style="width:100%;background:var(--navy);color:var(--white)">Demander un devis</button>
-        <div class="includes">
-          <div class="includes-title">Ce qui est inclus</div>
-          <div class="inc-item"><span class="inc-check">✓</span> Site vitrine personnalisé</div>
-          <div class="inc-item"><span class="inc-check">✓</span> Système de réservation</div>
-          <div class="inc-item"><span class="inc-check">✓</span> Dashboard de gestion</div>
-          <div class="inc-item"><span class="inc-check">✓</span> Notifications automatiques</div>
-          <div class="inc-item"><span class="inc-check">✓</span> Hébergement inclus</div>
-          <div class="inc-item"><span class="inc-check">✓</span> Support réactif</div>
-        </div>
+    <div class="example-card">
+      <div class="example-preview preview-fast">🍔</div>
+      <div class="example-info">
+        <div class="example-niche">Fast food</div>
+        <div class="example-name">BurgerDrop</div>
+        <div class="example-desc">Carte + commande + paiement en ligne</div>
+        <span class="example-link">Voir le site →</span>
       </div>
     </div>
+    <div class="example-card">
+      <div class="example-preview preview-resto">🍽️</div>
+      <div class="example-info">
+        <div class="example-niche">Restaurant gastronomique</div>
+        <div class="example-name">Le Clos Saint-Martin</div>
+        <div class="example-desc">Carte + menus + réservation de table</div>
+        <span class="example-link">Voir le site →</span>
+      </div>
+    </div>
+    <div class="example-card">
+      <div class="example-preview preview-esthe">🌸</div>
+      <div class="example-info">
+        <div class="example-niche">Institut esthétique</div>
+        <div class="example-name">Rosa Institut</div>
+        <div class="example-desc">Soins + tarifs + réservation en ligne</div>
+        <span class="example-link">Voir le site →</span>
+      </div>
+    </div>
+    <div class="example-card" style="border:1.5px dashed var(--border2);display:flex;flex-direction:column;align-items:center;justify-content:center;min-height:240px;gap:10px">
+      <div style="font-size:28px;opacity:0.3">+</div>
+      <div style="font-size:13px;color:var(--muted2);text-align:center;font-weight:300">Votre secteur<br>sur mesure</div>
+    </div>
   </div>
-  <footer><div class="logo">Youdesk</div><p>© 2026 Youdesk — Votre présence digitale</p></footer>
 </div>
 
-<script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<!-- COMMENT CA MARCHE -->
+<div class="how-section">
+  <div class="how-inner">
+    <div class="section-label">Comment ça marche</div>
+    <h2>Simple, rapide,<br>clé en main.</h2>
+    <p class="section-desc">De votre demande à la mise en ligne — on gère tout.</p>
+    <div class="steps">
+      <div class="step"><div class="step-num">01</div><h3>Vous nous contactez</h3><p>Remplissez le formulaire en 2 minutes. Réponse garantie sous 24h.</p></div>
+      <div class="step"><div class="step-num">02</div><h3>On crée votre site</h3><p>Design sur mesure adapté à votre secteur et votre image de marque.</p></div>
+      <div class="step"><div class="step-num">03</div><h3>Vous validez</h3><p>Vous relisez, on ajuste. Mise en ligne quand vous êtes 100% satisfait.</p></div>
+      <div class="step"><div class="step-num">04</div><h3>On gère tout</h3><p>Hébergement, mises à jour, support. Vous faites votre métier.</p></div>
+    </div>
+  </div>
+</div>
+
+<!-- PRICING -->
+<div class="pricing-section">
+  <div class="section-label">Tarifs</div>
+  <h2 style="font-family:'Instrument Serif',serif;font-size:clamp(30px,4vw,46px);color:var(--text);margin-bottom:12px;letter-spacing:-0.01em">Des prix clairs,<br>sans surprise.</h2>
+  <p style="font-size:15px;color:var(--muted);line-height:1.7;max-width:480px;font-weight:300">Abonnement mensuel tout inclus. Pas de frais cachés.</p>
+  <div class="pricing-grid">
+    <div class="pricing-card">
+      <div class="pricing-name">Vitrine</div>
+      <div class="pricing-price"><sup>€</sup>49</div>
+      <div class="pricing-period">par mois</div>
+      <div class="pricing-sep"></div>
+      <div class="pricing-items">
+        <div class="pricing-item"><span class="pricing-check">✓</span> Site vitrine personnalisé</div>
+        <div class="pricing-item"><span class="pricing-check">✓</span> Design sur mesure</div>
+        <div class="pricing-item"><span class="pricing-check">✓</span> Mobile-first</div>
+        <div class="pricing-item"><span class="pricing-check">✓</span> Hébergement inclus</div>
+        <div class="pricing-item"><span class="pricing-check">✓</span> Support par message</div>
+      </div>
+      <button class="btn-pricing-ghost">Demander un devis</button>
+      <div class="pricing-setup">+ 199€ de setup</div>
+    </div>
+    <div class="pricing-card featured">
+      <div class="pricing-badge">Le plus populaire</div>
+      <div class="pricing-name">Pro</div>
+      <div class="pricing-price"><sup>€</sup>69</div>
+      <div class="pricing-period">par mois</div>
+      <div class="pricing-sep"></div>
+      <div class="pricing-items">
+        <div class="pricing-item"><span class="pricing-check">✓</span> Site vitrine personnalisé</div>
+        <div class="pricing-item"><span class="pricing-check">✓</span> Réservation en ligne</div>
+        <div class="pricing-item"><span class="pricing-check">✓</span> Dashboard de gestion</div>
+        <div class="pricing-item"><span class="pricing-check">✓</span> Notifications automatiques</div>
+        <div class="pricing-item"><span class="pricing-check">✓</span> Hébergement inclus</div>
+        <div class="pricing-item"><span class="pricing-check">✓</span> Support réactif</div>
+      </div>
+      <button class="btn-pricing">Demander un devis</button>
+      <div class="pricing-setup">+ 299€ de setup</div>
+    </div>
+    <div class="pricing-card">
+      <div class="pricing-name">Premium</div>
+      <div class="pricing-price"><sup>€</sup>99</div>
+      <div class="pricing-period">par mois</div>
+      <div class="pricing-sep"></div>
+      <div class="pricing-items">
+        <div class="pricing-item"><span class="pricing-check">✓</span> Tout le pack Pro</div>
+        <div class="pricing-item"><span class="pricing-check">✓</span> Fonctionnalités sur mesure</div>
+        <div class="pricing-item"><span class="pricing-check">✓</span> Commande en ligne</div>
+        <div class="pricing-item"><span class="pricing-check">✓</span> Priorité support</div>
+        <div class="pricing-item"><span class="pricing-check">✓</span> Mises à jour régulières</div>
+      </div>
+      <button class="btn-pricing-ghost">Demander un devis</button>
+      <div class="pricing-setup">+ 399€ de setup</div>
+    </div>
+  </div>
+</div>
+
+<footer>
+  <div style="font-family:'Instrument Serif',serif;font-size:18px;color:var(--text)">Youdesk</div>
+  <p>© 2026 Youdesk — Création de sites internet professionnels</p>
+  <p style="font-size:12px;color:var(--muted2)">youdesk@hotmail.com</p>
+</footer>
+
 <script>
-const EMAILJS_PUBLIC_KEY  = 'ZL3RCQGUVxd2FaiQ9';
-const EMAILJS_SERVICE_ID  = 'service_2h4vdj7';
-const EMAILJS_TEMPLATE_ID = 'template_1x8pm4t';
-const SUPABASE_URL = 'https://qrsceaeduwdeluzuuaww.supabase.co';
-const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InFyc2NlYWVkdXdkZWx1enV1YXd3Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODAzNDY4MTgsImV4cCI6MjA5NTkyMjgxOH0.zHIP1cH-HdXerk5bR9lA18AgPX_mXdyO5qSG2fr7TLY';
-
-emailjs.init(EMAILJS_PUBLIC_KEY);
-
-// TYPING ANIMATION
-const typedPhrases = [
-  'votre site vitrine',
-  'votre système de RDV',
-  'votre présence en ligne',
-  'votre dashboard pro',
-  'votre image digitale',
-];
-
-let phraseIndex = 0;
-let charIndex = 0;
-let isDeleting = false;
-const typedEl = document.getElementById('typed-text');
-
-function typeLoop() {
-  if (!typedEl) return;
-  const current = typedPhrases[phraseIndex];
-
-  if (isDeleting) {
-    typedEl.textContent = current.substring(0, charIndex - 1);
-    charIndex--;
-  } else {
-    typedEl.textContent = current.substring(0, charIndex + 1);
-    charIndex++;
-  }
-
-  let delay = isDeleting ? 40 : 70;
-
-  if (!isDeleting && charIndex === current.length) {
-    delay = 1800;
-    isDeleting = true;
-  } else if (isDeleting && charIndex === 0) {
-    isDeleting = false;
-    phraseIndex = (phraseIndex + 1) % typedPhrases.length;
-    delay = 300;
-  }
-
-  setTimeout(typeLoop, delay);
-}
-
-setTimeout(typeLoop, 800);
-
-const { createClient } = supabase;
-const sb = createClient(SUPABASE_URL, SUPABASE_KEY);
-
 
 function toggleMobileMenu() {
   document.getElementById('nav-mobile').classList.toggle('open');
 }
-function closeMobileMenu() {
-  document.getElementById('nav-mobile').classList.remove('open');
+
+const phrases = ['votre site vitrine','votre système de RDV','votre boutique en ligne','votre présence digitale','votre dashboard pro'];
+let pi=0,ci=0,del=false;
+const el=document.getElementById('typed-text');
+function type(){
+  if(!el)return;
+  const cur=phrases[pi];
+  el.textContent=del?cur.substring(0,ci-1):cur.substring(0,ci+1);
+  del?ci--:ci++;
+  let d=del?40:70;
+  if(!del&&ci===cur.length){d=1800;del=true;}
+  else if(del&&ci===0){del=false;pi=(pi+1)%phrases.length;d=300;}
+  setTimeout(type,d);
 }
-
-function showPage(name) {
-  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
-  document.querySelectorAll('.nav-links a').forEach(a => a.classList.remove('active'));
-  document.getElementById('page-' + name).classList.add('active');
-  const n = document.getElementById('nav-' + name);
-  if (n) n.classList.add('active');
-  window.scrollTo(0, 0);
-}
-
-async function submitForm() {
-  const fields = ['f-prenom','f-nom','f-email','f-tel','f-type'];
-  if (fields.some(id => !document.getElementById(id).value.trim())) {
-    alert('Merci de remplir tous les champs.');
-    return;
-  }
-
-  const btn = document.querySelector('.btn-form');
-  btn.textContent = 'Envoi en cours...';
-  btn.disabled = true;
-
-  const data = {
-    prenom:    document.getElementById('f-prenom').value.trim(),
-    nom:       document.getElementById('f-nom').value.trim(),
-    email:     document.getElementById('f-email').value.trim(),
-    telephone: document.getElementById('f-tel').value.trim(),
-    type_site: document.getElementById('f-type').value,
-    message:   document.getElementById('f-message').value.trim() || '',
-  };
-
-  try {
-    await sb.from('demandes').insert([{
-      prenom: data.prenom, nom: data.nom, email: data.email,
-      telephone: data.telephone, type_site: data.type_site,
-      message: data.message, statut: 'nouveau'
-    }]);
-    await emailjs.send(EMAILJS_SERVICE_ID, EMAILJS_TEMPLATE_ID, {
-      prenom: data.prenom, nom: data.nom, email: data.email,
-      telephone: data.telephone, type_site: data.type_site,
-      message: data.message || 'Aucun message',
-    });
-    document.getElementById('form-content').style.display = 'none';
-    document.getElementById('form-success').style.display = 'block';
-  } catch(err) {
-    console.error('Erreur:', err);
-    btn.textContent = 'Envoyer ma demande';
-    btn.disabled = false;
-    alert('Une erreur est survenue. Réessayez ou contactez-moi directement.');
-  }
-}
+setTimeout(type,600);
 </script>
 </body>
 </html>
