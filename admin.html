@@ -231,6 +231,32 @@ tr:hover td { background:var(--card2); }
 }
 .btn-add-client:hover { background: var(--navy2); }
 
+
+/* PROSPECTS */
+.status-badge { font-size:11px; padding:3px 10px; border-radius:20px; font-weight:500; }
+.status-nouveau { background:rgba(59,130,246,0.1); color:#1d4ed8; }
+.status-contacte { background:rgba(245,158,11,0.1); color:#b45309; }
+.status-interesse { background:rgba(5,150,105,0.1); color:#059669; }
+.status-signe { background:rgba(5,150,105,0.2); color:#047857; font-weight:700; }
+.status-negatif { background:rgba(107,114,128,0.1); color:#6b7280; }
+
+.prospect-actions { display:flex; gap:6px; }
+.btn-sm { font-size:11px; padding:4px 10px; border-radius:5px; border:none; cursor:pointer; font-family:'DM Sans',sans-serif; font-weight:500; transition:all 0.15s; }
+.btn-sm-blue { background:rgba(15,35,64,0.08); color:var(--navy); }
+.btn-sm-blue:hover { background:var(--navy); color:white; }
+.btn-sm-red { background:rgba(220,38,38,0.08); color:var(--red); }
+.btn-sm-red:hover { background:var(--red); color:white; }
+
+.prospects-header { display:flex; justify-content:space-between; align-items:center; padding:18px 22px; border-bottom:1px solid var(--border); }
+.prospects-filters { display:flex; gap:8px; padding:14px 22px; border-bottom:1px solid var(--border); background:var(--card2); flex-wrap:wrap; }
+.filter-btn { font-size:12px; padding:5px 14px; border-radius:20px; border:1px solid var(--border2); background:transparent; cursor:pointer; font-family:'DM Sans',sans-serif; color:var(--muted); transition:all 0.15s; }
+.filter-btn.active { background:var(--navy); color:white; border-color:var(--navy); }
+
+.stats-prospects { display:grid; grid-template-columns:repeat(5,1fr); gap:10px; margin-bottom:24px; }
+.stat-prospect { background:var(--card); border:1px solid var(--border); border-radius:8px; padding:14px 16px; text-align:center; }
+.stat-prospect-num { font-family:'Instrument Serif',serif; font-size:28px; line-height:1; margin-bottom:3px; }
+.stat-prospect-lbl { font-size:10px; color:var(--muted2); text-transform:uppercase; letter-spacing:0.06em; }
+
 /* LOADING */
 .loading { text-align:center; padding:32px; color:var(--muted2); font-size:14px; }
 </style>
@@ -265,6 +291,7 @@ tr:hover td { background:var(--card2); }
       <div class="sidebar-item active" onclick="showTab('dashboard')"><span class="sidebar-ico">📊</span> Dashboard</div>
       <div class="sidebar-item" onclick="showTab('demandes')"><span class="sidebar-ico">📬</span> Demandes</div>
       <div class="sidebar-item" onclick="showTab('clients')"><span class="sidebar-ico">👥</span> Clients</div>
+      <div class="sidebar-item" onclick="showTab('prospects',this)"><span class="sidebar-ico">🎯</span> Prospects</div>
       <div class="sidebar-section">Mon site</div>
       <div class="sidebar-item" onclick="window.open('https://youdesk.vercel.app','_blank')"><span class="sidebar-ico">🌐</span> Voir le site</div>
     </div>
@@ -304,6 +331,37 @@ tr:hover td { background:var(--card2); }
         </div>
       </div>
 
+
+      <!-- PROSPECTS -->
+      <div id="tab-prospects" class="tab-content">
+        <div class="page-title">Prospects</div>
+        <div class="page-sub">Suivez vos démarches Instagram et gérez vos prospects.</div>
+
+        <div class="stats-prospects">
+          <div class="stat-prospect"><div class="stat-prospect-num" id="sp-total" style="color:var(--navy)">0</div><div class="stat-prospect-lbl">Total</div></div>
+          <div class="stat-prospect"><div class="stat-prospect-num" id="sp-contacte" style="color:#b45309">0</div><div class="stat-prospect-lbl">Contactés</div></div>
+          <div class="stat-prospect"><div class="stat-prospect-num" id="sp-interesse" style="color:#059669">0</div><div class="stat-prospect-lbl">Intéressés</div></div>
+          <div class="stat-prospect"><div class="stat-prospect-num" id="sp-signe" style="color:#047857">0</div><div class="stat-prospect-lbl">Signés</div></div>
+          <div class="stat-prospect"><div class="stat-prospect-num" id="sp-taux" style="color:var(--navy)">0%</div><div class="stat-prospect-lbl">Taux conv.</div></div>
+        </div>
+
+        <div class="table-wrap">
+          <div class="prospects-header">
+            <span class="table-title">Liste des prospects</span>
+            <button class="btn-add-client" onclick="openProspectModal()">+ Ajouter un prospect</button>
+          </div>
+          <div class="prospects-filters">
+            <button class="filter-btn active" onclick="filterProspects('all',this)">Tous</button>
+            <button class="filter-btn" onclick="filterProspects('nouveau',this)">Nouveau</button>
+            <button class="filter-btn" onclick="filterProspects('contacte',this)">Contacté</button>
+            <button class="filter-btn" onclick="filterProspects('interesse',this)">Intéressé</button>
+            <button class="filter-btn" onclick="filterProspects('signe',this)">Signé ✓</button>
+            <button class="filter-btn" onclick="filterProspects('negatif',this)">Négatif</button>
+          </div>
+          <div id="prospects-table"><div class="loading">Chargement...</div></div>
+        </div>
+      </div>
+
       <!-- CLIENTS -->
       <div id="tab-clients" class="tab-content">
         <div class="page-title">Clients</div>
@@ -322,6 +380,47 @@ tr:hover td { background:var(--card2); }
 
     </div>
   </div>
+
+
+<!-- MODAL PROSPECT -->
+<div class="modal-overlay" id="prospect-modal-overlay">
+  <div class="modal">
+    <div class="modal-title" id="prospect-modal-title">Ajouter un prospect</div>
+    <input type="hidden" id="p-id" value="">
+    <div class="fgroup"><label>Compte Instagram</label><input type="text" id="p-instagram" placeholder="@barbershop_paris"></div>
+    <div class="frow">
+      <div class="fgroup"><label>Secteur</label>
+        <select id="p-secteur">
+          <option value="" disabled selected>Choisir</option>
+          <option>Barbershop / Coiffeur</option>
+          <option>Coach sportif</option>
+          <option>Restaurant / Fast food</option>
+          <option>Institut esthétique</option>
+          <option>Artisan</option>
+          <option>Autre</option>
+        </select>
+      </div>
+      <div class="fgroup"><label>Statut</label>
+        <select id="p-statut">
+          <option value="nouveau">Nouveau</option>
+          <option value="contacte">Contacté</option>
+          <option value="interesse">Intéressé</option>
+          <option value="signe">Signé</option>
+          <option value="negatif">Négatif</option>
+        </select>
+      </div>
+    </div>
+    <div class="frow">
+      <div class="fgroup"><label>Date de contact</label><input type="date" id="p-date"></div>
+      <div class="fgroup"><label>Date de relance</label><input type="date" id="p-relance"></div>
+    </div>
+    <div class="fgroup"><label>Notes</label><input type="text" id="p-notes" placeholder="Ex: très intéressé, attend un devis..."></div>
+    <div class="modal-actions">
+      <button class="btn-cancel" onclick="closeProspectModal()">Annuler</button>
+      <button class="btn-save" onclick="saveProspect()">Enregistrer</button>
+    </div>
+  </div>
+</div>
 
 <!-- MODAL AJOUTER CLIENT -->
 <div class="modal-overlay" id="modal-overlay">
@@ -388,6 +487,7 @@ function showAdmin(email) {
   document.getElementById('admin-screen').style.display = 'block';
   document.getElementById('admin-email').textContent = email;
   loadData();
+  loadProspects();
 }
 
 // Check session au chargement
@@ -454,6 +554,140 @@ async function loadData() {
         <td><button class="btn-action" onclick="contactClient('${x.email}')">Contacter</button></td>
       </tr>`).join('')}
     </tbody></table>`;
+}
+
+
+
+// ===== PROSPECTS =====
+let allProspects = [];
+let currentFilter = 'all';
+
+function openProspectModal(prospect = null) {
+  document.getElementById('prospect-modal-overlay').classList.add('open');
+  document.getElementById('prospect-modal-title').textContent = prospect ? 'Modifier le prospect' : 'Ajouter un prospect';
+  if (prospect) {
+    document.getElementById('p-id').value = prospect.id;
+    document.getElementById('p-instagram').value = prospect.instagram || '';
+    document.getElementById('p-secteur').value = prospect.secteur || '';
+    document.getElementById('p-statut').value = prospect.statut || 'nouveau';
+    document.getElementById('p-date').value = prospect.date_contact || '';
+    document.getElementById('p-relance').value = prospect.date_relance || '';
+    document.getElementById('p-notes').value = prospect.notes || '';
+  } else {
+    document.getElementById('p-id').value = '';
+    ['p-instagram','p-date','p-relance','p-notes'].forEach(id => document.getElementById(id).value = '');
+    document.getElementById('p-statut').value = 'nouveau';
+    document.getElementById('p-secteur').selectedIndex = 0;
+  }
+}
+
+function closeProspectModal() {
+  document.getElementById('prospect-modal-overlay').classList.remove('open');
+}
+
+async function saveProspect() {
+  const instagram = document.getElementById('p-instagram').value.trim();
+  if (!instagram) { alert('Le compte Instagram est obligatoire.'); return; }
+
+  const id = document.getElementById('p-id').value;
+  const data = {
+    instagram,
+    secteur: document.getElementById('p-secteur').value,
+    statut: document.getElementById('p-statut').value,
+    date_contact: document.getElementById('p-date').value || null,
+    date_relance: document.getElementById('p-relance').value || null,
+    notes: document.getElementById('p-notes').value.trim() || null,
+  };
+
+  let error;
+  if (id) {
+    ({ error } = await sb.from('prospects').update(data).eq('id', id));
+  } else {
+    ({ error } = await sb.from('prospects').insert([data]));
+  }
+
+  if (error) { alert('Erreur: ' + error.message); return; }
+  closeProspectModal();
+  loadProspects();
+}
+
+async function deleteProspect(id) {
+  if (!confirm('Supprimer ce prospect ?')) return;
+  await sb.from('prospects').delete().eq('id', id);
+  loadProspects();
+}
+
+async function loadProspects() {
+  const { data } = await sb.from('prospects').select('*').order('created_at', { ascending: false });
+  allProspects = data || [];
+  renderProspects(currentFilter);
+  updateProspectStats();
+}
+
+function updateProspectStats() {
+  const total = allProspects.length;
+  const contacte = allProspects.filter(p => ['contacte','interesse','signe'].includes(p.statut)).length;
+  const interesse = allProspects.filter(p => p.statut === 'interesse').length;
+  const signe = allProspects.filter(p => p.statut === 'signe').length;
+  const taux = contacte > 0 ? Math.round((signe / contacte) * 100) : 0;
+
+  document.getElementById('sp-total').textContent = total;
+  document.getElementById('sp-contacte').textContent = contacte;
+  document.getElementById('sp-interesse').textContent = interesse;
+  document.getElementById('sp-signe').textContent = signe;
+  document.getElementById('sp-taux').textContent = taux + '%';
+}
+
+function filterProspects(filter, el) {
+  currentFilter = filter;
+  document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+  el.classList.add('active');
+  renderProspects(filter);
+}
+
+function renderProspects(filter) {
+  const filtered = filter === 'all' ? allProspects : allProspects.filter(p => p.statut === filter);
+  const container = document.getElementById('prospects-table');
+
+  if (filtered.length === 0) {
+    container.innerHTML = '<div class="empty"><span>🎯</span>Aucun prospect dans cette catégorie.</div>';
+    return;
+  }
+
+  const statusLabels = { nouveau:'Nouveau', contacte:'Contacté', interesse:'Intéressé', signe:'Signé ✓', negatif:'Négatif' };
+  const today = new Date().toISOString().split('T')[0];
+
+  container.innerHTML = `<table>
+    <thead><tr>
+      <th>Instagram</th><th>Secteur</th><th>Statut</th>
+      <th>Contacté le</th><th>Relance</th><th>Notes</th><th>Actions</th>
+    </tr></thead>
+    <tbody>
+      ${filtered.map(p => {
+        const relanceAlert = p.date_relance && p.date_relance <= today && p.statut !== 'signe' && p.statut !== 'negatif';
+        return `<tr>
+          <td style="font-weight:500">
+            <a href="https://instagram.com/${p.instagram ? p.instagram.replace('@','') : ''}" target="_blank" style="color:var(--navy);text-decoration:none">
+              ${p.instagram || '—'}
+            </a>
+          </td>
+          <td style="color:var(--muted)">${p.secteur || '—'}</td>
+          <td><span class="status-badge status-${p.statut}">${statusLabels[p.statut] || p.statut}</span></td>
+          <td style="color:var(--muted2)">${p.date_contact ? new Date(p.date_contact).toLocaleDateString('fr-FR') : '—'}</td>
+          <td style="color:${relanceAlert ? '#dc2626' : 'var(--muted2)'}; font-weight:${relanceAlert ? '600' : '400'}">
+            ${p.date_relance ? new Date(p.date_relance).toLocaleDateString('fr-FR') + (relanceAlert ? ' ⚠️' : '') : '—'}
+          </td>
+          <td style="color:var(--muted);font-size:12px;max-width:180px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">${p.notes || '—'}</td>
+          <td>
+            <div class="prospect-actions">
+              <button class="btn-sm btn-sm-blue" onclick='openProspectModal(${JSON.stringify(p)})'>Modifier</button>
+              <button class="btn-sm btn-sm-red" onclick="deleteProspect('${p.id}')">✕</button>
+            </div>
+          </td>
+        </tr>`;
+      }).join('')}
+    </tbody>
+  </table>`;
 }
 
 
